@@ -2,6 +2,13 @@
 A gallery and map of street art in Aberdeen, Scotland, built with Joomla
 
 
+## DNS and hosting
+178.79.157.89
+* https://dcc.godaddy.com/manage/streetartaberdeen.org/dns?plid=1
+* https://dcc.godaddy.com/manage/streetartaberdeen.org.uk/dns?plid=1
+* https://dcc.godaddy.com/manage/streetartaberdeen.com/dns?plid=1
+* https://dcc.godaddy.com/manage/streetartaberdeen.co.uk/dns?plid=1
+
 ## Fonts
 * Kneewave - https://www.theleagueofmoveabletype.com/knewave
 * Philly Sans - https://allfont.net/download/philly-sans/
