@@ -13,9 +13,9 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla
 * Kneewave - https://www.theleagueofmoveabletype.com/knewave
 * Philly Sans - https://allfont.net/download/philly-sans/
 * Don Graffiti - https://www.dafont.com/don-graffiti.font
-* Rock Salt - google
-* Mansalva - google
-* Sarina - google
+* Rock Salt - https://fonts.google.com/specimen/Rock+Salt?query=rock+#standard-styles
+* Mansalva - https://fonts.google.com/specimen/Mansalva?query=Mansalva
+* Sarina - https://fonts.google.com/specimen/Sarina?query=Sarina
 
 
 ## Project links
