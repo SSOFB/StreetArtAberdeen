@@ -28,6 +28,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla
 
 ## Website tech links
 * https://www.creativebloq.com/typography/free-graffiti-fonts-11121160
+* https://www.richeyweb.com/software/joomla/plugins/125-free-field-plugins
 
 
 ## Street Art Links
