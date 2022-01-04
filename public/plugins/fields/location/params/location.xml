@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="fieldparams">
+        <fieldset name="fieldparams">
+            <field type="radio" name="llreadonly" label="PLG_FIELDS_LOCATION_FIELDPARAM_LLREADONLY_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_LLREADONLY_DESC" default="1">
+                <option value="1">JYes</option>
+                <option value="0">JNo</option>
+            </field>
+            <field type="list" name="mapstyle" default="ROADMAP" label="PLG_FIELDS_LOCATION_FIELDPARAM_MAPTYPE_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_MAPTYPE_DESC">
+                <option value="ROADMAP"></option>
+                <option value="SATELLITE"></option>
+                <option value="HYBRID"></option>
+                <option value="TERRAIN"></option>
+            </field>
+            <field type="list" name="displaytype" default="map" label="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYTYPE_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYTYPE_DESC">
+                <option value="static">PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYTYPE_STATIC</option>
+                <option value="map">PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYTYPE_MAP</option>
+                <option value="text">PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYTYPE_TEXT</option>
+            </field>
+            <field type="text" name="displaywidth" default="auto" label="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYWIDTH_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYWIDTH_DESC" />
+            <field type="text" name="displayheight" default="200px" label="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYHEIGHT_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYHEIGHT_DESC" />
+            <field type="integer" name="displayzoom" default="1" first="1" last="20" step="1" label="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYZOOM_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYZOOM_DESC" />
+            <field type="text" name="editwidth" default="400px" label="PLG_FIELDS_LOCATION_FIELDPARAM_EDITWIDTH_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_EDITWIDTH_DESC" />
+            <field type="text" name="editheight" default="300px" label="PLG_FIELDS_LOCATION_FIELDPARAM_EDITHEIGHT_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_EDITHEIGHT_DESC" />
+            <field type="integer" name="editzoom" default="1" first="1" last="20" step="1" label="PLG_FIELDS_LOCATION_FIELDPARAM_EDITZOOM_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_DISPLAYZOOM_DESC" />
+            <field type="radio" name="searchbox" default="0" label="PLG_FIELDS_LOCATION_FIELDPARAM_SEARCHBOX_LABEL" description="PLG_FIELDS_LOCATION_FIELDPARAM_SEARCHBOX_DESC">
+                <option value="1">JYes</option>
+                <option value="0">JNo</option>
+            </field>
+        </fieldset>
+    </fields>
+</form>

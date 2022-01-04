@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" version="3.7.0" group="fields" method="upgrade">
+    <name>PLG_FIELDS_LOCATION</name>
+    <author>Michael Richey</author>
+    <creationDate>September 2017</creationDate>
+    <copyright>Copyright (C) 2005 - 2017 Michael Richey. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>support@richeyweb.com</authorEmail>
+    <authorUrl>https://www.richeyweb.com</authorUrl>
+    <version>1.6.6</version>
+    <description>PLG_FIELDS_LOCATION_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="location">location.php</filename>
+        <filename>helper.php</filename>
+        <folder>params</folder>
+        <folder>tmpl</folder>
+    </files>
+    <media folder="media" destination="plg_fields_location">
+        <file>plg_fields_location.min.js</file>
+        <file>plg_fields_location.js</file>
+    </media>
+    <languages>
+        <language tag="en-GB">en-GB.plg_fields_location.ini</language>
+        <language tag="en-GB">en-GB.plg_fields_location.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="apikey"
+                    type="text"
+                    filter="raw"
+                    required="true"
+                    label="PLG_FIELDS_LOCATION_PARAMS_APIKEY_LABEL"
+                    description="PLG_FIELDS_LOCATION_PARAMS_APIKEY_DESC"
+                />
+                <field
+                    name="staticapikey"
+                    type="text"
+                    filter="raw"
+                    label="PLG_FIELDS_LOCATION_PARAMS_STATICAPIKEY_LABEL"
+                    description="PLG_FIELDS_LOCATION_PARAMS_STATICAPIKEY_DESC"
+                /> 
+                <field type="radio" name="searchbox" default="0" label="PLG_FIELDS_LOCATION_PARAMS_SEARCHBOX_LABEL" description="PLG_FIELDS_LOCATION_PARAMS_SEARCHBOX_DESC">
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+    <updateservers>
+        <server type="extension" priority="1" name="RicheyWeb Update Site">https://www.richeyweb.com/updates/fieldlocation.xml</server>
+    </updateservers>
+</extension>
