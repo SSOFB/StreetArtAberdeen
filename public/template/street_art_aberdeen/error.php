@@ -1,10 +1,9 @@
 <?php
 /**
- * @package     SSOFB
- * @subpackage  Templates.street_art_aberdeen
+ * @package     street_art_aberdeen
  *
- * @copyright   (C) 2022 SSOFB Ltd
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   (C) 2022 SSOFB. <https://www.ssofb.co.uk>
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
