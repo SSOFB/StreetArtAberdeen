@@ -3,6 +3,7 @@
 /public/administrator/components/com_actionlogs/*
 /public/administrator/components/com_admin/*
 /public/administrator/components/com_ajax/*
+/public/administrator/components/com_akeebabackup/*
 /public/administrator/components/com_associations/*
 /public/administrator/components/com_banners/*
 /public/administrator/components/com_cache/*
@@ -515,6 +516,7 @@
 /public/layouts/index.html
 /public/libraries/cms/*
 /public/libraries/fof/*
+/public/libraries/fof40/*
 /public/libraries/idna_convert/*
 /public/libraries/joomla/*
 /public/libraries/legacy/*
@@ -532,6 +534,7 @@
 /public/libraries/index.html
 /public/libraries/loader.php
 /public/media/cms/*
+/public/media/com_akeebabackup/*
 /public/media/com_associations/*
 /public/media/com_contact/*
 /public/media/com_content/*
@@ -559,6 +562,7 @@
 /public/media/plg_system_stats/*
 /public/media/plg_twofactorauth_totp/*
 /public/media/system/*
+/public/media/vendor/*
 /public/media/index.html
 /public/modules/mod_articles_archive/*
 /public/modules/mod_articles_categories/*
@@ -691,6 +695,7 @@
 /public/plugins/user/index.html
 /public/plugins/index.html
 /public/templates/beez3/*
+/public/templates/cassiopeia/*
 /public/templates/protostar/*
 /public/templates/system/*
 /public/templates/index.html
