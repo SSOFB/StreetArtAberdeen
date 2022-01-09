@@ -16,7 +16,7 @@ require_once __DIR__.'/helper.php';
 class PlgFieldsLocation extends FieldsPlugin
 {
 	public $apikey = false;
-        public $scriptAdded = false;
+    public $scriptAdded = false;
         
 	/**
 	 * Transforms the field into a DOM XML element and appends it as a child on the given parent.
@@ -41,24 +41,33 @@ class PlgFieldsLocation extends FieldsPlugin
 		$debug = JFactory::getConfig()->get('debug',false);
 		$doc = JFactory::getDocument();
 		JHtml::_('jquery.framework',true);
-                $this->apikey = $this->params->get('apikey', false);
-                error_log($this->apikey);
+        $this->apikey = $this->params->get('apikey', false);
+        error_log($this->apikey);
 		if ($this->apikey)
 		{
-			$latlon = (false===strpos($field->value,','))?array(0,0):explode(',', $field->value);
+			#echo "<pre>" . print_r($field, TRUE) . "</pre>";
+			#echo "<pre>" . print_r($fieldNode, TRUE) . "</pre>";
+			
+			if ( strlen( $field->value ) == 0 ) {
+				$value = $field->default_value;
+			} else {
+				$value = $field->value;
+			}
+			#echo "value: " . $value . "<br/>";
+			$latlon = (false===strpos($value,','))?array(0,0):explode(',', $value);
 			$fieldid = 'plg_fields_location_' . $field->name . '_' . $field->id;
 			$targetid = 'jform_com_fields_' . $field->name;
-                        $urlvars = array();
-                        if($this->params->get('searchbox',false)) {
-                            $urlvars[] = 'libraries=places';
-                            JText::script('PLG_FIELDS_LOCATION_SEARCHBOX_PLACEHOLDER');
-                        }
-                        plgFieldsLocationHelper::loadMapsAPI($this->params, $debug);
+			$urlvars = array();
+			if($this->params->get('searchbox',false)) {
+				$urlvars[] = 'libraries=places';
+				JText::script('PLG_FIELDS_LOCATION_SEARCHBOX_PLACEHOLDER');
+			}
+			plgFieldsLocationHelper::loadMapsAPI($this->params, $debug);
 			$options = array(
 				'zoom'=>$field->fieldparams->get('editzoom', 1),
 				'center'=>array($latlon[0]?:0, $latlon[1]?:0),
 				'mapTypeId'=>$field->fieldparams->get('maptype', 'ROADMAP'),
-                                'searchbox'=>($this->params->get('searchbox',0) && $field->fieldparams->get('searchbox',0))?1:0
+                'searchbox'=>($this->params->get('searchbox',0) && $field->fieldparams->get('searchbox',0))?1:0
 			);
 			$doc->addScriptOptions('plg_fields_location_'.$field->id,$options);
 			$width = $field->fieldparams->get('editwidth', '400px');

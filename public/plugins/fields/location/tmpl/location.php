@@ -3,6 +3,8 @@
 /**
  * @copyright   Copyright (C) 2005 - 2017 Michael Richey. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 
+ * This is the view portion of the field
  */
 defined('_JEXEC') or die;
 require_once dirname(__DIR__) . '/helper.php';
@@ -17,6 +19,7 @@ if (is_array($value)) {
     $value = implode(', ', $value);
 }
 $latlon = explode(',', $value);
+#echo "<pre>" . print_r($latlon, TRUE) . "</pre>";
 $displaytype = $this->params->get('staticapikey', false) ? $field->fieldparams->get('displaytype', 'map') : 'map';
 if ($app->input->getCmd('layout', false) !== 'edit') {
     if (!$this->params->get('apikey', false) || $displaytype == 'text') {
