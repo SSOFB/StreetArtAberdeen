@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="fieldparams">
+		<fieldset name="fieldparams">
+			<field 
+				name="image_target" 
+				type="folderlist" 
+				default="" 
+				label="PLG_FIELDS_IMAGE_TARGET" 
+				description="PLG_FIELDS_IMAGE_TARGET_DESC" 
+				directory="images" 
+				filter="" 
+				exclude="" 
+				stripext="" 
+				recursive=1
+			/>
+			<field 
+				type="text" 
+				name="image_prefix" 
+				default="auto" 
+				label="PLG_FIELDS_IMAGE_PREFIX" 
+				description="PLG_FIELDS_IMAGE_PREFIX_DESC" 
+			/>
+		</fieldset>
+	</fields>
+</form>
