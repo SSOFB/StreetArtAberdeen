@@ -90,6 +90,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 *
 	 * @since   2.5
 	 */
+    /*
 	public function onContentAfterSave($context, $article, $isNew)
 	{
 		#echo "<pre>context: " . $context . "</pre>";
@@ -116,6 +117,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         JFactory::getApplication()->enqueueMessage("form: " . print_r($form, TRUE));   
 
 	}
+    */
 
 
 
@@ -130,6 +132,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 *
 	 * @since   2.5
 	 */
+
 	public function onContentBeforeSave($context, $article, $isNew)
 	{
 		#echo "<pre>context: " . $context . "</pre>";
@@ -152,10 +155,16 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 
         $input = Factory::getApplication()->input;
         $files = $input->files->get('jform');
+        $this->ilog("files: " . print_r($files, true), 6);
+
+        # TODO: set image filename
+        # TODO: move image into dir
+        # TODO: set filename as field value
 
         JFactory::getApplication()->enqueueMessage("files: " . print_r($files, TRUE));   
 
 	}
+
 
 
 	/**
@@ -168,6 +177,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 *
 	 * @since   <your version>
 	 */
+    /*
 	function onContentPrepareForm($form, $data)
 	{
         $this->ilog("onContentPrepareForm");
@@ -182,6 +192,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         JFactory::getApplication()->enqueueMessage("onContentPrepareForm");
 		return true;
 	}
+    */
 
 
 
@@ -195,11 +206,13 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 *
 	 * @since   1.6
 	 */
+    /*
 	public function onContentPrepareData($context, $data) {
         $this->ilog("onContentPrepareData");
         $this->ilog("context: " . $context);
         $this->ilog("data: " . print_r($data, TRUE));        
     }
+    */
 
 
     /**
@@ -223,6 +236,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 *
 	 * @return  boolean	True on success.
 	 */
+    /*
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{
         $this->ilog("onContentPrepare");
@@ -233,6 +247,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 
         return true;
 	}
+    */
 
 
 
