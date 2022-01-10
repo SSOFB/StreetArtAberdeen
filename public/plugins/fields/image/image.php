@@ -31,7 +31,7 @@ class PlgFieldsImage extends FieldsPlugin {
 	public function onCustomFieldsPrepareDom($field, DOMElement $parent, JForm $form)
 	{
 
-        $field->type = "file";
+        #$field->type = "file";
         
         #echo "<hr/>";
         #echo "<pre>field: " . print_r($field, TRUE) . "</pre>";
