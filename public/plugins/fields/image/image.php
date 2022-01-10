@@ -33,10 +33,10 @@ class PlgFieldsImage extends FieldsPlugin {
 
         $field->type = "file";
         
-        echo "<hr/>";
-        echo "<pre>field: " . print_r($field, TRUE) . "</pre>";
-        echo "<pre>parent: " . print_r($parent, TRUE) . "</pre>";
-        echo "<pre>form: " . print_r($form, TRUE) . "</pre>";
+        #echo "<hr/>";
+        #echo "<pre>field: " . print_r($field, TRUE) . "</pre>";
+        #echo "<pre>parent: " . print_r($parent, TRUE) . "</pre>";
+        #echo "<pre>form: " . print_r($form, TRUE) . "</pre>";
         
         
 
@@ -52,11 +52,11 @@ class PlgFieldsImage extends FieldsPlugin {
 
             if ($field->id == 6) {
                 #echo "<pre>field: " . print_r($field, TRUE) . "</pre>";
-                echo "<pre>fieldNode: " . print_r($fieldNode, TRUE) . "</pre>";
+                #echo "<pre>fieldNode: " . print_r($fieldNode, TRUE) . "</pre>";
                 #echo "<pre>fieldNode parentNode: " . print_r($fieldNode->parentNode, TRUE) . "</pre>";
                 #echo "<pre>fieldNode childNodes: " . print_r($fieldNode->childNodes, TRUE) . "</pre>";
                 #echo "<pre>fieldNode previousSibling: " . print_r($fieldNode->previousSibling, TRUE) . "</pre>";
-                echo "<pre>fieldNode attributes: " . print_r($fieldNode->attributes, TRUE) . "</pre>";
+                #echo "<pre>fieldNode attributes: " . print_r($fieldNode->attributes, TRUE) . "</pre>";
             }
     
     
