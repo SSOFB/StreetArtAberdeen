@@ -35,16 +35,24 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	public function onCustomFieldsPrepareDom($field, DOMElement $parent, Form $form)
 	{
 
+        # TODO: make the form be `enctype="multipart/form-data"`
+        
         #$field->type = "file";
+
+
         
         #echo "<hr/>";
         #echo "<pre>field: " . print_r($field, TRUE) . "</pre>";
         #echo "<pre>parent: " . print_r($parent, TRUE) . "</pre>";
         #echo "<pre>form: " . print_r($form, TRUE) . "</pre>";
         
-        
+        $this->ilog("onCustomFieldsPrepareDom");
+        $this->ilog("field: " . print_r($field, TRUE));
+        $this->ilog("parent: " . print_r($parent, TRUE));
+        $this->ilog("form: " . print_r($form, TRUE));        
 
         $fieldNode = parent::onCustomFieldsPrepareDom($field, $parent, $form);
+        $this->ilog("fieldNode: " . print_r($fieldNode, TRUE));
 
 		if (!$fieldNode ){
 			
@@ -88,6 +96,15 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         #echo "<pre>article id: " . $article->id . "</pre>";
         #echo "<pre>article: " . print_r($article, TRUE) . "</pre>";
 
+        $this->ilog("onContentAfterSave");
+        $this->ilog("context: " . $context);
+        #$this->ilog("article: " . print_r($article, TRUE));
+        $this->ilog("isNew: " . $isNew);
+
+        $this->ilog("POST: " . print_r($_POST, true));
+        $this->ilog("GET: " . print_r($_GET, true));
+        $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
+        $this->ilog("Headers: " . print_r($headers_array, true), 6);
 
         JFactory::getApplication()->enqueueMessage("onContentAfterSave");
         JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
@@ -119,6 +136,15 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         #echo "<pre>article id: " . $article->id . "</pre>";
         #echo "<pre>article: " . print_r($article, TRUE) . "</pre>";
 
+        $this->ilog("onContentBeforeSave");
+        $this->ilog("context: " . $context);
+        #$this->ilog("article: " . print_r($article, TRUE));
+        $this->ilog("isNew: " . $isNew);
+
+        $this->ilog("POST: " . print_r($_POST, true));
+        $this->ilog("GET: " . print_r($_GET, true));
+        $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
+        $this->ilog("Headers: " . print_r($headers_array, true), 6);
 
         JFactory::getApplication()->enqueueMessage("onContentBeforeSave");
         JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
@@ -144,10 +170,37 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 */
 	function onContentPrepareForm($form, $data)
 	{
+        $this->ilog("onContentPrepareForm");
+        $this->ilog("form: " . print_r($form, TRUE));
+        $this->ilog("data: " . print_r($data, TRUE));
+
+        $this->ilog("POST: " . print_r($_POST, true));
+        $this->ilog("GET: " . print_r($_GET, true));
+        $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
+        $this->ilog("Headers: " . print_r($headers_array, true), 6);
 
         JFactory::getApplication()->enqueueMessage("onContentPrepareForm");
 		return true;
 	}
+
+
+
+	/**
+	 * Runs on content preparation
+	 *
+	 * @param   string  $context  The context for the data
+	 * @param   object  $data     An object containing the data for the form.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.6
+	 */
+	public function onContentPrepareData($context, $data) {
+        $this->ilog("onContentPrepareData");
+        $this->ilog("context: " . $context);
+        $this->ilog("data: " . print_r($data, TRUE));        
+    }
+
 
     /**
     * Injects Insert Tags input box and drop down menu to adminForm
@@ -172,8 +225,35 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{
-		JFactory::getApplication()->enqueueMessage("onContentPrepare");
+        $this->ilog("onContentPrepare");
+        $this->ilog("context: " . $context);
+        #$this->ilog("row: " . print_r($row, TRUE));
+        $this->ilog("params: " . print_r($params, TRUE));
+        $this->ilog("page: " . $page);
+
         return true;
 	}
+
+
+
+    /**
+    * very simple logging function
+    *
+    * @param   string    the log string
+    * @param   int       log level
+    */    
+    function ilog($log_string, $level=1) {
+        $logging_level = 0;
+        
+        if ( $level > $logging_level ) {
+            $log_file = JPATH_BASE . '/administrator/logs/field_image_plugin.log';
+            $fh = fopen($log_file, 'a') or die();
+            $log_string = date("Y-m-d H:i:s") . " : " . $log_string . "\n";
+            fwrite($fh, $log_string);
+            fclose($fh);  
+        }
+    }  	
+    
+    
 
 }
