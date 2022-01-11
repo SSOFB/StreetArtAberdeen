@@ -83,6 +83,8 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 
 	/**
 	 * Content is passed by reference. Method is called before the content is saved.
+     * 
+     * https://docs.joomla.org/Plugin/Events/Content#onContentBeforeSave
 	 *
 	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6).
 	 * @param   object  $article  A JTableContent object.
@@ -93,7 +95,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 * @since   2.5
 	 */
 
-	public function onContentBeforeSave($context, $article, $isNew)
+	public function onContentBeforeSave($context, $article, $isNew, $data)
 	{
 		#echo "<pre>context: " . $context . "</pre>";
         #echo "<pre>article id: " . $article->id . "</pre>";
@@ -102,12 +104,19 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         $this->ilog("onContentBeforeSave");
         $this->ilog("context: " . $context);
         #$this->ilog("article: " . print_r($article, TRUE));
+        $this->ilog("data: " . print_r($data, TRUE));
         $this->ilog("isNew: " . $isNew);
 
         $this->ilog("POST: " . print_r($_POST, true));
         $this->ilog("GET: " . print_r($_GET, true));
         $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
         $this->ilog("Headers: " . print_r($headers_array, true), 6);
+
+        $attribs = json_decode($article->attribs);
+        $this->ilog("attribs: " . print_r($attribs, true));
+
+        $fields = json_decode($article->fields);
+        $this->ilog("fields: " . print_r($fields, true));
 
         JFactory::getApplication()->enqueueMessage("onContentBeforeSave");
         JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
@@ -135,7 +144,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         )
         */
 
-        #jimport('joomla.filesystem.file');
+        jimport('joomla.filesystem.file');
 
         foreach ( $files['com_fields'] AS $field_name=>$field_data ) {
             # set image filename
@@ -147,13 +156,25 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
             
             
             # set filename as field value
-            #$jform = $input->get('jform', array(), 'array');
-            #$jform['com_fields'][" . $field_name . "] = $filename;
-            #$input->set('jform', $jform);
+            $jform = $input->get('jform', array(), 'array');
+            $jform['com_fields'][$field_name] = $filename;
+            $jform['articletext'] = date("Y-m-d_H-i-s");
+            #$input->set("jform['articletext']", date("Y-m-d_H-i-s") );
+            $input->set("jform", $jform);
+            #$input->setValue($field_name, "com_fields", $filename);
+
+
+            #$data = JRequest::getVar( 'jform', null, 'post', 'array' );
+            #$data['com_fields'][$field_name] = strtolower( $filename );
+            #JRequest::setVar('jform', $data );
 
             $this->ilog("input: " . print_r($input, true));
+
+            $data['com_fields'][$field_name] = $filename;
+            $data['articletext'] = date("Y-m-d_H-i-s");
         }
 
+        $this->ilog("data: " . print_r($data, TRUE));
 
         JFactory::getApplication()->enqueueMessage("files: " . print_r($files, TRUE));   
 
