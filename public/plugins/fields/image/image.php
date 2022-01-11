@@ -79,47 +79,6 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         }  
 	}  
     
-	/**
-	 * Content is passed by reference. Method is called after the content is saved.
-	 *
-	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6).
-	 * @param   object  $article  A JTableContent object.
-	 * @param   bool    $isNew    If the content is just about to be created.
-	 *
-	 * @return  void
-	 *
-	 * @since   2.5
-	 */
-    /*
-	public function onContentAfterSave($context, $article, $isNew)
-	{
-		#echo "<pre>context: " . $context . "</pre>";
-        #echo "<pre>article id: " . $article->id . "</pre>";
-        #echo "<pre>article: " . print_r($article, TRUE) . "</pre>";
-
-        $this->ilog("onContentAfterSave");
-        $this->ilog("context: " . $context);
-        #$this->ilog("article: " . print_r($article, TRUE));
-        $this->ilog("isNew: " . $isNew);
-
-        $this->ilog("POST: " . print_r($_POST, true));
-        $this->ilog("GET: " . print_r($_GET, true));
-        $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
-        $this->ilog("Headers: " . print_r($headers_array, true), 6);
-
-        JFactory::getApplication()->enqueueMessage("onContentAfterSave");
-        JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
-
-
-        #$input = Factory::getApplication()->input;
-        #$form = $input->get('jform');
-
-        JFactory::getApplication()->enqueueMessage("form: " . print_r($form, TRUE));   
-
-	}
-    */
-
-
 
 	/**
 	 * Content is passed by reference. Method is called before the content is saved.
@@ -174,7 +133,6 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
      * https://joomla.stackexchange.com/questions/31787/
 	 *
 	 */
-    
     public function onAfterDispatch()
     {
         # Get the document.
@@ -215,90 +173,6 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         // Set the updated HTML.
         $doc->setBuffer($html, 'component');
     }
-
-
-
-	/**
-	 * Prepare form and add my field.
-	 *
-	 * @param   JForm  $form  The form to be altered.
-	 * @param   mixed  $data  The associated data for the form.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   <your version>
-	 */
-    /*
-	function onContentPrepareForm($form, $data)
-	{
-        $this->ilog("onContentPrepareForm");
-        $this->ilog("form: " . print_r($form, TRUE));
-        $this->ilog("data: " . print_r($data, TRUE));
-
-        $this->ilog("POST: " . print_r($_POST, true));
-        $this->ilog("GET: " . print_r($_GET, true));
-        $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
-        $this->ilog("Headers: " . print_r($headers_array, true), 6);
-
-        JFactory::getApplication()->enqueueMessage("onContentPrepareForm");
-		return true;
-	}
-    */
-
-
-
-	/**
-	 * Runs on content preparation
-	 *
-	 * @param   string  $context  The context for the data
-	 * @param   object  $data     An object containing the data for the form.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.6
-	 */
-    /*
-	public function onContentPrepareData($context, $data) {
-        $this->ilog("onContentPrepareData");
-        $this->ilog("context: " . $context);
-        $this->ilog("data: " . print_r($data, TRUE));        
-    }
-    */
-
-
-    /**
-    * Injects Insert Tags input box and drop down menu to adminForm
-    *
-    * @access   public
-    * @since    1.5
-    */
-    #function onAfterRender()
-    #{
-    #    JFactory::getApplication()->enqueueMessage("onContentPrepareForm");
-    #}
-
-	/**
-	 * Plugin that cloaks all emails in content from spambots via Javascript.
-	 *
-	 * @param   string   $context  The context of the content being passed to the plugin.
-	 * @param   mixed    &$row     An object with a "text" property or the string to be cloaked.
-	 * @param   mixed    &$params  Additional parameters. See {@see PlgContentEmailcloak()}.
-	 * @param   integer  $page     Optional page number. Unused. Defaults to zero.
-	 *
-	 * @return  boolean	True on success.
-	 */
-    /*
-	public function onContentPrepare($context, &$row, &$params, $page = 0)
-	{
-        $this->ilog("onContentPrepare");
-        $this->ilog("context: " . $context);
-        #$this->ilog("row: " . print_r($row, TRUE));
-        $this->ilog("params: " . print_r($params, TRUE));
-        $this->ilog("page: " . $page);
-
-        return true;
-	}
-    */
 
 
 
