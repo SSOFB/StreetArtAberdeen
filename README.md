@@ -43,6 +43,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * Commit changes `git commit -m "all fixed"` or `git commit -a -m "all fixed"`
 * Add a file `git add blah`
 * Send your changes to the main `git push origin main`
+* Set git to ignore file permission changes `git config core.fileMode false`
 
 
 ## DNS and hosting
