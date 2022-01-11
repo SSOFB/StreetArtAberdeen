@@ -242,7 +242,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         $logging_level = 0;
         
         if ( $level > $logging_level ) {
-            $log_file = JPATH_BASE . '/administrator/logs/field_image_plugin.log';
+            $log_file = JPATH_ADMINISTRATOR . '/logs/field_image_plugin.log';
             $fh = fopen($log_file, 'a') or die();
             $log_string = date("Y-m-d H:i:s") . " : " . $log_string . "\n";
             fwrite($fh, $log_string);
