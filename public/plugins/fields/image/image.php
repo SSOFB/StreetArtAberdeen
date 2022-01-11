@@ -168,6 +168,57 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 
 
 	/**
+	 * onAfterDispatch
+     * https://docs.joomla.org/Plugin/Events/System#onAfterDispatch
+     * 
+     * https://joomla.stackexchange.com/questions/31787/
+	 *
+	 */
+    
+    public function onAfterDispatch()
+    {
+        # Get the document.
+        $doc = $this->app->getDocument();
+    
+        # Check that we are manipulating a HTML document.
+        if (!($doc instanceof Joomla\CMS\Document\HtmlDocument)) {
+            return;
+        }
+
+        # Check that we're in correct application.
+        if (!$this->app->isClient('site') && !$this->app->isClient('administrator')) {
+            return;
+        }
+
+        # Check the component.
+        $input = $this->app->getInput();
+        if ($input->get('option') !== 'com_content') {
+            return;
+        }
+
+        # Check the views.
+        if ($this->app->isClient('site') && $input->get('view') !== 'form') {
+            return;
+        }
+
+        if ($this->app->isClient('administrator') && $input->get('view') !== 'article') {
+            return;
+        }
+
+
+        // Get the HTML content.
+        $html = $doc->getBuffer('component');
+    
+        // Add the attribute.
+        $html = str_replace("method=\"post\" name=\"adminForm\" id=\"adminForm\" ", "method=\"post\" enctype=\"multipart/form-data\" name=\"adminForm\" id=\"adminForm\" ", $html);
+    
+        // Set the updated HTML.
+        $doc->setBuffer($html, 'component');
+    }
+
+
+
+	/**
 	 * Prepare form and add my field.
 	 *
 	 * @param   JForm  $form  The form to be altered.
