@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 #JLoader::import('components.com_fields.libraries.fieldsfileplugin', JPATH_ADMINISTRATOR);
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Fields Text Plugin
@@ -116,9 +117,43 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         $files = $input->files->get('jform');
         $this->ilog("files: " . print_r($files, true), 6);
 
-        # TODO: set image filename
-        # TODO: move image into dir
-        # TODO: set filename as field value
+        /*
+        (
+            [com_fields] => Array
+                (
+                    [image-field-test-01] => Array
+                        (
+                            [name] => uc_test.PNG
+                            [type] => image/png
+                            [tmp_name] => /tmp/phpTJDy6L
+                            [error] => 0
+                            [size] => 94390
+                        )
+        
+                )
+        
+        )
+        */
+
+        #jimport('joomla.filesystem.file');
+
+        foreach ( $files['com_fields'] AS $field_name=>$field_data ) {
+            # set image filename
+            list($file_type, $file_extention) = explode("/", $field_data['type']);
+            $filename = JPATH_SITE . "/images/image_field_file_" . date("Y-m-d_H-i-s") . "_" . rand(1000, 9999) . "." . $file_extention;
+            
+            # move image into dir
+            File::upload($field_data['tmp_name'], $filename);
+            
+            
+            # set filename as field value
+            #$jform = $input->get('jform', array(), 'array');
+            #$jform['com_fields'][" . $field_name . "] = $filename;
+            #$input->set('jform', $jform);
+
+            $this->ilog("input: " . print_r($input, true));
+        }
+
 
         JFactory::getApplication()->enqueueMessage("files: " . print_r($files, TRUE));   
 
