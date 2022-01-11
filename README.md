@@ -19,6 +19,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://docs.joomla.org/Adding_custom_fields_to_core_components_using_a_plugin
 * https://docs.joomla.org/Basic_form_guide
 * https://docs.joomla.org/Advanced_form_guide
+* https://docs.joomla.org/Retrieving_request_data_using_JInput
 
 
 ## Street Art Links
