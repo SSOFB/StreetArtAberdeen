@@ -89,18 +89,20 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6).
 	 * @param   object  $article  A JTableContent object.
 	 * @param   bool    $isNew    If the content is just about to be created.
+     * @param   array   data    The data to save. 
 	 *
 	 * @return  void
 	 *
 	 * @since   2.5
 	 */
 
-	public function onContentBeforeSave($context, $article, $isNew, $data)
+	public function onContentBeforeSave($context, &$article, $isNew, &$data=Array())
 	{
 		#echo "<pre>context: " . $context . "</pre>";
         #echo "<pre>article id: " . $article->id . "</pre>";
         #echo "<pre>article: " . print_r($article, TRUE) . "</pre>";
 
+        /*
         $this->ilog("onContentBeforeSave");
         $this->ilog("context: " . $context);
         #$this->ilog("article: " . print_r($article, TRUE));
@@ -115,8 +117,8 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         $attribs = json_decode($article->attribs);
         $this->ilog("attribs: " . print_r($attribs, true));
 
-        $fields = json_decode($article->fields);
-        $this->ilog("fields: " . print_r($fields, true));
+        #$fields = json_decode($article->fields);
+        #$this->ilog("fields: " . print_r($fields, true));
 
         JFactory::getApplication()->enqueueMessage("onContentBeforeSave");
         JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
@@ -126,23 +128,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         $files = $input->files->get('jform');
         $this->ilog("files: " . print_r($files, true), 6);
 
-        /*
-        (
-            [com_fields] => Array
-                (
-                    [image-field-test-01] => Array
-                        (
-                            [name] => uc_test.PNG
-                            [type] => image/png
-                            [tmp_name] => /tmp/phpTJDy6L
-                            [error] => 0
-                            [size] => 94390
-                        )
-        
-                )
-        
-        )
-        */
+
 
         jimport('joomla.filesystem.file');
 
@@ -171,14 +157,49 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
             $this->ilog("input: " . print_r($input, true));
 
             $data['com_fields'][$field_name] = $filename;
-            $data['articletext'] = date("Y-m-d_H-i-s");
+            #$data['articletext'] = date("Y-m-d_H-i-s");
         }
 
         $this->ilog("data: " . print_r($data, TRUE));
 
         JFactory::getApplication()->enqueueMessage("files: " . print_r($files, TRUE));   
 
+        $article->introtext = "coded introtext";
+        $article->fulltext = "coded fulltext";
+        #$article->fields["medium"] = "coded medium";
+        $data['com_fields']["medium"] = "3D";
+
+        return true;
+
+        */
+
 	}
+
+
+
+    public function onContentAfterSave($context, &$article, $isNew) {
+        $this->ilog("onContentAfterSave");
+        $this->ilog("article id: " . $article->id);
+        $this->ilog("jcFields: " . print_r($article->jcFields, TRUE) );
+
+
+
+        JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
+        $custom_fields = FieldsHelper::getFields($context, $article);
+        $custom_fields_by_name = \Joomla\Utilities\ArrayHelper::pivot($custom_fields, 'name');
+        $this->ilog("custom_fields: " . print_r($custom_fields, TRUE));
+        $this->ilog("custom_fields_by_name: " . print_r($custom_fields_by_name, TRUE));
+
+
+        JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fields/models');
+        $model_field = JModelLegacy::getInstance('Field', 'FieldsModel', ['ignore_request' => true]);
+
+        //set the value using field model instead to make change permanent in db
+        $model_field->setFieldValue(1, $article->id, "3D");
+
+    
+    }
+
 
 
 
