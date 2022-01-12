@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="plugin" group="fields" method="upgrade">
 	<name>plg_fields_image</name>
-	<author>Joomla! Project</author>
-	<creationDate>March 2016</creationDate>
-	<copyright>(C) 2016 Open Source Matters, Inc.</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<authorEmail>admin@joomla.org</authorEmail>
-	<authorUrl>www.joomla.org</authorUrl>
+	<author>Andy Gaskell</author>
+	<creationDate>January 2022</creationDate>
+	<copyright>(C) 2022 SSOFB Ltd</copyright>
+	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+	<authorEmail>ag@ssofb.co.uk</authorEmail>
+	<authorUrl>www.ssofb.co.uk</authorUrl>
 	<version>3.7.0</version>
-	<description>PLG_FIELDS_TEXT_XML_DESCRIPTION</description>
+	<description>PLG_FIELDS_IMAGE_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="image">image.php</filename>
 		<folder>params</folder>
