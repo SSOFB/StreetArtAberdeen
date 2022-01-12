@@ -102,7 +102,6 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
     */
 
 
-
     public function onContentAfterSave($context, &$article, $isNew) {
         $this->ilog("onContentAfterSave");
         $this->ilog("article id: " . $article->id);
@@ -123,41 +122,46 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 
         foreach ( $files['com_fields'] AS $field_name=>$field_data ) {
 
+            # check there were no errors
             if ( $field_data['error'] == 0 ) {
                 $this->ilog("field_name: " . $field_name);
                 $this->ilog("field_data: " . print_r($field_data, true));
     
                 # set image filename
                 list($file_type, $file_extension) = explode("/", $field_data['type']);
-                $file_url = "images/image-field-file_id" . $article->id . "_"  . date("Y-m-d_H-i-s") . "_" . rand(1000, 9999) . "." . $file_extension;
-                $file_name = JPATH_SITE . "/" . $file_url;
-                $this->ilog("file_url: " . $file_url);
-                $this->ilog("file_name: " . $file_name);
 
-                # move image into dir
-                File::upload($field_data['tmp_name'], $file_name);
-             
-                # get the field ID
-                $db = JFactory::getDbo();
-                $query = $db
-                    ->getQuery(true)
-                    ->select('id')
-                    ->from($db->quoteName('#__fields'))
-                    ->where($db->quoteName('name') . " = " . $db->quote($field_name));
-                $db->setQuery($query);
-                $field_id = $db->loadResult();
-                $this->ilog("field_id: " . $field_id); 
+                # check it's an image
+                if ( $file_type == "image" ) {
+                    $file_url = "images/image-field-file_id" . $article->id . "_"  . date("Y-m-d_H-i-s") . "_" . rand(1000, 9999) . "." . $file_extension;
+                    $file_name = JPATH_SITE . "/" . $file_url;
+                    $this->ilog("file_url: " . $file_url);
+                    $this->ilog("file_name: " . $file_name);
     
-                #set the value using field model instead to make change permanent in db
-                $model_field->setFieldValue($field_id, $article->id, $file_url);
+                    # move image into dir
+                    File::upload($field_data['tmp_name'], $file_name);
+                 
+                    # get the field ID
+                    $db = JFactory::getDbo();
+                    $query = $db
+                        ->getQuery(true)
+                        ->select('id')
+                        ->from($db->quoteName('#__fields'))
+                        ->where($db->quoteName('name') . " = " . $db->quote($field_name));
+                    $db->setQuery($query);
+                    $field_id = $db->loadResult();
+                    $this->ilog("field_id: " . $field_id); 
+        
+                    #set the value using field model instead to make change permanent in db
+                    $model_field->setFieldValue($field_id, $article->id, $file_url);
+                }
             }
-
         }
     }
 
 
 	/**
 	 * onAfterDispatch
+     * We use this to make the com_content edit form use enctype="multipart/form-data" in the form tag
      * https://docs.joomla.org/Plugin/Events/System#onAfterDispatch
      * 
      * https://joomla.stackexchange.com/questions/31787/
@@ -193,14 +197,13 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
             return;
         }
 
-
-        // Get the HTML content.
+        # Get the HTML content.
         $html = $doc->getBuffer('component');
     
-        // Add the attribute.
+        # Add the attribute.
         $html = str_replace("method=\"post\" name=\"adminForm\" id=\"adminForm\" ", "method=\"post\" enctype=\"multipart/form-data\" name=\"adminForm\" id=\"adminForm\" ", $html);
     
-        // Set the updated HTML.
+        # Set the updated HTML.
         $doc->setBuffer($html, 'component');
     }
 

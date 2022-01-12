@@ -31,7 +31,7 @@ class JFormFieldImage extends JFormFieldFile
             $html .= "<p>Choose an image</p>";
         }
 
-        $html .= "<input name=\"" . $this->name . "\" id=\"" . $this->id . "\" accept=\"image/*\" aria-invalid=\"false\" type=\"file\" value=\"" . $this->value . "\">";
+        $html .= "<input accept=\"image/*\" name=\"" . $this->name . "\" id=\"" . $this->id . "\" accept=\"image/*\" aria-invalid=\"false\" type=\"file\" value=\"" . $this->value . "\">";
 
         return $html;
     }
