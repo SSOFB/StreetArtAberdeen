@@ -11,6 +11,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://www.richeyweb.com/software/joomla/plugins/125-free-field-plugins
 * https://coolcat-creations.com/en/blog/tutorial-build-your-own-custom-field-plugin / https://github.com/coolcat-creations/plg_fields_owlimg
 * https://joomla.stackexchange.com/questions/31787/creating-a-field-plug-in-need-the-com-content-form-to-be-enctype-multipart
+* https://joomla.stackexchange.com/questions/26322/how-to-programmatically-set-the-value-of-a-custom-field-of-type-checkbox
 
 
 ## Useful Joomla! docs
@@ -20,6 +21,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://docs.joomla.org/Basic_form_guide
 * https://docs.joomla.org/Advanced_form_guide
 * https://docs.joomla.org/Retrieving_request_data_using_JInput
+* https://docs.joomla.org/Creating_a_custom_form_field_type
 
 
 ## Street Art Links
