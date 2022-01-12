@@ -11,6 +11,9 @@
 
 defined('_JEXEC') or die;
 
+
+#echo "<pre>" . print_r($field, TRUE) . "</pre>";
+
 $value = $field->value;
 
 if ($value == '')
@@ -23,7 +26,10 @@ if (is_array($value))
 	$value = implode(', ', $value);
 }
 
-echo htmlentities($value);
+#echo htmlentities($value);
 
+#echo "zzz";
+
+echo "<img class=\"image_field_display\" alt=\"" . $field->label . "\" src=\"" . $value . "\" />";
 
 # TODO: make this render an img tag

@@ -24,12 +24,24 @@ class JFormFieldImage extends JFormFieldFile
      *
      * @return  array  An array of JHtml options.
      */
-	/*
     public function getInput() {
-        return '<div class="filename_labe">'.$this->value.'</div><input name="'.$this->name.'" id="'.$this->id.'" accept="image/*" aria-invalid="false" type="file" value="'.$this->value.'">';
-        // code that returns HTML that will be shown as the form field
+
+
+        $html = "";
+        #$html .= "<pre>" . print_r($this, TRUE) . "</pre>";
+
+        if ( strlen($this->value) ) {
+            $html .= "<img class=\"image_field_display\" alt=\"" . $this->label . "\" src=\"" . $this->value . "\" />";
+            $html .= "<p>Replace this image</p>";
+        } else {
+            $html .= "<p>Choose an image</p>";
+        }
+
+        $html .= "<input name=\"" . $this->name . "\" id=\"" . $this->id . "\" accept=\"image/*\" aria-invalid=\"false\" type=\"file\" value=\"" . $this->value . "\">";
+
+        return $html;
     }
-	*/
+
 
 	/*
 	public function setInput(){
