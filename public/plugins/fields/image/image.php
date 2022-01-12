@@ -95,106 +95,26 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 *
 	 * @since   2.5
 	 */
-
+    /*
 	public function onContentBeforeSave($context, &$article, $isNew, &$data=Array())
 	{
-		#echo "<pre>context: " . $context . "</pre>";
-        #echo "<pre>article id: " . $article->id . "</pre>";
-        #echo "<pre>article: " . print_r($article, TRUE) . "</pre>";
-
-        /*
-        $this->ilog("onContentBeforeSave");
-        $this->ilog("context: " . $context);
-        #$this->ilog("article: " . print_r($article, TRUE));
-        $this->ilog("data: " . print_r($data, TRUE));
-        $this->ilog("isNew: " . $isNew);
-
-        $this->ilog("POST: " . print_r($_POST, true));
-        $this->ilog("GET: " . print_r($_GET, true));
-        $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
-        $this->ilog("Headers: " . print_r($headers_array, true), 6);
-
-        $attribs = json_decode($article->attribs);
-        $this->ilog("attribs: " . print_r($attribs, true));
-
-        #$fields = json_decode($article->fields);
-        #$this->ilog("fields: " . print_r($fields, true));
-
-        JFactory::getApplication()->enqueueMessage("onContentBeforeSave");
-        JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
-
-
-        $input = Factory::getApplication()->input;
-        $files = $input->files->get('jform');
-        $this->ilog("files: " . print_r($files, true), 6);
-
-
-
-        jimport('joomla.filesystem.file');
-
-        foreach ( $files['com_fields'] AS $field_name=>$field_data ) {
-            # set image filename
-            list($file_type, $file_extention) = explode("/", $field_data['type']);
-            $filename = JPATH_SITE . "/images/image_field_file_" . date("Y-m-d_H-i-s") . "_" . rand(1000, 9999) . "." . $file_extention;
-            
-            # move image into dir
-            File::upload($field_data['tmp_name'], $filename);
-            
-            
-            # set filename as field value
-            $jform = $input->get('jform', array(), 'array');
-            $jform['com_fields'][$field_name] = $filename;
-            $jform['articletext'] = date("Y-m-d_H-i-s");
-            #$input->set("jform['articletext']", date("Y-m-d_H-i-s") );
-            $input->set("jform", $jform);
-            #$input->setValue($field_name, "com_fields", $filename);
-
-
-            #$data = JRequest::getVar( 'jform', null, 'post', 'array' );
-            #$data['com_fields'][$field_name] = strtolower( $filename );
-            #JRequest::setVar('jform', $data );
-
-            $this->ilog("input: " . print_r($input, true));
-
-            $data['com_fields'][$field_name] = $filename;
-            #$data['articletext'] = date("Y-m-d_H-i-s");
-        }
-
-        $this->ilog("data: " . print_r($data, TRUE));
-
-        JFactory::getApplication()->enqueueMessage("files: " . print_r($files, TRUE));   
-
-        $article->introtext = "coded introtext";
-        $article->fulltext = "coded fulltext";
-        #$article->fields["medium"] = "coded medium";
-        $data['com_fields']["medium"] = "3D";
-
-        return true;
-
-        */
-
 	}
+    */
 
 
 
     public function onContentAfterSave($context, &$article, $isNew) {
         $this->ilog("onContentAfterSave");
         $this->ilog("article id: " . $article->id);
-
-
         $this->ilog("POST: " . print_r($_POST, true));
         $this->ilog("GET: " . print_r($_GET, true));
         $this->ilog("FILES: " . print_r($_FILES, true));
-        $headers_array = array_change_key_case(getallheaders(), CASE_LOWER);
-        $this->ilog("Headers: " . print_r($headers_array, true), 6);
-
+        $this->ilog("Headers: " . print_r(getallheaders(), true));
 
         $input = Factory::getApplication()->input;
         $files = $input->files->get('jform');
-        $this->ilog("files: " . print_r($files, true), 6);
+        $this->ilog("files: " . print_r($files, true));
 
-
-        
         JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fields/models');
         $model_field = JModelLegacy::getInstance('Field', 'FieldsModel', ['ignore_request' => true]);
         #$this->ilog("model_field: " . print_r($model_field, true));
@@ -213,24 +133,11 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
                 $file_name = JPATH_SITE . "/" . $file_url;
                 $this->ilog("file_url: " . $file_url);
                 $this->ilog("file_name: " . $file_name);
-                
-
 
                 # move image into dir
                 File::upload($field_data['tmp_name'], $file_name);
-                
-                
-                # set filename as field value
-                #$jform = $input->get('jform', array(), 'array');
-                #$jform['com_fields'][$field_name] = $filename;
-                #$jform['articletext'] = date("Y-m-d_H-i-s");
-                #$input->set("jform", $jform);
-    
-                #$this->ilog("input: " . print_r($input, true));
-    
-                #$data['com_fields'][$field_name] = $filename;
-                #$data['articletext'] = date("Y-m-d_H-i-s");
-    
+             
+                # get the field ID
                 $db = JFactory::getDbo();
                 $query = $db
                     ->getQuery(true)
@@ -239,26 +146,14 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
                     ->where($db->quoteName('name') . " = " . $db->quote($field_name));
                 $db->setQuery($query);
                 $field_id = $db->loadResult();
-                $this->ilog("field_id: " . $field_id);
+                $this->ilog("field_id: " . $field_id); 
     
-    
-                //set the value using field model instead to make change permanent in db
+                #set the value using field model instead to make change permanent in db
                 $model_field->setFieldValue($field_id, $article->id, $file_url);
             }
 
-
-
         }
-
-
-
-
-
-
-    
     }
-
-
 
 
 	/**
