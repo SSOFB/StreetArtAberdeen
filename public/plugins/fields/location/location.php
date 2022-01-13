@@ -38,6 +38,12 @@ class PlgFieldsLocation extends FieldsPlugin
 			return $fieldNode;
 		}
 		$fieldNode->setAttribute('readonly', ($field->fieldparams->get('llreadonly',true)?true:false));
+
+		$llhidden = $field->fieldparams->get('llhidden',true);
+		if ($llhidden) {
+			$fieldNode->setAttribute('class', 'llhidden');
+		}
+
 		$debug = JFactory::getConfig()->get('debug',false);
 		$doc = JFactory::getDocument();
 		JHtml::_('jquery.framework',true);
