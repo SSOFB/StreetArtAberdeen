@@ -36,7 +36,7 @@ if (!$editoroptions)
 	$params->show_urls_images_frontend = '0';
 }
 ?>
-<div class="edit item-page">
+<div class="edit item-page saa_edit_screen">
 	<?php if ($params->get('show_page_heading')) : ?>
 	<div class="page-header">
 		<h1>
@@ -47,62 +47,28 @@ if (!$editoroptions)
 
 	<form action="<?php echo Route::_('index.php?option=com_content&a_id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate form-vertical" >
 		<fieldset>
-			<?php echo HTMLHelper::_('uitab.startTabSet', $this->tab_name, ['active' => 'editor', 'recall' => true, 'breakpoint' => 768]); ?>
+			
+			<?php echo $this->form->renderField('title'); ?>
 
-			<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'editor', Text::_('COM_CONTENT_ARTICLE_CONTENT')); ?>
-				<?php echo $this->form->renderField('title'); ?>
-
-				<?php if (is_null($this->item->id)) : ?>
+			<?php if (is_null($this->item->id)) : ?>
+				<div class="noshow">	
 					<?php echo $this->form->renderField('alias'); ?>
-				<?php endif; ?>
+				</div>
+			<?php endif; ?>
 
+			<div class="article_field">
+				<p>Notes</p>
 				<?php echo $this->form->renderField('articletext'); ?>
+			</div>
 
-				<?php if ($this->captchaEnabled) : ?>
-					<?php echo $this->form->renderField('captcha'); ?>
-				<?php endif; ?>
-			<?php echo HTMLHelper::_('uitab.endTab'); ?>
-
-			<?php if ($params->get('show_urls_images_frontend')) : ?>
-			<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'images', Text::_('COM_CONTENT_IMAGES_AND_URLS')); ?>
-				<?php echo $this->form->renderField('image_intro', 'images'); ?>
-				<?php echo $this->form->renderField('image_intro_alt', 'images'); ?>
-				<?php echo $this->form->renderField('image_intro_alt_empty', 'images'); ?>
-				<?php echo $this->form->renderField('image_intro_caption', 'images'); ?>
-				<?php echo $this->form->renderField('float_intro', 'images'); ?>
-				<?php echo $this->form->renderField('image_fulltext', 'images'); ?>
-				<?php echo $this->form->renderField('image_fulltext_alt', 'images'); ?>
-				<?php echo $this->form->renderField('image_fulltext_alt_empty', 'images'); ?>
-				<?php echo $this->form->renderField('image_fulltext_caption', 'images'); ?>
-				<?php echo $this->form->renderField('float_fulltext', 'images'); ?>
-				<?php echo $this->form->renderField('urla', 'urls'); ?>
-				<?php echo $this->form->renderField('urlatext', 'urls'); ?>
-				<div class="control-group">
-					<div class="controls">
-						<?php echo $this->form->getInput('targeta', 'urls'); ?>
-					</div>
-				</div>
-				<?php echo $this->form->renderField('urlb', 'urls'); ?>
-				<?php echo $this->form->renderField('urlbtext', 'urls'); ?>
-				<div class="control-group">
-					<div class="controls">
-						<?php echo $this->form->getInput('targetb', 'urls'); ?>
-					</div>
-				</div>
-				<?php echo $this->form->renderField('urlc', 'urls'); ?>
-				<?php echo $this->form->renderField('urlctext', 'urls'); ?>
-				<div class="control-group">
-					<div class="controls">
-						<?php echo $this->form->getInput('targetc', 'urls'); ?>
-					</div>
-				</div>
-			<?php echo HTMLHelper::_('uitab.endTab'); ?>
+			<?php if ($this->captchaEnabled) : ?>
+				<?php echo $this->form->renderField('captcha'); ?>
 			<?php endif; ?>
 
 			<?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
 
-			<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'publishing', Text::_('COM_CONTENT_PUBLISHING')); ?>
-
+			<div class="noshow">
+				
 				<?php echo $this->form->renderField('transition'); ?>
 				<?php echo $this->form->renderField('state'); ?>
 				<?php echo $this->form->renderField('catid'); ?>
@@ -133,24 +99,12 @@ if (!$editoroptions)
 						</div>
 					</div>
 				<?php endif; ?>
-			<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-			<?php if (Multilanguage::isEnabled()) : ?>
-				<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'language', Text::_('JFIELD_LANGUAGE_LABEL')); ?>
-					<?php echo $this->form->renderField('language'); ?>
-				<?php echo HTMLHelper::_('uitab.endTab'); ?>
-			<?php else: ?>
-				<?php echo $this->form->renderField('language'); ?>
-			<?php endif; ?>
-
-			<?php if ($params->get('show_publishing_options', 1) == 1) : ?>
-				<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'metadata', Text::_('COM_CONTENT_METADATA')); ?>
-					<?php echo $this->form->renderField('metadesc'); ?>
-					<?php echo $this->form->renderField('metakey'); ?>
-				<?php echo HTMLHelper::_('uitab.endTab'); ?>
-			<?php endif; ?>
-
-			<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+				<?php if ($params->get('show_publishing_options', 1) == 1) : ?>
+						<?php echo $this->form->renderField('metadesc'); ?>
+						<?php echo $this->form->renderField('metakey'); ?>
+				<?php endif; ?>
+			</div>
 
 			<input type="hidden" name="task" value="">
 			<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
