@@ -5,7 +5,7 @@
 			key = "Menu_Item:_Category_List"
 		/>
 		<message>
-			<![CDATA[COM_CONTENT_CATEGORY_VIEW_MAP_DESC]]>
+			<![CDATA[This displays a gallery view of items]]>
 		</message>
 	</layout>
 
