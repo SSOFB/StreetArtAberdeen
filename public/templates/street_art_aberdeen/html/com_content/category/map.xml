@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Category List Map View" option="Displays items on a Map">
+		<help
+			key = "Menu_Item:_Category_List"
+		/>
+		<message>
+			<![CDATA[COM_CONTENT_CATEGORY_VIEW_MAP_DESC]]>
+		</message>
+	</layout>
+
+	<!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request"
+			addfieldprefix="Joomla\Component\Categories\Administrator\Field"
+		>
+			<field
+				name="id"
+				type="modal_category"
+				label="JGLOBAL_CHOOSE_CATEGORY_LABEL"
+				extension="com_content"
+				required="true"
+				select="true"
+				new="true"
+				edit="true"
+				clear="true"
+			/>
+
+			<field
+				name="filter_tag"
+				type="tag"
+				label="JTAG"
+				multiple="true"
+				mode="nested"
+			/>
+		</fieldset>
+	</fields>
+</metadata>
