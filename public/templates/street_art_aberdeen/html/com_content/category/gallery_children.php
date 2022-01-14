@@ -19,7 +19,7 @@ $lang   = Factory::getLanguage();
 $user   = Factory::getUser();
 $groups = $user->getAuthorisedViewLevels();
 ?>
-
+yyyyyyyyyyyyy
 <?php if (count($this->children[$this->category->id]) > 0) : ?>
 	<?php foreach ($this->children[$this->category->id] as $id => $child) : ?>
 		<?php // Check whether category access level allows access to subcategories. ?>
