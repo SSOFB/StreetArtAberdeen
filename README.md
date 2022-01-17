@@ -12,6 +12,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://coolcat-creations.com/en/blog/tutorial-build-your-own-custom-field-plugin / https://github.com/coolcat-creations/plg_fields_owlimg
 * https://joomla.stackexchange.com/questions/31787/creating-a-field-plug-in-need-the-com-content-form-to-be-enctype-multipart
 * https://joomla.stackexchange.com/questions/26322/how-to-programmatically-set-the-value-of-a-custom-field-of-type-checkbox
+* https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding
 
 
 ## Useful Joomla! docs
@@ -28,6 +29,10 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://www.visitabdn.com/listing/nuart-aberdeen
 * https://www.aberdeeninspired.com/festival/nuart-aberdeen/nuart-aberdeen-walking-tours
 * https://2021.nuartaberdeen.co.uk/
+* https://twitter.com/nuartaberdeen
+* https://www.wallspot.org/en/wall/sunnybank-park
+* https://www.wallspot.org/en/wall/mounthooly-roundabout-underpasses
+* https://twitter.com/streetartabdn
 
 
 ## Fonts
