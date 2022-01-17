@@ -147,6 +147,13 @@ footer {
     height: 0;
 }
 
+/* gallery */
+.gallery img {
+    max-height: 200px;
+    margin: 10px;
+}
+
+
 /* menu, only on small screens */
 @media (max-width: 767.98px) {
     .container-nav nav{

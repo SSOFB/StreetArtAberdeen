@@ -31,11 +31,12 @@ $n          = count($this->items);
 
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 
+echo "<div class=\"gallery\">";
 foreach ($this->items as $i => $article) {
-	echo "<pre>" . print_r($article->jcfields, TRUE) . "</pre>";
+	#echo "<pre>" . print_r($article, TRUE) . "</pre>";
 
-
-	echo $article->jcfields[6]->value;
-
+	echo "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
+	echo "<img src=\"" . Uri::root() . $article->jcfields[6]->rawvalue . "\" alt=\"" . $article->title . "\" />";
+	echo "</a>";
 }
-
+echo "</div>";

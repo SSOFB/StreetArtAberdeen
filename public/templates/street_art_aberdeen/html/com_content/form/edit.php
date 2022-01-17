@@ -31,6 +31,11 @@ $params = $this->state->get('params');
 // This checks if the editor config options have ever been saved. If they haven't they will fall back to the original settings.
 $editoroptions = isset($params->show_publishing_options);
 
+
+
+
+
+
 if (!$editoroptions)
 {
 	$params->show_urls_images_frontend = '0';
@@ -48,18 +53,7 @@ if (!$editoroptions)
 	<form action="<?php echo Route::_('index.php?option=com_content&a_id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate form-vertical" >
 		<fieldset>
 			
-			<?php echo $this->form->renderField('title'); ?>
 
-			<?php if (is_null($this->item->id)) : ?>
-				<div class="noshow">	
-					<?php echo $this->form->renderField('alias'); ?>
-				</div>
-			<?php endif; ?>
-
-			<div class="article_field">
-				<p>Notes</p>
-				<?php echo $this->form->renderField('articletext'); ?>
-			</div>
 
 			<?php if ($this->captchaEnabled) : ?>
 				<?php echo $this->form->renderField('captcha'); ?>
@@ -68,7 +62,7 @@ if (!$editoroptions)
 			<?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
 
 			<div class="noshow">
-				
+				<?php echo $this->form->renderField('alias'); ?>
 				<?php echo $this->form->renderField('transition'); ?>
 				<?php echo $this->form->renderField('state'); ?>
 				<?php echo $this->form->renderField('catid'); ?>
@@ -106,6 +100,13 @@ if (!$editoroptions)
 				<?php endif; ?>
 			</div>
 
+			<?php echo $this->form->renderField('title'); ?>
+
+			<div class="article_field">
+				<p>Notes</p>
+				<?php echo $this->form->renderField('articletext'); ?>
+			</div>
+
 			<input type="hidden" name="task" value="">
 			<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
 			<?php echo HTMLHelper::_('form.token'); ?>
@@ -125,3 +126,26 @@ if (!$editoroptions)
 		</div>
 	</form>
 </div>
+
+
+
+
+<?php
+/*
+https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&amp;key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA
+
+TODO: use the lat lon to lookup a location name, and use that as the title
+*/
+?>
+
+<script type="text/javascript">
+
+$("#jform_title").val( Math.floor(Math.random() * (999 - 100 + 1) + 100) );
+
+
+</script>
+
+
+
+
+<?php 
