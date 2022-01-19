@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
 
-echo "<!--\n" . print_r($item, TRUE) . "\n-->";
+#echo "<!--\n" . print_r($item, TRUE) . "\n-->";
 
 $attributes = [];
 

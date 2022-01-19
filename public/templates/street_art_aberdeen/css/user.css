@@ -24,7 +24,7 @@
 
 
 body{
-    background-color: #dbdbdb;
+    background-color: #f3f3f3;
 }
 body, h1, h2, h3, h4, h5, h6{
     font-family: 'KnewaveRegular';
@@ -59,15 +59,15 @@ body.offline{
 }
 .container-nav > ul.mod-menu,
 .mod-menu_dropdown-metismenu {
-    background-color: #3d3d3d;
+    background-color: #314152;
     border: 1px solid #252525;
-    border-radius: 12px;
+    border-radius: 16px;
     text-shadow: 0px 0px 1px #0a203d, 0px 0px 2px #0a203d !important;
     font-weight: bold;
 }
 .metismenu.mod-menu .mm-collapse {
-    background-color: #3d3d3d;
-    border: 1px solid #3d3d3d;
+    background-color: #314152;
+    border: 1px solid #314152;
     border-radius: 12px;
     color: #fff !important;
 }
@@ -78,8 +78,11 @@ body.offline{
 .container-nav > ul.mod-menu > li > ul > li > a{
     color: #fff;
 }
+.container-nav ul.mod-menu > li.active a{
+    color: #5cdb95;
+}
 .container-header .navbar-toggler {
-    background-color: #3d3d3d;
+    background-color: #314152;
 }
 .hero_wide {
     background-position: center;
@@ -106,10 +109,23 @@ body.offline{
 }
 
 footer {
-    background-color: #3d3d3d !important;
+    border-top: #5cdb95 1px solid;
+    background-color: #314152 !important;
+}
+footer a{
+    text-decoration: none !important;
+}
+footer a:hover{
+    border-bottom: #5cdb95 1px solid;
 }
 .footer .grid-child {
     padding: 0.5rem 0.5em;
+}
+.footer_left{
+    text-align: left;
+}
+.footer_right{
+    text-align: right;
 }
 
 /* utility bits */
@@ -124,8 +140,8 @@ footer {
     clear: both;
 }
 .btn-primary {
-    background-color: #3d3d3d;
-    border-color: #3d3d3d;
+    background-color: #314152;
+    border-color: #314152;
 }
 
 .noshow,

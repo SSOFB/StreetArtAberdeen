@@ -40,18 +40,7 @@ $wa->usePreset('template.street_art_aberdeen.' . ($this->direction === 'rtl' ? '
 // Override 'template.active' asset to set correct ltr/rtl dependency
 $wa->registerStyle('template.active', '', [], [], ['template.street_art_aberdeen.' . ($this->direction === 'rtl' ? 'rtl' : 'ltr')]);
 
-# sidebar grid logic
-$hasClass = '';
-if ($this->countModules('left', true)){
-	$hasClass .= ' has-sidebar-left';
-}
-if ($this->countModules('right', true)){
-	$hasClass .= ' has-sidebar-right';
-}
-
-
 $this->setMetaData('viewport', 'width=device-width, initial-scale=1');
-
 
 // Defer font awesome
 $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
@@ -103,13 +92,14 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 	<?php if ( $this->countModules('footer_left', true) || $this->countModules('footer_right', true) ) : ?>
 	<footer class="container-footer footer full-width fixed-bottom">
 		<div class="grid-child">
-			<jdoc:include type="modules" name="footer_left" style="none" />
-			<jdoc:include type="modules" name="footer_right" style="none" />
+			<div class="pull-left footer_left">
+				<jdoc:include type="modules" name="footer_left" style="none" />
+			</div>
+			<div class="pull-right footer_right">
+				<jdoc:include type="modules" name="footer_right" style="none" />
+			</div>
 		</div>
 	</footer>
-
-
-
 	<?php endif; ?>
 
 
