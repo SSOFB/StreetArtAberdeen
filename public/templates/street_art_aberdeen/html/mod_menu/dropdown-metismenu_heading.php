@@ -33,11 +33,11 @@ if ($item->menu_image)
 		$image_attributes['class'] = $item->menu_image_css;
 		$linktype                  = HTMLHelper::image($item->menu_image, $item->title, $image_attributes);
 	}
-
-	if ($itemParams->get('menu_text', 1))
-	{
-		$linktype .= '<span class="image-title">' . $item->title . '</span>';
-	}
+}
+if ($itemParams->get('menu_text', 1)){
+	$linktype .= '<span class="image-title">' . $item->title . '</span>';
+} else {
+	$linktype = '<span class="image-title">' . $item->title . '</span>';
 }
 
 if ($showAll && $item->deeper)

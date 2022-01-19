@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
 
+echo "<!--\n" . print_r($item, TRUE) . "\n-->";
+
 $attributes = [];
 
 if ($item->anchor_title)
@@ -50,11 +52,12 @@ if ($item->menu_image)
 		$image_attributes['class'] = $item->menu_image_css;
 		$linktype                  = HTMLHelper::image($item->menu_image, $item->title, $image_attributes);
 	}
-
-	if ($itemParams->get('menu_text', 1))
-	{
-		$linktype .= '<span class="image-title">' . $item->title . '</span>';
-	}
+}
+if ($itemParams->get('menu_text', 1))
+{
+	$linktype .= '<span class="image-title">' . $item->title . '</span>';
+} else {
+	$linktype = '';
 }
 
 if ($item->browserNav == 1)
