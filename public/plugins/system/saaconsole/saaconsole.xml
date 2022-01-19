@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade">
+	<name>plg_system_saaconsole</name>
+	<author>Andy Gaskell</author>
+	<creationDate>January 2022</creationDate>
+	<copyright>(C) Andy Gaskell</copyright>
+	<license>GNU General Public License version 3 or later</license>
+	<authorEmail>ag@ssofb.co.uk</authorEmail>
+	<version>0.2.0</version>
+	<description>PLG_SYSTEM_SAACONSOLE_DESCRIPTION</description>
+	<namespace path="src">Joomla\Plugin\System\Saaconsole</namespace>
+	<files>
+		<filename plugin="saaconsole">saaconsole.php</filename>
+		<folder>services</folder>
+		<folder>src</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_system_saaconsole.ini</language>
+		<language tag="en-GB">language/en-GB/plg_system_saaconsole.sys.ini</language>
+	</languages>
+	<config>
+	</config>
+</extension>
