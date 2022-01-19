@@ -24,7 +24,13 @@
 
 
 body{
+    background-color: #dbdbdb;
+}
+body, h1, h2, h3, h4, h5, h6{
     font-family: 'KnewaveRegular';
+}
+main{
+    margin: 0px 10px 0px 10px;
 }
 
 .offline-card .header h1{
@@ -53,20 +59,15 @@ body.offline{
 }
 .container-nav > ul.mod-menu,
 .mod-menu_dropdown-metismenu {
-    background-color: #8bd4ff;
-    background-image: -moz-linear-gradient(top,#8bd4ff,#378bd4);
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#8bd4ff),to(#378bd4));
-    background-image: -webkit-linear-gradient(top,#8bd4ff,#378bd4);
-    background-image: -o-linear-gradient(top,#8bd4ff,#378bd4);
-    background-image: linear-gradient(to bottom,#8bd4ff,#378bd4);
-    border: 1px solid #8bd4ff;
+    background-color: #3d3d3d;
+    border: 1px solid #252525;
     border-radius: 12px;
     text-shadow: 0px 0px 1px #0a203d, 0px 0px 2px #0a203d !important;
     font-weight: bold;
 }
 .metismenu.mod-menu .mm-collapse {
-    background-color: #378bd4;
-    border: 1px solid #378bd4;
+    background-color: #3d3d3d;
+    border: 1px solid #3d3d3d;
     border-radius: 12px;
     color: #fff !important;
 }
@@ -78,7 +79,7 @@ body.offline{
     color: #fff;
 }
 .container-header .navbar-toggler {
-    background-color: #378bd4;
+    background-color: #3d3d3d;
 }
 .hero_wide {
     background-position: center;
@@ -105,7 +106,7 @@ body.offline{
 }
 
 footer {
-    background-color: #489be3 !important;
+    background-color: #3d3d3d !important;
 }
 .footer .grid-child {
     padding: 0.5rem 0.5em;
@@ -123,8 +124,8 @@ footer {
     clear: both;
 }
 .btn-primary {
-    background-color: #489be3;
-    border-color: #489be3;
+    background-color: #3d3d3d;
+    border-color: #3d3d3d;
 }
 
 .noshow,
@@ -148,6 +149,9 @@ footer {
 }
 
 /* gallery */
+.gallery{
+    text-align: justify;
+}
 .gallery img {
     max-height: 200px;
     margin: 10px;

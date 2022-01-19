@@ -93,25 +93,26 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 		<?php endif; ?>
 	</header>
 
-	<div class="site-grid">
+	<main>
+		<jdoc:include type="message" />
+		<jdoc:include type="component" />
+	</main>
 
-		<div class="grid-child container-component">
-			<jdoc:include type="message" />
-			<main>
-			<jdoc:include type="component" />
-			</main>
-		</div>
-
-	</div>
+	<p></p><p></p><p></p>
 
 	<?php if ( $this->countModules('footer_left', true) || $this->countModules('footer_right', true) ) : ?>
-	<footer class="container-footer footer full-width">
+	<footer class="container-footer footer full-width fixed-bottom">
 		<div class="grid-child">
 			<jdoc:include type="modules" name="footer_left" style="none" />
 			<jdoc:include type="modules" name="footer_right" style="none" />
 		</div>
 	</footer>
+
+
+
 	<?php endif; ?>
+
+
 
 	<jdoc:include type="modules" name="debug" style="none" />
 </body>
