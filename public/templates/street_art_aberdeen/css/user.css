@@ -116,7 +116,7 @@ footer a{
     text-decoration: none !important;
 }
 footer a:hover{
-    border-bottom: #5cdb95 1px solid;
+    border-bottom: #5cdb95 2px solid;
 }
 .footer .grid-child {
     padding: 0.5rem 0.5em;
