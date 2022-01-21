@@ -9,7 +9,8 @@
 
 defined('_JEXEC') or die;
 
-#use Joomla\CMS\Language\Text;
+JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+echo saa_helper::tester("hello");
 
 ?>
 <div class="mod-footer">

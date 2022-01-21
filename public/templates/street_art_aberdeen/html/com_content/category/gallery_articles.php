@@ -28,6 +28,7 @@ JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.p
 echo "<div class=\"gallery container-fluid\">";
 foreach ($this->items as $i => $article) {
 	#echo "<pre>" . print_r($article, TRUE) . "</pre>";
+
 	if ( saa_helper::check_image($article->jcfields[6]->rawvalue) ) {
 		echo "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
 		echo "<img src=\"" . Uri::root() . "/" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
