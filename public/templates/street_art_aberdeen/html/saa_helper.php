@@ -14,7 +14,8 @@
 class saa_helper{
 
     # fixed params
-    const image_base = JPATH_ROOT . "/images/";
+    const image_url = "/images/";
+    const image_path = JPATH_ROOT . "/images/";
     const small_width = 100;
     const small_height = 100;
     const large_width = 500;
@@ -45,11 +46,11 @@ class saa_helper{
 
         $input_filename = basename( $input_filename );
         # other params
-        $input_full_filename = self::image_base . $input_filename;
+        $input_full_filename = self::image_path . $input_filename;
         $output_small_filename = "small_" . $input_filename;
         $output_large_filename = "large_" . $input_filename;
-        $output_small_full_filename = self::image_base . $output_small_filename;
-        $output_large_full_filename = self::image_base . $output_large_filename;
+        $output_small_full_filename = self::image_path . $output_small_filename;
+        $output_large_full_filename = self::image_path . $output_large_filename;
         #$small_dimension = $small_width . "x" . $small_height;
         #$large_dimension = $large_width . "x" . $large_height;
 
@@ -89,8 +90,8 @@ class saa_helper{
     public static function small_image( $input_filename ) {
         $input_filename = basename( $input_filename );
 
-        $small_filename = self::image_base . "small_" . $input_filename;
-        return true;
+        $small_filename = self::image_url . "small_" . $input_filename;
+        return $small_filename;
     }
 
 }

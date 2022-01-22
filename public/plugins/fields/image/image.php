@@ -225,7 +225,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
             fwrite($fh, $log_string);
             fclose($fh);  
         }
-    }  	
+    }
     
     
 

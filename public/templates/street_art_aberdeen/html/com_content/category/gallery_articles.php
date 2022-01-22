@@ -26,13 +26,15 @@ JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.p
 # saa_helper::check_image("image-field-file_id313_2022-01-20_22-32-44_2247.jpeg");
 
 echo "<div class=\"gallery container-fluid\">";
-foreach ($this->items as $i => $article) {
+#foreach ($this->items as $i => $article) {
 	#echo "<pre>" . print_r($article, TRUE) . "</pre>";
+
+	$article = $this->items[0];
 
 	if ( saa_helper::check_image($article->jcfields[6]->rawvalue) ) {
 		echo "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
-		echo "<img src=\"" . Uri::root() . "/" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
+		echo "<img src=\"" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
 		echo "</a>\n";
 	}
-}
+#}
 echo "</div>";
