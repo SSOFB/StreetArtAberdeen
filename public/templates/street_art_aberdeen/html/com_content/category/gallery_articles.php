@@ -31,6 +31,9 @@ foreach ($this->items as $i => $article) {
 
 	#$article = $this->items[0];
 
+	#JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
+
+
 	if ( saa_helper::check_image($article->jcfields[6]->rawvalue) ) {
 		echo "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
 		echo "<img src=\"" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";

@@ -44,6 +44,13 @@ class saa_helper{
     public static function check_image( $input_filename ) {
         #JFactory::getApplication()->enqueueMessage("check_image: " . $input_filename);
 
+        # check if the files exists
+        if ( strlen( $input_filename ) == 0 ) {
+            JFactory::getApplication()->enqueueMessage("No image: " . $input_full_filename);
+            # SELECT * FROM `s3ib7_fields_values` WHERE `field_id`=6 AND `value`="";
+            return false;
+        }
+
         $input_filename = basename( $input_filename );
         # other params
         $input_full_filename = self::image_path . $input_filename;

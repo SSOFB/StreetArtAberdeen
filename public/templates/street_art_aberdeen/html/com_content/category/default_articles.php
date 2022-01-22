@@ -246,6 +246,13 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 							</span>
 						</div>
 					<?php endif; ?>
+
+					<?php
+					echo "<small>";
+					echo " file: " . $article->jcfields[6]->rawvalue . " ";
+					echo " lat/lon: " . $article->jcfields[2]->rawvalue . " ";
+					echo "</small>";
+					?>
 				</th>
 				<?php if ($this->params->get('list_show_date')) : ?>
 					<td class="list-date small">

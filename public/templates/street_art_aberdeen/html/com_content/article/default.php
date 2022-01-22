@@ -32,6 +32,8 @@ $assocParam        = (Associations::isEnabled() && $params->get('show_associatio
 $currentDate       = Factory::getDate()->format('Y-m-d H:i:s');
 $isNotPublishedYet = $this->item->publish_up > $currentDate;
 $isExpired         = !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
+
+JHtml::_('jquery.framework');
 ?>
 <div class="com-content-article item-page<?php echo $this->pageclass_sfx; ?> container" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? Factory::getApplication()->get('language') : $this->item->language; ?>">
