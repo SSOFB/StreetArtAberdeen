@@ -42,7 +42,7 @@ class saa_helper{
      * @return bool     true for success
      */
     public static function check_image( $input_filename ) {
-        JFactory::getApplication()->enqueueMessage("check_image: " . $input_filename);
+        #JFactory::getApplication()->enqueueMessage("check_image: " . $input_filename);
 
         $input_filename = basename( $input_filename );
         # other params

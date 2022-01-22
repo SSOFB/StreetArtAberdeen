@@ -9,8 +9,8 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
-echo saa_helper::tester("hello");
+#JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+#echo saa_helper::tester("hello");
 
 ?>
 <div class="mod-footer">
