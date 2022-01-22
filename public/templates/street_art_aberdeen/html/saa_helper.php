@@ -96,10 +96,10 @@ class saa_helper{
      */
     public static function small_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-
         $small_filename = self::image_url . "small_" . $input_filename;
         return $small_filename;
     }
 
+    
 }
 ?>

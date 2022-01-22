@@ -42,8 +42,8 @@ defined('_JEXEC') or die;
   function init() {
     var mapOptions = {
    "center":{
-      "lat":57.14542,
-      "lng":-2.09373
+      "lat":57.15293719699627,
+      "lng":-2.0985408827160112
    },
    "clickableIcons":true,
    "disableDoubleClickZoom":false,
@@ -239,7 +239,7 @@ defined('_JEXEC') or die;
          ]
       }
    ],
-   "zoom":11,
+   "zoom":15,
    "zoomControl":true,
    "navigationControl":true,
    "navigationControlOptions":{
@@ -283,12 +283,36 @@ foreach ($this->items as $i => $article) {
     
     if ( $lat AND $lon ) {
         ?>
-        var marker<?php echo $article->id; ?> = new google.maps.Marker({icon: "<?php echo saa_helper::small_image( $article->jcfields[6]->rawvalue ); ?>", position: new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lon; ?>), map: map});
-        var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({content: <?php echo $info_window_content; ?> ,map: map});
-        marker<?php echo $article->id; ?>.addListener('click', function () { infowindow<?php echo $article->id; ?>.open(map, marker<?php echo $article->id; ?>) ;});infowindow<?php echo $article->id; ?>.close();        
+        var marker<?php echo $article->id; ?> = new google.maps.Marker({
+			position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, 
+			map: map,
+			icon: {
+				url: "<?php echo saa_helper::small_image( $article->jcfields[6]->rawvalue ); ?>", 
+				scaledSize: new google.maps.Size(30, 30),
+			}
+		});
+        var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({
+			content: <?php echo $info_window_content; ?> ,map: map
+		});
+        marker<?php echo $article->id; ?>.addListener('click', function () { 
+			infowindow<?php echo $article->id; ?>.open(map, marker<?php echo $article->id; ?>) ;
+		});
+		infowindow<?php echo $article->id; ?>.close();        
         <?php
     }    
 }
+
+/*
+var marker = new google.maps.Marker({
+	position: {lat: 48.856259, lng: 2.365043},
+	map: map,
+	title: 'PEPSized Coffee',
+	icon: {
+		url: "images/markers/svg/Coffee_3.svg",
+		scaledSize: new google.maps.Size(64, 64)
+	}
+});
+*/
 ?>
 
     google.maps.event.addDomListener(window, "resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });
@@ -296,6 +320,12 @@ foreach ($this->items as $i => $article) {
 google.maps.event.addDomListener(window, 'load', init);
 </script>
 <style>
-  #ez-map{min-height:150px;min-width:150px;height: 620px;width: 100%;}
+#ez-map{
+	min-height:150px; 
+	min-width:150px; 
+	height: 850px; 
+	width: 100%;
+	margin-top: -100px
+}
 </style>
 <div id='ez-map'></div>   
