@@ -21,20 +21,7 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\AssociationHelper;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
-
-/**
-  Map module for CMA Planning
- 
-  https://ezmap.co/
-
- */
-
 defined('_JEXEC') or die;
-
-#JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-#JLoader::register('fieldattach', 'components/com_fieldsattach/helpers/fieldattach.php'); 
-
-#57.145428390778264,-2.0937312622943405
 
 ?>
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA'></script>
@@ -253,27 +240,9 @@ JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.p
 JHtml::_('jquery.framework');
 
 foreach ($this->items as $i => $article) {
-    #echo $article->title;
-    #echo $article->introtext;
-    #echo $article->link;
-    
-    # TODO: add image
-    # TODO: strip tags from trimmed_text
-    
-    #$lat = fieldattach::getValue($article->id, 5);
-    #$lon = fieldattach::getValue($article->id, 6);
+
 	list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
-    
-    #$trimmed_text = $article->introtext;
-    /*
-    rem Nov 2021
-         0 strpos(): Argument #3 ($offset) must be contained in argument #1 ($haystack) 
-    $pos = strpos($trimmed_text, ' ', 500);
-    if ( $pos ){
-        $trimmed_text = substr($trimmed_text, 0, $pos); 
-    }
-    */
-    
+
     $info_window_content = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
 	$info_window_content .=  "<img src=\"" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
 	$info_window_content .=  "</a>\n";
@@ -321,11 +290,18 @@ google.maps.event.addDomListener(window, 'load', init);
 </script>
 <style>
 #ez-map{
-	min-height:150px; 
-	min-width:150px; 
-	height: 850px; 
-	width: 100%;
-	margin-top: -100px
+	min-height: 150px;
+	min-width: 150px;
+	height: 870px;
+	width: 105%;
+	margin-top: -90px;
+	margin-left: -10px;
+	margin-right: -10px;
+}
+.gm-style .gm-style-iw-c {
+    padding: 0px;
+    box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
+    border: 1px solid #fff;
 }
 </style>
 <div id='ez-map'></div>   
