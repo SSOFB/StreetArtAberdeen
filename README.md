@@ -18,6 +18,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://getbootstrap.com/docs/5.0/getting-started/introduction/
 * https://visme.co/blog/website-color-schemes/
 * https://slides.woluweb.be/cassiopeia/cassiopeia.html
+* https://joomla.stackexchange.com/questions/31868/
 
 
 ## Useful Joomla! docs
