@@ -19,31 +19,27 @@ namespace Joomla\Plugin\System\Saaconsole\Console;
 
 use Joomla\CMS\Factory;
 use Joomla\Console\Command\AbstractCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Joomla\CMS\Router\Route;
-use Joomla\Component\Content\Site\Helper\RouteHelper;
-use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Registry\Registry;
-use Joomla\CMS\Component\ComponentHelper;
+
+use JLoader;
+#use Myhelper;
+
 #use Joomla\CMS\Templates\Street_art_aberdeen\Html\Saahelper;
-use Joomla\Template\Street_art_aberdeen\Site\Html\Saahelper;
+#use Joomla\Template\Street_art_aberdeen\Site\Html\Saahelper;
 #Class "Joomla\CMS\Template\Street_art_aberdeen\html\saa_helper"
 #use Joomla\CMS\Template\
 # load the helper
 #JLoader::register('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/saa_helper.php'); 
 #JLoader::registerNamespace('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html');
-
+#use Joomla\CMS\Streetartaberdeen\Saahelper;
 
 class SaaconsoleCommand extends AbstractCommand
 {
+	
+	
 	/**
 	 * The default command name
 	 *
@@ -159,28 +155,35 @@ class SaaconsoleCommand extends AbstractCommand
 		#JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fields/models');
 		#JModelLegacy
 		#require_once(JPATH_ROOT . '/templates/street_art_aberdeen/html/Saahelper.php');
-		#\JLoader::registerNamespace('Saahelper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/'); 
-		\JLoader::register('Saahelper', 'templates/street_art_aberdeen/html/Saahelper.php'); 
+		#JLoader::registerNamespace('Saahelper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/'); 
+		#JLoader::register('Saahelper', 'templates/street_art_aberdeen/html/Saahelper.php'); 
 
-		#$saa_helper = New Saahelper();
+		#JLoader::import('sample.library');
 
+        JLoader::register('myhelper', 'templates/street_art_aberdeen/html/myhelper.php'); 
+        $test = myhelper::tester("galopin");
+        $symfonyStyle->text('test: ' . $test);
+
+		/*
 		foreach ($images AS $image) {
 			$symfonyStyle->text('image: ' . $image);
 			# run the helper functions against them
 
-			#$test = $saa_helper->tester("galopin");
+			$test = $saa_helper->tester("galopin");
+			#$test = Saahelper::tester("galopin");
+			$symfonyStyle->text('test: ' . $test);
+
+			#$test = Saahelper::tester("galopin");
 			#$symfonyStyle->text('test: ' . $test);
 
-			$test = Saahelper::tester("galopin");
-			$symfonyStyle->text('test: ' . $test);
-			/*
-			$deleted = $saa_helper->clear_out_image($image);
-			$symfonyStyle->text('deleted: ' . $deleted);
-			$saa_helper->check_image($image);
-			*/
+			#$deleted = $saa_helper->clear_out_image($image);
+			#$symfonyStyle->text('deleted: ' . $deleted);
+			#$saa_helper->check_image($image);
+
 
 			
 		}
+		*/
 
 		
 		
