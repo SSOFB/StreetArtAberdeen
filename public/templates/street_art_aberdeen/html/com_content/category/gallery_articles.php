@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+namespace J4xdemos\Component\Mywalks\Site\Helper;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
@@ -21,8 +23,11 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\AssociationHelper;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
-
+# TODO: figure out J4 helper loading
 JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php');
+#JLoader::registerPrefix('saa_helper', JPATH_ROOT . '/templates/street_art_aberdeen/html/');
+#JLoader::registerNamespace('saa_helper', JPATH_ROOT . '/templates/street_art_aberdeen/html/');
+
 # saa_helper::check_image("image-field-file_id313_2022-01-20_22-32-44_2247.jpeg");
 
 echo "<div class=\"gallery container-fluid\">";

@@ -11,7 +11,7 @@
  * saa_helper::check_image("image-field-file_id313_2022-01-20_22-32-44_2247.jpeg");
  */
 
-class saa_helper{
+class Saahelper{
 
     # fixed params
     const image_url = "/images/";
@@ -25,7 +25,7 @@ class saa_helper{
 
 
     public function onAfterInitialise(){
-        JLoader::registerPrefix('saa_helper', JPATH_ROOT . '/templates/street_art_aberdeen/html');
+        JLoader::registerPrefix('Saahelper', JPATH_ROOT . '/templates/street_art_aberdeen/html');
     }
 
 
