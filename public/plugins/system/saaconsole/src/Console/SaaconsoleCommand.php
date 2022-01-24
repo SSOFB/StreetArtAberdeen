@@ -2,6 +2,12 @@
 /**
  * @package     Joomla.Console
  * @subpackage  Saaconsole
+ * 
+ * Get cli options...
+ * php cli/joomla.php list
+ * 
+ * 
+ * php cli/joomla.php saaconsole:action hello
  *
  * @copyright   Copyright (C) 2005 - 2021 Clifford E Ford. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -21,6 +27,20 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Joomla\CMS\Router\Route;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Component\ComponentHelper;
+#use Joomla\CMS\Templates\Street_art_aberdeen\Html\Saahelper;
+use Joomla\Template\Street_art_aberdeen\Site\Html\Saahelper;
+#Class "Joomla\CMS\Template\Street_art_aberdeen\html\saa_helper"
+#use Joomla\CMS\Template\
+# load the helper
+#JLoader::register('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/saa_helper.php'); 
+#JLoader::registerNamespace('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html');
+
 
 class SaaconsoleCommand extends AbstractCommand
 {
@@ -54,6 +74,7 @@ class SaaconsoleCommand extends AbstractCommand
 	public function __construct()
 	{
 		parent::__construct();
+		
 	}
 
 	/**
@@ -86,15 +107,11 @@ class SaaconsoleCommand extends AbstractCommand
 				InputArgument::REQUIRED,
 				'name of action');
 
-		$this->addArgument('module_id',
-				InputArgument::REQUIRED,
-				'module id');
+		$help = "<info>%command.name%</info> Does cli tasks related to StreetArtAberdeen
+			\nUsage: <info>php %command.full_name% action
+			\nwhere action is what you want to do, like makeimages</info>";
 
-		$help = "<info>%command.name%</info> Toggles module Enabled/Disabled state
-			\nUsage: <info>php %command.full_name% action_id module_id
-			\nwhere action_id is one of winter or weekend</info>";
-
-		$this->setDescription('Called by cron to set the enabled state of a module.');
+		$this->setDescription('Called by cron to do cli tasks related to StreetArtAberdeen.');
 		$this->setHelp($help);
 
 	}
@@ -117,10 +134,59 @@ class SaaconsoleCommand extends AbstractCommand
 
 		$symfonyStyle = new SymfonyStyle($input, $output);
 
-		$symfonyStyle->title('SAA Title');
+		$symfonyStyle->title('StreetArtAberdeen CLI');
+
+		$symfonyStyle->text('action: ' . $action);
+
+		# get all the image filenames
+		$db = Factory::getDbo();
+		$query = $db
+			->getQuery(true)
+			->select('value')
+			->from($db->quoteName('#__fields_values'))
+			->where($db->quoteName('field_id') . " = 6");
+		
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		$images = $db->loadColumn();
 
 
-		$symfonyStyle->success('SAA Done');
+		#\JLoader::registerPrefix('saa_helper', JPATH_ROOT . '/templates/street_art_aberdeen/html/'); 
+		#\JLoader::registerNamespace('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/'); 
+		#JLoader::registerNamespace('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html');
+		#JLoader::setup();
+		#\JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+		#JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fields/models');
+		#JModelLegacy
+		#require_once(JPATH_ROOT . '/templates/street_art_aberdeen/html/Saahelper.php');
+		#\JLoader::registerNamespace('Saahelper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/'); 
+		\JLoader::register('Saahelper', 'templates/street_art_aberdeen/html/Saahelper.php'); 
+
+		#$saa_helper = New Saahelper();
+
+		foreach ($images AS $image) {
+			$symfonyStyle->text('image: ' . $image);
+			# run the helper functions against them
+
+			#$test = $saa_helper->tester("galopin");
+			#$symfonyStyle->text('test: ' . $test);
+
+			$test = Saahelper::tester("galopin");
+			$symfonyStyle->text('test: ' . $test);
+			/*
+			$deleted = $saa_helper->clear_out_image($image);
+			$symfonyStyle->text('deleted: ' . $deleted);
+			$saa_helper->check_image($image);
+			*/
+
+			
+		}
+
+		
+		
+
+
+		$symfonyStyle->success('StreetArtAberdeen CLI');
 
 		return 0;
 	}
