@@ -72,7 +72,7 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 		<?php if ($this->countModules('menu', true) || $this->countModules('search', true)) : ?>
 			<div class="grid-child container-nav">
 				<a class="head_logo_link" href="<?php echo $this->baseurl; ?>" title="<?php echo $app->getCfg( 'sitename' ); ?>">
-					<img alt="<?php echo $app->getCfg( 'sitename' ); ?>" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/images/street_art_aberdeen_wide.svg" />
+					StreetArtAberdeen
 				</a> 
 				<?php if ($this->countModules('menu', true)) : ?>
 					<jdoc:include type="modules" name="menu" style="none" />
