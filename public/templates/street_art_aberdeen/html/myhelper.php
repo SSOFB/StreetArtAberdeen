@@ -7,9 +7,10 @@
  * Call functions like...
  * myhelper::tester("hello");
  */
-namespace Myhelper; # not sure about this bit
+#namespace Myhelper; # not sure about this bit
+namespace Joomla\Plugin\System\Saaconsole\Console;
 
-class Myhelper{
+class MyHelper{
     /**
      * tester
      * @param string    test string

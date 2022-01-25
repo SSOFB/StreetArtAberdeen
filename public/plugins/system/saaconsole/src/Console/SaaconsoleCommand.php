@@ -26,6 +26,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use JLoader;
 #use Myhelper;
+use Joomla\Plugin\System\SaaconsoleCommand\Console\MyHelper;
+#use Joomla\Plugin\System\SaaconsoleCommand\Console;
 
 #use Joomla\CMS\Templates\Street_art_aberdeen\Html\Saahelper;
 #use Joomla\Template\Street_art_aberdeen\Site\Html\Saahelper;
@@ -160,8 +162,8 @@ class SaaconsoleCommand extends AbstractCommand
 
 		#JLoader::import('sample.library');
 
-        JLoader::register('myhelper', 'templates/street_art_aberdeen/html/myhelper.php'); 
-        $test = myhelper::tester("galopin");
+        JLoader::register('MyHelper', 'templates/street_art_aberdeen/html/myhelper.php'); 
+        $test = MyHelper::tester("galopin");
         $symfonyStyle->text('test: ' . $test);
 
 		/*

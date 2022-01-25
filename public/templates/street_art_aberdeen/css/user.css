@@ -84,6 +84,27 @@ body.offline{
 .container-header .navbar-toggler {
     background-color: #314152;
 }
+
+.saa_menu{
+    background-color: #314152;
+    border: 1px solid #252525;
+    border-radius: 30px;
+    height: 60px;
+}
+
+.saa_menu > div {
+    display: inline-block;
+}
+.saa_menu > div > a{
+    color: #fff;
+    padding: 20px;
+    margin: 0;
+    display: inline-block;
+}
+.saa_menu > div.active > a{
+    color: #5cdb95;
+}
+
 .hero_wide {
     background-position: center;
     background-size: cover;
