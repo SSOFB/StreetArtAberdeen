@@ -22,6 +22,9 @@
 
 }
 
+html, body, main {
+    height: 100%;
+}
 
 body{
     background-color: #f3f3f3;
@@ -30,7 +33,7 @@ body, h1, h2, h3, h4, h5, h6{
     font-family: 'KnewaveRegular';
 }
 main{
-    margin: 0px 10px 0px 10px;
+    margin: 0px 0px 0px 0px;
 }
 
 .offline-card .header h1{
@@ -52,15 +55,18 @@ body.offline{
 
 .head_logo_link{
     margin-right: 40px;
-    margin-top: 10px;
+    margin-top: 0px;
     text-decoration: none;
     color: #314152;
     font-size: 50px;
     text-shadow: #5cdb95 3px 3px 0px;
+    word-spacing: -10px;
 }
 .head_logo_link img {
     width: 400px;
 }
+
+/* TODO: remove metismenu css */
 .container-nav > ul.mod-menu,
 .mod-menu_dropdown-metismenu {
     background-color: #314152;
@@ -164,7 +170,7 @@ footer a:hover{
 }
 .lfloat,
 .pull-left{
-    float: right;
+    float: left;
     clear: both;
 }
 .btn-primary {
@@ -204,14 +210,54 @@ footer a:hover{
 
 /* menu, only on small screens */
 @media (max-width: 767.98px) {
-    .container-nav nav{
-        margin-top: 0em !important;
-        position: fixed !important;
-        left: 1em !important;
-        top: 1em !important;
+    .head_logo_link{
+        margin: 0;
+        font-size: 40px;
+        width: 200px;
+        line-height: 40px;
     }
-    .head_logo_link {
-        margin-right: 0px;
-        margin-left: 80px;
+    .footer_right,
+    .footer_left{
+        text-align: center;
+    }
+    .mod-footer{
+        display: none;
+    }
+}
+
+
+
+/* Map screen syles */
+.saa_map_screen{
+    
+}/*
+#saa-map{
+	min-width: 150px;
+	height: 870px;
+	width: 105%;
+	margin-top: -100px;
+	margin-left: -10px;
+	margin-right: -10px;
+}
+*/
+#saa-map{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    height: 100%;
+}
+.gm-style .gm-style-iw-c {
+    padding: 0px;
+    box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
+    border: 1px solid #fff;
+}
+
+
+/* Map screen syles, only on small screens */
+@media (max-width: 767.98px) {
+    #saa-map{
+
     }
 }

@@ -233,7 +233,7 @@ defined('_JEXEC') or die;
       "style":1
    }
 };
-    var mapElement = document.getElementById('ez-map');
+    var mapElement = document.getElementById('saa-map');
     var map = new google.maps.Map(mapElement, mapOptions);
 <?php
 JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php');
@@ -256,7 +256,7 @@ foreach ($this->items as $i => $article) {
 			position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, 
 			map: map,
 			icon: {
-				url: "<?php echo saa_helper::small_image( $article->jcfields[6]->rawvalue ); ?>", 
+				url: "<?php echo saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", 
 				scaledSize: new google.maps.Size(30, 30),
 			}
 		});
@@ -288,20 +288,4 @@ var marker = new google.maps.Marker({
   }
 google.maps.event.addDomListener(window, 'load', init);
 </script>
-<style>
-#ez-map{
-	min-height: 150px;
-	min-width: 150px;
-	height: 870px;
-	width: 105%;
-	margin-top: -90px;
-	margin-left: -10px;
-	margin-right: -10px;
-}
-.gm-style .gm-style-iw-c {
-    padding: 0px;
-    box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
-    border: 1px solid #fff;
-}
-</style>
-<div id='ez-map'></div>   
+<div id='saa-map'></div>   

@@ -14,5 +14,5 @@ defined('_JEXEC') or die;
 
 ?>
 <div class="mod-footer">
-	<div class="footer1"><?php echo $app->getCfg( 'sitename' ) . " - " . date('l jS \of F Y, g:i a') ?></div>
+	<div class="footer1"><?php echo $app->getCfg( 'sitename' ) . " - " . date('l jS \of F Y, g:ia') ?></div>
 </div>

@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Layout\LayoutHelper;
 
 ?>
-<div class="com-content-category category-list">
+<div class="saa_map_screen">
 
 <?php
 $this->subtemplatename = 'articles';

@@ -16,7 +16,7 @@ class saa_helper{
     # fixed params
     const image_url = "/images/";
     const image_path = JPATH_ROOT . "/images/";
-    const small_width = 100;
+    const small_width = 500;
     const small_height = 100;
     const large_width = 500;
     const large_height = 500;
@@ -65,8 +65,10 @@ class saa_helper{
         $input_full_filename = self::image_path . $input_filename;
         $output_small_filename = "small_" . $input_filename;
         $output_large_filename = "large_" . $input_filename;
+        $output_pin_filename = "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
         $output_small_full_filename = self::image_path . $output_small_filename;
         $output_large_full_filename = self::image_path . $output_large_filename;
+        $output_pin_full_filename = self::image_path . $output_pin_filename;
         #$small_dimension = $small_width . "x" . $small_height;
         #$large_dimension = $large_width . "x" . $large_height;
 
@@ -84,6 +86,7 @@ class saa_helper{
             JFactory::getApplication()->enqueueMessage("Created small file: " . $output_small_full_filename);
         }
 
+        /*
         # create a big one
         if ( !file_exists( $output_large_full_filename ) ) {
             $image = new JImage($input_full_filename);
@@ -91,6 +94,38 @@ class saa_helper{
             $image->toFile($output_large_full_filename);
             JFactory::getApplication()->enqueueMessage("Created large file: " . $output_large_full_filename);
         }
+        */
+
+        # create a small one
+        if ( !file_exists( $output_pin_full_filename ) ) {
+            # add an overlay
+            $width = 40; 
+            $height = 40; 
+            
+            $bottom_image = imagecreatefromjpeg($output_small_full_filename); 
+            $bottom_image = imagescale($bottom_image, 38, 26); 
+            
+            $top_image = imagecreatefrompng(JPATH_BASE . "/templates/street_art_aberdeen/images/pin.png"); 
+            imagesavealpha($top_image, true); 
+            imagealphablending($top_image, true); 
+
+            $pin_image = imagecreatetruecolor($width, $height);
+            
+            imagealphablending($pin_image, true); 
+            $transparency = imagecolorallocatealpha($pin_image, 0, 0, 0, 127);
+            imagefill($pin_image, 0, 0, $transparency);
+            imagesavealpha($pin_image, true); 
+
+
+
+            imagecopy($pin_image, $bottom_image, 2, 2, 0, 0, 38, 26); 
+
+            imagecopy($pin_image, $top_image, 0, 0, 0, 0, 40, 40); 
+
+
+            imagepng($pin_image, $output_pin_full_filename);
+        }
+
 
         return true;
     }
@@ -130,6 +165,31 @@ class saa_helper{
         return $small_filename;
     }
 
-    
+     /**
+     * large_image
+     * 
+     * @param string    filename
+     * 
+     * @return string   large filename
+     */
+    public static function large_image( $input_filename ) {
+        $input_filename = basename( $input_filename );
+        $small_filename = self::image_url . "large_" . $input_filename;
+        return $small_filename;
+    }  
+
+
+     /**
+     * pin_image
+     * 
+     * @param string    filename
+     * 
+     * @return string   pin filename
+     */
+    public static function pin_image( $input_filename ) {
+        $input_filename = basename( $input_filename );
+        $small_filename = self::image_url . "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
+        return $small_filename;
+    } 
 }
 ?>
