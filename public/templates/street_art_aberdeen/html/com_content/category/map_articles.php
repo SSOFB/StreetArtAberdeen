@@ -243,7 +243,7 @@ foreach ($this->items as $i => $article) {
 
 	list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
 
-    $info_window_content = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
+   $info_window_content = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
 	$info_window_content .=  "<img src=\"" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
 	$info_window_content .=  "</a>\n";
 
@@ -271,19 +271,7 @@ foreach ($this->items as $i => $article) {
     }    
 }
 
-/*
-var marker = new google.maps.Marker({
-	position: {lat: 48.856259, lng: 2.365043},
-	map: map,
-	title: 'PEPSized Coffee',
-	icon: {
-		url: "images/markers/svg/Coffee_3.svg",
-		scaledSize: new google.maps.Size(64, 64)
-	}
-});
-*/
 ?>
-
     google.maps.event.addDomListener(window, "resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });
   }
 google.maps.event.addDomListener(window, 'load', init);
