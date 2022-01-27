@@ -7,8 +7,8 @@
  * Call functions like...
  * myhelper::tester("hello");
  */
-#namespace Myhelper; # not sure about this bit
-namespace Joomla\Plugin\System\Saaconsole\Console;
+namespace MyHelper; # not sure about this bit
+#namespace Joomla\Plugin\System\Saaconsole\Console;
 
 class MyHelper{
     /**
