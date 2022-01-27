@@ -13,6 +13,8 @@
  * saa_helper::check_image("image-field-file_id313_2022-01-20_22-32-44_2247.jpeg");
  */
 
+namespace Saa_helper; # not sure about this bit
+
 class saa_helper{
 
     # fixed params

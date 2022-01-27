@@ -30,6 +30,7 @@ use JLoader;
 #use Joomla\Plugin\System\SaaconsoleCommand\Console;
 #use MyHelper;
 use Myhelper\Myhelper;
+use Saa_helper\Saa_helper;
 
 #use Joomla\CMS\Templates\Street_art_aberdeen\Html\Saahelper;
 #use Joomla\Template\Street_art_aberdeen\Site\Html\Saahelper;
@@ -166,7 +167,12 @@ class SaaconsoleCommand extends AbstractCommand
 
         JLoader::register('Myhelper\Myhelper', 'templates/street_art_aberdeen/html/myhelper.php'); 
         $test = MyHelper::tester("galopin");
-        $symfonyStyle->text('test: ' . $test);
+        $symfonyStyle->text('myhelper test: ' . $test);
+
+
+        JLoader::register('Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+        $test = Saa_helper::tester("galopin");
+        $symfonyStyle->text('saa_helper test: ' . $test);
 
 		/*
 		foreach ($images AS $image) {
