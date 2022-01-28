@@ -23,24 +23,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-
 use JLoader;
-#use Myhelper;
-#use Joomla\Plugin\System\SaaconsoleCommand\Console\MyHelper;
-#use Joomla\Plugin\System\SaaconsoleCommand\Console;
-#use MyHelper;
-use Myhelper\Myhelper;
 use Saa_helper\Saa_helper;
-
-#use Joomla\CMS\Templates\Street_art_aberdeen\Html\Saahelper;
-#use Joomla\Template\Street_art_aberdeen\Site\Html\Saahelper;
-#Class "Joomla\CMS\Template\Street_art_aberdeen\html\saa_helper"
-#use Joomla\CMS\Template\
-# load the helper
-#JLoader::register('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/saa_helper.php'); 
-#JLoader::registerNamespace('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html');
-#use Joomla\CMS\Streetartaberdeen\Saahelper;
-
 class SaaconsoleCommand extends AbstractCommand
 {
 	
@@ -150,24 +134,6 @@ class SaaconsoleCommand extends AbstractCommand
 		// Reset the query using our newly populated query object.
 		$db->setQuery($query);
 		$images = $db->loadColumn();
-
-
-		#\JLoader::registerPrefix('saa_helper', JPATH_ROOT . '/templates/street_art_aberdeen/html/'); 
-		#\JLoader::registerNamespace('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/'); 
-		#JLoader::registerNamespace('saa_helper', JPATH_ROOT .  '/templates/street_art_aberdeen/html');
-		#JLoader::setup();
-		#\JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
-		#JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fields/models');
-		#JModelLegacy
-		#require_once(JPATH_ROOT . '/templates/street_art_aberdeen/html/Saahelper.php');
-		#JLoader::registerNamespace('Saahelper', JPATH_ROOT .  '/templates/street_art_aberdeen/html/'); 
-		#JLoader::register('Saahelper', 'templates/street_art_aberdeen/html/Saahelper.php'); 
-
-		#JLoader::import('sample.library');
-
-        JLoader::register('Myhelper\Myhelper', 'templates/street_art_aberdeen/html/myhelper.php'); 
-        $test = MyHelper::tester("galopin");
-        $symfonyStyle->text('myhelper test: ' . $test);
 
 
         JLoader::register('Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
