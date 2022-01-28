@@ -17,14 +17,14 @@
 namespace Joomla\CMS\Saa_helper;
 
 use Joomla\CMS\Factory;
-#use Joomla\CMS\JImage;
+use Joomla\CMS\JImage;
 class Saa_helper{
 
     # fixed params
     const image_url = "/images/";
     const image_path = JPATH_ROOT . "/images/";
     const small_width = 500;
-    const small_height = 100;
+    const small_height = 80;
     const large_width = 500;
     const large_height = 500;
 
@@ -61,7 +61,8 @@ class Saa_helper{
         # check if the files exists
         if ( strlen( $input_filename ) == 0 ) {
             # it should always be there, can check with a SELECT * FROM `s3ib7_fields_values` WHERE `field_id`=6 AND `value`="";
-            Factory::getApplication()->enqueueMessage("No image: " . $input_filename);
+            #Factory::getApplication()->enqueueMessage("No image: " . $input_filename);
+            self::ilog("input_filename, no file, value is empty");
             return false;
         }
 
@@ -78,30 +79,41 @@ class Saa_helper{
 
         # check if the files exists
         if ( !file_exists( $input_full_filename ) ) {
-            Factory::getApplication()->enqueueMessage("File not found: " . $input_full_filename);
+            #Factory::getApplication()->enqueueMessage("File not found: " . $input_full_filename);
+            self::ilog("input_filename, no file, file doesn't exist");
             return false;
         }
 
         # create a small one
         if ( !file_exists( $output_small_full_filename ) ) {
-            #$image = new JImage($input_full_filename);
-            #$image->resize( self::small_width, self::small_height, false, JImage::SCALE_INSIDE);              
-            #$image->toFile($output_small_full_filename);
-
-
-
-            Factory::getApplication()->enqueueMessage("Created small file: " . $output_small_full_filename);
+            $image = self::get_image($input_full_filename); 
+            $image = self::rezise_image($image, self::small_width, self::small_height );
+            $out_result = imagegd($image, $output_small_full_filename);
+            if ($out_result) {
+                self::ilog("created small file: " . $output_small_full_filename);
+            } else {
+                self::ilog("failed to create small file: " . $output_small_full_filename);
+            }
+        } else {
+            self::ilog("small file exists already: " . $output_small_full_filename);
         }
 
-        /*
+
         # create a big one
         if ( !file_exists( $output_large_full_filename ) ) {
-            $image = new Image($input_full_filename);
-            $image->resize( self::large_width, self::large_height, false, JImage::SCALE_INSIDE);              
-            $image->toFile($output_large_full_filename);
-            JFactory::getApplication()->enqueueMessage("Created large file: " . $output_large_full_filename);
+            $image = self::get_image($input_full_filename); 
+            $image = self::rezise_image($image, self::large_width, self::large_height );
+            $out_result = imagegd($image, $output_large_full_filename);
+            if ($out_result) {
+                self::ilog("created large file: " . $output_large_full_filename);
+            } else {
+                self::ilog("failed to create large file: " . $output_large_full_filename);
+            }
+            
+        } else {
+            self::ilog("large file exists already: " . $output_large_full_filename);
         }
-        */
+  
 
         # create a the pin one
         if ( !file_exists( $output_pin_full_filename ) ) {
@@ -111,7 +123,7 @@ class Saa_helper{
             
             # get the art image
             # TODO: check if it's a jpeg, we can't really assume this: output_pin_full_filename or  output_small_full_filename
-            $bottom_image = self::get_image($output_pin_full_filename); 
+            $bottom_image = self::get_image($input_full_filename); 
             $bottom_image = imagescale($bottom_image, $width - 2, 26); 
             
             # get the 
@@ -132,7 +144,11 @@ class Saa_helper{
             imagecopy($pin_image, $top_image, 0, 0, 0, 0, $width, $height); 
             # output it
             imagepng($pin_image, $output_pin_full_filename);
+            self::ilog("created pin file: " . $output_pin_full_filename);
+        } else {
+            self::ilog("pin file exists already: " . $output_pin_full_filename);
         }
+
         return true;
     }
 
@@ -146,15 +162,16 @@ class Saa_helper{
      * @return string   feedback text
      */
     public static function clear_out_image( $input_filename ) {
-        $feedback = "Deleted files for " . $input_filename . ": \n";
-        $input_filename = basename( $input_filename );
-        $image_pattern = self::image_path . "*_" .  $input_filename;
+        self::ilog("Deleted files for " . $input_filename );
+        $input_file_info = pathinfo( $input_filename );
+        $image_pattern = self::image_path . "*_" .  $input_file_info['filename'] . ".*";
+        self::ilog("With the pattern: " . $image_pattern . ":");
         foreach (glob($image_pattern) as $filename) {
-            echo "$filename size " . filesize($filename) . "\n";
+            #echo $filename . " size: " . filesize($filename) . "\n";
             unlink( $filename );
-            $feedback .= " - " . $filename . "\n";
+            self::ilog(" - " . $filename);
         }
-        return $feedback;
+        return "cleared out image: " . $input_filename;
     }
 
 
@@ -222,6 +239,33 @@ class Saa_helper{
         return $image_data;
     } 
 
+
+     /**
+     * resize image
+     * 
+     * @param   GdImage  image obj
+     * @param   int      max width of the box the image will fit in
+     * @param   int      max height of the box the image will fit in
+     * 
+     * @return  GdImage  image obj
+     */
+    public static function rezise_image( $image_obj, $maxwidth, $maxheight ) {
+        self::ilog("target size: " . $maxwidth . "x" .  $maxheight );
+        $input_width = imagesx($image_obj);
+        $input_height = imagesy($image_obj);
+        self::ilog("input size: " . $input_width . "x" .  $input_height );        
+
+        if($input_width > $input_height) {
+            $ratio = $maxwidth / $input_width;
+            $height = $input_width * $ratio;
+            $image_obj = imagescale($image_obj, $maxwidth, $height);
+        } else {
+            $ratio = $maxheight / $input_height;
+            $input_width = $input_width * $ratio;
+            $image_obj = imagescale($image_obj, $input_width, $maxheight);
+        }        
+        return $image_obj;
+    } 
 
 
     /**
