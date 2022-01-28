@@ -23,10 +23,10 @@ class Saa_helper{
     # fixed params
     const image_url = "/images/";
     const image_path = JPATH_ROOT . "/images/";
-    const small_width = 500;
-    const small_height = 80;
+    const small_width = 300;
+    const small_height = 90;
     const large_width = 500;
-    const large_height = 500;
+    const large_height = 800;
 
     # not sure if the onAfterInitialise is needed
     public function onAfterInitialise(){
@@ -43,7 +43,6 @@ class Saa_helper{
     public static function tester($test_value){
         return "tester says " . $test_value . " static test: " . self::small_width;
     }
-
 
 
     /**
@@ -242,6 +241,7 @@ class Saa_helper{
 
      /**
      * resize image
+     * this function resizes images so they'd fit in a maxwidth x maxheight box, keeping the aspect ratio the same
      * 
      * @param   GdImage  image obj
      * @param   int      max width of the box the image will fit in
@@ -249,20 +249,28 @@ class Saa_helper{
      * 
      * @return  GdImage  image obj
      */
-    public static function rezise_image( $image_obj, $maxwidth, $maxheight ) {
-        self::ilog("target size: " . $maxwidth . "x" .  $maxheight );
+    public static function rezise_image( $image_obj, $max_width, $max_height ) {
         $input_width = imagesx($image_obj);
         $input_height = imagesy($image_obj);
-        self::ilog("input size: " . $input_width . "x" .  $input_height );        
 
-        if($input_width > $input_height) {
-            $ratio = $maxwidth / $input_width;
-            $height = $input_width * $ratio;
-            $image_obj = imagescale($image_obj, $maxwidth, $height);
+        self::ilog("max size: " . $max_width . "x" .  $max_height );
+        $max_ratio = $max_width / $max_height;
+        self::ilog("max_ratio: " . $max_ratio );
+
+        self::ilog("input size: " . $input_width . "x" .  $input_height );        
+        $input_ratio = $input_width / $input_height;
+        self::ilog("input_ratio: " . $input_ratio );       
+        
+        if($input_ratio < $max_ratio) {
+            # wide image
+            $height = round($max_width * $input_ratio);
+            $image_obj = imagescale($image_obj, $max_width, $height);
+            self::ilog("wide image: " . $max_width . "x" . $height );  
         } else {
-            $ratio = $maxheight / $input_height;
-            $input_width = $input_width * $ratio;
-            $image_obj = imagescale($image_obj, $input_width, $maxheight);
+            # tall image
+            $width = round($max_height * $input_ratio);
+            $image_obj = imagescale($image_obj, $width, $max_height);
+            self::ilog("tall image: " . $width . "x" . $max_height ); 
         }        
         return $image_obj;
     } 
