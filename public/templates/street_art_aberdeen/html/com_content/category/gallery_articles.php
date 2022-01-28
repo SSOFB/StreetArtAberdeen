@@ -23,8 +23,10 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\AssociationHelper;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
-# TODO: figure out J4 helper loading
-JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php');
+# get the helper
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+#echo Saa_helper::tester("galopin");
 
 
 echo "<div class=\"gallery container-fluid\">";
@@ -32,9 +34,9 @@ foreach ($this->items as $i => $article) {
 	#echo "<pre>" . print_r($article, TRUE) . "</pre>";
 	#JFactory::getApplication()->enqueueMessage("article id: " . $article->id);
 
-	if ( saa_helper::check_image($article->jcfields[6]->rawvalue) ) {
+	if ( Saa_helper::check_image($article->jcfields[6]->rawvalue) ) {
 		echo "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
-		echo "<img src=\"" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
+		echo "<img src=\"" . Saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
 		echo "</a>\n";
 	}
 }

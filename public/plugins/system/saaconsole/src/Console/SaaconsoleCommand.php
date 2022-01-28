@@ -24,7 +24,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use JLoader;
-use Saa_helper\Saa_helper;
+#use Saa_helper\Saa_helper;
+use Joomla\CMS\Saa_helper\Saa_helper;
 class SaaconsoleCommand extends AbstractCommand
 {
 	
@@ -136,30 +137,29 @@ class SaaconsoleCommand extends AbstractCommand
 		$images = $db->loadColumn();
 
 
-        JLoader::register('Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+        JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
         $test = Saa_helper::tester("galopin");
         $symfonyStyle->text('saa_helper test: ' . $test);
 
-		/*
+
 		foreach ($images AS $image) {
 			$symfonyStyle->text('image: ' . $image);
 			# run the helper functions against them
-
-			$test = $saa_helper->tester("galopin");
-			#$test = Saahelper::tester("galopin");
-			$symfonyStyle->text('test: ' . $test);
-
-			#$test = Saahelper::tester("galopin");
+			#$test = Saa_helper::tester("galopin");
 			#$symfonyStyle->text('test: ' . $test);
 
-			#$deleted = $saa_helper->clear_out_image($image);
-			#$symfonyStyle->text('deleted: ' . $deleted);
-			#$saa_helper->check_image($image);
+
+
+			$clear_out_image_out = Saa_helper::clear_out_image($image);
+			$symfonyStyle->text('clear_out_image_out: ' . $clear_out_image_out);
+			
+			$check_image_out = Saa_helper::check_image($image);
+			$symfonyStyle->text('check_image_out: ' . $check_image_out);
 
 
 			
 		}
-		*/
+
 
 		
 		

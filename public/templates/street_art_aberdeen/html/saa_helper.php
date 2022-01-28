@@ -13,9 +13,12 @@
  * saa_helper::check_image("image-field-file_id313_2022-01-20_22-32-44_2247.jpeg");
  */
 
-namespace Saa_helper; # not sure about this bit
+#namespace Saa_helper; # not sure about this bit
+namespace Joomla\CMS\Saa_helper;
 
-class saa_helper{
+use Joomla\CMS\Factory;
+#use Joomla\CMS\JImage;
+class Saa_helper{
 
     # fixed params
     const image_url = "/images/";
@@ -27,7 +30,7 @@ class saa_helper{
 
     # not sure if the onAfterInitialise is needed
     public function onAfterInitialise(){
-        JLoader::registerPrefix('saa_helper', JPATH_ROOT . '/templates/street_art_aberdeen/html');
+        JLoader::registerPrefix('Saa_helper', JPATH_ROOT . '/templates/street_art_aberdeen/html');
     }
 
     /**
@@ -53,10 +56,12 @@ class saa_helper{
     public static function check_image( $input_filename ) {
         #JFactory::getApplication()->enqueueMessage("check_image: " . $input_filename);
 
+        self::ilog("input_filename: " . $input_filename);
+
         # check if the files exists
         if ( strlen( $input_filename ) == 0 ) {
             # it should always be there, can check with a SELECT * FROM `s3ib7_fields_values` WHERE `field_id`=6 AND `value`="";
-            JFactory::getApplication()->enqueueMessage("No image: " . $input_filename);
+            Factory::getApplication()->enqueueMessage("No image: " . $input_filename);
             return false;
         }
 
@@ -73,22 +78,25 @@ class saa_helper{
 
         # check if the files exists
         if ( !file_exists( $input_full_filename ) ) {
-            JFactory::getApplication()->enqueueMessage("File not found: " . $input_full_filename);
+            Factory::getApplication()->enqueueMessage("File not found: " . $input_full_filename);
             return false;
         }
 
         # create a small one
         if ( !file_exists( $output_small_full_filename ) ) {
-            $image = new JImage($input_full_filename);
-            $image->resize( self::small_width, self::small_height, false, JImage::SCALE_INSIDE);              
-            $image->toFile($output_small_full_filename);
-            JFactory::getApplication()->enqueueMessage("Created small file: " . $output_small_full_filename);
+            #$image = new JImage($input_full_filename);
+            #$image->resize( self::small_width, self::small_height, false, JImage::SCALE_INSIDE);              
+            #$image->toFile($output_small_full_filename);
+
+
+
+            Factory::getApplication()->enqueueMessage("Created small file: " . $output_small_full_filename);
         }
 
         /*
         # create a big one
         if ( !file_exists( $output_large_full_filename ) ) {
-            $image = new JImage($input_full_filename);
+            $image = new Image($input_full_filename);
             $image->resize( self::large_width, self::large_height, false, JImage::SCALE_INSIDE);              
             $image->toFile($output_large_full_filename);
             JFactory::getApplication()->enqueueMessage("Created large file: " . $output_large_full_filename);
@@ -102,8 +110,8 @@ class saa_helper{
             $height = 40; 
             
             # get the art image
-            # TODO: check if it's a jpeg, we can't really assume this
-            $bottom_image = imagecreatefromjpeg($output_small_full_filename); 
+            # TODO: check if it's a jpeg, we can't really assume this: output_pin_full_filename or  output_small_full_filename
+            $bottom_image = self::get_image($output_pin_full_filename); 
             $bottom_image = imagescale($bottom_image, $width - 2, 26); 
             
             # get the 
@@ -138,13 +146,13 @@ class saa_helper{
      * @return string   feedback text
      */
     public static function clear_out_image( $input_filename ) {
-        $feedback = "Deleted files: \n";
+        $feedback = "Deleted files for " . $input_filename . ": \n";
         $input_filename = basename( $input_filename );
         $image_pattern = self::image_path . "*_" .  $input_filename;
         foreach (glob($image_pattern) as $filename) {
             echo "$filename size " . filesize($filename) . "\n";
             unlink( $filename );
-            $feedback .= "- " . $filename . "\n";
+            $feedback .= " - " . $filename . "\n";
         }
         return $feedback;
     }
@@ -189,5 +197,53 @@ class saa_helper{
         $small_filename = self::image_url . "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
         return $small_filename;
     } 
+
+
+     /**
+     * get image
+     * 
+     * @param string    filename
+     * 
+     * @return GdImage  image obj
+     */
+    public static function get_image( $input_filename ) {
+        self::ilog("input_filename: " . $input_filename);
+        $image_info = getimagesize($input_filename);
+        self::ilog("image_info: " . print_r( $image_info, TRUE) );
+
+        $image_type = $image_info[2];
+        if( $image_type == IMAGETYPE_JPEG ) {
+           $image_data = imagecreatefromjpeg($input_filename);
+        } elseif( $image_type == IMAGETYPE_GIF ) {
+           $image_data = imagecreatefromgif($input_filename);
+        } elseif( $image_type == IMAGETYPE_PNG ) {
+           $image_data = imagecreatefrompng($input_filename);
+        }        
+        return $image_data;
+    } 
+
+
+
+    /**
+    * very simple logging function
+    *
+    * @param   string    the log string
+    * @param   int       log level
+    */    
+    public static function ilog($log_string, $level=1) {
+        $logging_level = 0;
+        
+        if ( $level > $logging_level ) {
+            $log_file = JPATH_ADMINISTRATOR . '/logs/saa_helper.log';
+            $fh = fopen($log_file, 'a') or die();
+            # if it's a app designer call, also write it to that log
+            $calling_function = debug_backtrace()[1]['function'];
+            $log_string = date("Y-m-d H:i:s") . " : " . $calling_function . " : " . $log_string . "\n";
+            fwrite($fh, $log_string);
+            fclose($fh);  
+        }
+    }  	
+
+
 }
 ?>

@@ -21,7 +21,10 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\AssociationHelper;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
-defined('_JEXEC') or die;
+# get the helper
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+echo Saa_helper::tester("galopin");
 
 ?>
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA'></script>
@@ -236,7 +239,6 @@ defined('_JEXEC') or die;
     var mapElement = document.getElementById('saa-map');
     var map = new google.maps.Map(mapElement, mapOptions);
 <?php
-JLoader::register('saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php');
 JHtml::_('jquery.framework');
 
 foreach ($this->items as $i => $article) {
@@ -244,7 +246,7 @@ foreach ($this->items as $i => $article) {
 	list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
 
    $info_window_content = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
-	$info_window_content .=  "<img src=\"" . saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
+	$info_window_content .=  "<img src=\"" . Saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
 	$info_window_content .=  "</a>\n";
 
     $info_window_content = json_encode($info_window_content);
@@ -256,7 +258,7 @@ foreach ($this->items as $i => $article) {
 			position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, 
 			map: map,
 			icon: {
-				url: "<?php echo saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", 
+				url: "<?php echo Saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", 
 				scaledSize: new google.maps.Size(30, 30),
 			}
 		});
