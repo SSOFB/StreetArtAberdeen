@@ -88,7 +88,7 @@ class Saa_helper{
         if ( !file_exists( $output_small_full_filename ) ) {
             $image = self::get_image($input_full_filename); 
             $image = self::rezise_image($image, self::small_width, self::small_height );
-            $out_result = imagegd($image, $output_small_full_filename);
+            $out_result = imagejpeg($image, $output_small_full_filename);
             if ($out_result) {
                 self::ilog("created small file: " . $output_small_full_filename);
             } else {
@@ -103,7 +103,7 @@ class Saa_helper{
         if ( !file_exists( $output_large_full_filename ) ) {
             $image = self::get_image($input_full_filename); 
             $image = self::rezise_image($image, self::large_width, self::large_height );
-            $out_result = imagegd($image, $output_large_full_filename);
+            $out_result = imagejpeg($image, $output_large_full_filename);
             if ($out_result) {
                 self::ilog("created large file: " . $output_large_full_filename);
             } else {
