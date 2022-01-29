@@ -97,7 +97,6 @@ class Saa_helper{
             self::ilog("small file exists already: " . $output_small_full_filename);
         }
 
-
         # create a big one
         if ( !file_exists( $output_large_full_filename ) ) {
             $image = self::get_image($input_full_filename); 
@@ -112,7 +111,6 @@ class Saa_helper{
         } else {
             self::ilog("large file exists already: " . $output_large_full_filename);
         }
-  
 
         # create a the pin one
         if ( !file_exists( $output_pin_full_filename ) ) {
@@ -261,13 +259,13 @@ class Saa_helper{
         $input_ratio = $input_width / $input_height;
         self::ilog("input_ratio: " . $input_ratio );       
         
-        if($input_ratio < $max_ratio) {
-            # wide image
-            $height = round($max_width * $input_ratio);
+        if($input_ratio > $max_ratio) {
+            # wider than max, so width is the limiter
+            $height = round($max_width / $input_ratio);
             $image_obj = imagescale($image_obj, $max_width, $height);
             self::ilog("wide image: " . $max_width . "x" . $height );  
         } else {
-            # tall image
+            # taller than max, so height is the limiter
             $width = round($max_height * $input_ratio);
             $image_obj = imagescale($image_obj, $width, $max_height);
             self::ilog("tall image: " . $width . "x" . $max_height ); 
