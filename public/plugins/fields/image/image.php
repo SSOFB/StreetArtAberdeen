@@ -95,11 +95,17 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 	 *
 	 * @since   2.5
 	 */
-    /*
-	public function onContentBeforeSave($context, &$article, $isNew, &$data=Array())
-	{
-	}
-    */
+
+	public function onContentBeforeSave($context, &$article, $isNew, &$data=Array()) {
+        $this->ilog("onContentBeforeSave");
+        JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_fields/models');
+        $model_field = JModelLegacy::getInstance('Field', 'FieldsModel', ['ignore_request' => true]);
+        #$this->ilog("model_field: " . print_r($model_field, true));
+
+        $field_value = $model_field->getFieldValue(6, $article->id);
+        $this->ilog("field_value: " . $field_value); 
+    }
+
 
 
     public function onContentAfterSave($context, &$article, $isNew) {
@@ -118,14 +124,16 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         $model_field = JModelLegacy::getInstance('Field', 'FieldsModel', ['ignore_request' => true]);
         #$this->ilog("model_field: " . print_r($model_field, true));
 
+        $field_value = $model_field->getFieldValue(6, $article->id);
+        $this->ilog("field_value: " . $field_value); 
+
         jimport('joomla.filesystem.file');
 
         foreach ( $files['com_fields'] AS $field_name=>$field_data ) {
-
+            $this->ilog("field_name: " . $field_name);
             # check there were no errors
             if ( $field_data['error'] == 0 ) {
-                $this->ilog("field_name: " . $field_name);
-                $this->ilog("field_data: " . print_r($field_data, true));
+                $this->ilog("no errors, field_data: " . print_r($field_data, true));
     
                 # set image filename
                 list($file_type, $file_extension) = explode("/", $field_data['type']);
@@ -140,20 +148,37 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
                     # move image into dir
                     File::upload($field_data['tmp_name'], $file_name);
                  
-                    # get the field ID
-                    $db = JFactory::getDbo();
-                    $query = $db
-                        ->getQuery(true)
-                        ->select('id')
-                        ->from($db->quoteName('#__fields'))
-                        ->where($db->quoteName('name') . " = " . $db->quote($field_name));
-                    $db->setQuery($query);
-                    $field_id = $db->loadResult();
-                    $this->ilog("field_id: " . $field_id); 
+                    $field_id = $this->get_field_id_from_name($field_name);
         
                     #set the value using field model instead to make change permanent in db
                     $model_field->setFieldValue($field_id, $article->id, $file_url);
                 }
+            } else {
+                $this->ilog("field error: " .$field_data['error']);
+
+
+                # name="jform[com_fields][photo_hidden]"
+                $jform = $input->post->get("jform");
+                $this->ilog("jform: " . print_r($jform, true));
+
+                #$hidden_field_name = "jform['com_fields']['" .$field_name . "_hidden']";
+                #$this->ilog("hidden_field_name: " . $hidden_field_name);
+                #$value_to_keep = $input->post->get($hidden_field_name);
+
+                $hidden_field_name =  $field_name . "_hidden";
+
+                $value_to_keep = $jform['com_fields'][$hidden_field_name];
+                $this->ilog("value_to_keep: " . $value_to_keep);
+
+                # TODO: figure out why the slash is getting removed
+                $value_to_keep = str_replace("images", "images/", $value_to_keep);
+                $this->ilog("value_to_keep, fixed: " . $value_to_keep);
+
+                $field_id = $this->get_field_id_from_name($field_name);
+    
+                #set the value using field model instead to make change permanent in db
+                $model_field->setFieldValue($field_id, $article->id, $value_to_keep);
+
             }
         }
     }
@@ -207,6 +232,24 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
         $doc->setBuffer($html, 'component');
     }
 
+    /**
+    * get the field ID from the name
+    *
+    * @param   string    the log string
+    * @param   int       log level
+    */    
+    function get_field_id_from_name($field_name) {
+        $db = JFactory::getDbo();
+        $query = $db
+            ->getQuery(true)
+            ->select('id')
+            ->from($db->quoteName('#__fields'))
+            ->where($db->quoteName('name') . " = " . $db->quote($field_name));
+        $db->setQuery($query);
+        $field_id = $db->loadResult();
+        $this->ilog("field_id: " . $field_id); 
+        return $field_id;
+    }
 
 
     /**

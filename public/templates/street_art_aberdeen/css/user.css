@@ -142,6 +142,12 @@ body.offline{
     padding-bottom: 10px;
 }
 
+
+.item-page,
+.com-content-category,
+com-content-article {
+    margin-bottom: 50px;
+}
 footer {
     border-top: #5cdb95 1px solid;
     background-color: #314152 !important;
@@ -205,6 +211,14 @@ footer a:hover{
 .gallery img {
     max-height: 200px;
     margin: 10px;
+}
+
+
+.options-form, .options-form > legend {
+    background-color: none;
+}
+.options-form {
+    border: 0;
 }
 
 

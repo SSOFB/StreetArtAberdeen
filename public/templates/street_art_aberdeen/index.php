@@ -86,8 +86,6 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 		<jdoc:include type="component" />
 	</main>
 
-	<p></p><p></p><p></p>
-
 	<?php if ( $this->countModules('footer_left', true) || $this->countModules('footer_right', true) ) : ?>
 	<footer class="container-footer footer full-width fixed-bottom">
 		<div class="grid-child">

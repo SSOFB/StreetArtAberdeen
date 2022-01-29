@@ -22,16 +22,18 @@ class JFormFieldImage extends JFormFieldFile
      */
     public function getInput() {
         $html = "";
-        #$html .= "<pre>" . print_r($this, TRUE) . "</pre>";
+        #$html .= "<pre>" . print_r($this, TRUE) . "</pre> \n \n";
 
         if ( strlen($this->value) ) {
-            $html .= "<img class=\"image_field_display\" alt=\"" . $this->label . "\" src=\"" . $this->value . "\" />";
-            $html .= "<p>Replace this image</p>";
+            $html .= "<img class=\"image_field_display\" alt=\"" . $this->label . "\" src=\"" . $this->value . "\" /> \n";
+            $html .= "<p>Replace this image</p> \n";
         } else {
-            $html .= "<p>Choose an image</p>";
+            $html .= "<p>Choose an image</p> \n";
         }
 
-        $html .= "<input accept=\"image/*\" name=\"" . $this->name . "\" id=\"" . $this->id . "\" accept=\"image/*\" aria-invalid=\"false\" type=\"file\" value=\"" . $this->value . "\">";
+        $html .= "<input accept=\"image/*\" name=\"" . $this->name . "\" id=\"" . $this->id . "\" aria-invalid=\"false\" type=\"file\" > \n";
+
+        $html .= "<input name=\"" .  str_replace($this->fieldname, $this->fieldname . "_hidden", $this->name ) . "\" id=\"" . $this->id . "_hidden\" type=\"hidden\" value=\"" . $this->value . "\"> \n";
 
         return $html;
     }
