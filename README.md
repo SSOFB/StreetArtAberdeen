@@ -44,6 +44,13 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://www.wallspot.org/en/wall/sunnybank-park
 * https://www.wallspot.org/en/wall/mounthooly-roundabout-underpasses
 * https://twitter.com/streetartabdn
+* https://inspiringcity.com/2018/04/13/where-to-find-street-art-in-aberdeen/
+* https://inspiringcity.com/2018/04/15/the-murals-of-the-2018-nuart-aberdeen-street-art-festival/
+* https://inspiringcity.com/2019/04/20/the-street-art-of-the-2019-aberdeen-nuart-festival/
+* https://inspiringcity.com/2021/08/08/nuart-murals-in-aberdeen-for-2021-street-art-festival/
+* https://www.instagram.com/nogreywalls/
+* https://www.instagram.com/nuartaberdeen/
+
 
 
 ## Fonts
