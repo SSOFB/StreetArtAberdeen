@@ -6,24 +6,25 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 - [x] Install CMS
 - [x] Set-up server
 - [x] Domains
-- [x] initial fieldset
-- [x] new image field
-- [x] write basic content
+- [x] Initial fieldset
+- [x] New image field
+- [x] Write basic content
 - [x] Main template file
-- [x] top menu
-- [x] map view
-- [x] gallery view
-- [x] blog / news view
-- [x] single page view
-- [x] image resizer
-- [x] pin icons
-- [ ] edit view
-- [ ] sidebar for blog/news
-- [ ] feedback forms
-- [ ] chzn type field
-- [ ] geo lookup
-- [ ] error page
-- [ ] write more content
+- [x] Top menu
+- [x] Footer menu
+- [x] Map view
+- [x] Gallery view
+- [x] Blog / news view
+- [x] Single page view
+- [x] Image resizer
+- [x] Pin icons
+- [ ] Edit view
+- [ ] Sidebar for blog/news
+- [ ] Feedback forms
+- [ ] Chzn / select-or-new type field
+- [ ] Geo lookup
+- [ ] Error page
+- [ ] Write more content
 
 
 ## Project links
