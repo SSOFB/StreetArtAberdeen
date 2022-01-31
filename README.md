@@ -2,6 +2,30 @@
 A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 
 
+## To-do
+- [x] Install CMS
+- [x] Set-up server
+- [x] Domains
+- [x] initial fieldset
+- [x] new image field
+- [x] write basic content
+- [x] Main template file
+- [x] top menu
+- [x] map view
+- [x] gallery view
+- [x] blog / news view
+- [x] single page view
+- [x] image resizer
+- [x] pin icons
+- [ ] edit view
+- [ ] sidebar for blog/news
+- [ ] feedback forms
+- [ ] chzn type field
+- [ ] geo lookup
+- [ ] error page
+- [ ] write more content
+
+
 ## Project links
 * Git repo - https://github.com/SSOFB/StreetArtAberdeen
 * Domains: https://streetartaberdeen.org, https://streetartaberdeen.org.uk, https://streetartaberdeen.com and https://streetartaberdeen.co.uk
@@ -77,3 +101,5 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://dcc.godaddy.com/manage/streetartaberdeen.org.uk/dns?plid=1
 * https://dcc.godaddy.com/manage/streetartaberdeen.com/dns?plid=1
 * https://dcc.godaddy.com/manage/streetartaberdeen.co.uk/dns?plid=1
+
+
