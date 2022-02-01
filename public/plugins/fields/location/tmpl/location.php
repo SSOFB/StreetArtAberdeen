@@ -39,7 +39,8 @@ if ($app->input->getCmd('layout', false) !== 'edit') {
 
                 $doc = JFactory::getDocument();
                 plgFieldsLocationHelper::loadMapsAPI($this->params, $debug);
-                $doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location' . ($debug ? '' : '.min') . '.js', array('version' => 'auto'));
+                #$doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location' . ($debug ? '' : '.min') . '.js', array('version' => 'auto'));
+                $doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location.js', array('version' => 'auto'));
                 $doc->addStyleDeclaration('#' . $fieldid . ' { width: ' . ($width == 'auto' ? '100%' : $width) . '; height: ' . ($height == 'auto' ? '100%' : $height) . '; margin-bottom: 20px; }');
                 $options = array(
                     'zoom' => $field->fieldparams->get('displayzoom', 1),
