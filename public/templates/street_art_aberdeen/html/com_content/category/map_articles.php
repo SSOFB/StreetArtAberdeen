@@ -276,7 +276,9 @@ foreach ($this->items as $i => $article) {
 
 
 
-   infoWindowMyLocation = new google.maps.InfoWindow();
+   //infoWindowMyLocation = new google.maps.InfoWindow();
+
+   markerMyLocation = new google.maps.Marker();
    
    const locationButton = document.createElement("button");
 
@@ -294,25 +296,30 @@ foreach ($this->items as $i => $article) {
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                };
-               infoWindowMyLocation.setPosition(pos);
-               infoWindowMyLocation.setContent("You're around here");
-               //infoWindowMyLocation.setAttributeValue("class", "you_are_here");
-               infoWindowMyLocation.open(map);
+               //infoWindowMyLocation.setPosition(pos);
+               //infoWindowMyLocation.setContent("You're around here");
+               //infoWindowMyLocation.open(map);
                map.setCenter(pos);
 
+               markerMyLocation.setPosition(pos);
+               //markerMyLocation.setLabel("You're probably here");
+               //markerMyLocation.open(map);
+               /*
                markerMyLocation = new google.maps.Marker({
                   position: pos,
                   map,
                   title: "You're probably here",
-               });                 
+               });    
+               */       
+               markerMyLocation.setMap(map);      
             },
             () => {
-               handleLocationError(true, infoWindowMyLocation, map.getCenter());
+               handleLocationError(true, markerMyLocation, map.getCenter());
             }
          );
       } else {
          // Browser doesn't support Geolocation
-         handleLocationError(false, infoWindowMyLocation, map.getCenter());
+         handleLocationError(false, markerMyLocation, map.getCenter());
       }
    });
 
@@ -320,14 +327,15 @@ foreach ($this->items as $i => $article) {
 
 };
 
-function handleLocationError(browserHasGeolocation, infoWindowMyLocation, pos) {
-   infoWindowMyLocation.setPosition(pos);
-   infoWindowMyLocation.setContent(
-   browserHasGeolocation
+function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
+   markerMyLocation.setPosition(pos);
+   markerMyLocation.setContent(
+      browserHasGeolocation
       ? "Error: The Geolocation service failed."
       : "Error: Your browser doesn't support geolocation."
    );
-   infoWindowMyLocation.open(map);
+   //infoWindowMyLocation.open(map);
+   markerMyLocation.setMap(map);
 };
 
 google.maps.event.addDomListener(window, "resize", function() { 
