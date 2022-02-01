@@ -43,6 +43,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://joomla.stackexchange.com/questions/26322/how-to-programmatically-set-the-value-of-a-custom-field-of-type-checkbox
 * https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding
 * https://developers.google.com/maps/documentation/javascript/geolocation
+* https://developers.google.com/maps/documentation/javascript/controls
 * https://magazine.joomla.org/all-issues/may-2021/explore-the-core-play-with-custom-fields-to-enrich-your-content-or-your-design
 * https://getbootstrap.com/docs/5.0/getting-started/introduction/
 * https://visme.co/blog/website-color-schemes/

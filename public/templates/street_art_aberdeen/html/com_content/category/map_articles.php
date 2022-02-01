@@ -29,7 +29,7 @@ JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aber
 ?>
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA'></script>
 <script>
-let map, infoWindowGPS;
+let map, infoWindowMyLocation;
 function init() {
       var mapOptions = {
          "center":{
@@ -42,7 +42,7 @@ function init() {
          "fullscreenControl":true,
          "keyboardShortcuts":true,
          "mapMaker":false,
-         "mapTypeControl":true,
+         "mapTypeControl":false,
          "mapTypeControlOptions":{
             "style":0
          },
@@ -272,48 +272,62 @@ foreach ($this->items as $i => $article) {
 }
 
 ?>
-   infoWindowGPS = new google.maps.InfoWindow();
+
+
+
+
+   infoWindowMyLocation = new google.maps.InfoWindow();
    
    const locationButton = document.createElement("button");
-   
 
-   locationButton.textContent = "Pan to Current Location";
+   locationButton.textContent = "Go to your current location";
    locationButton.classList.add("custom-map-control-button");
+   locationButton.classList.add("btn");
+   locationButton.classList.add("btn-primary");
    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
    locationButton.addEventListener("click", () => {
       // Try HTML5 geolocation.
       if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(
             (position) => {
-            const pos = {
-               lat: position.coords.latitude,
-               lng: position.coords.longitude,
-            };
+               const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+               };
+               infoWindowMyLocation.setPosition(pos);
+               infoWindowMyLocation.setContent("You're around here");
+               //infoWindowMyLocation.setAttributeValue("class", "you_are_here");
+               infoWindowMyLocation.open(map);
+               map.setCenter(pos);
 
-            infoWindowGPS.setPosition(pos);
-            infoWindowGPS.setContent("Location found.");
-            infoWindowGPS.open(map);
-            map.setCenter(pos);
+               markerMyLocation = new google.maps.Marker({
+                  position: pos,
+                  map,
+                  title: "You're probably here",
+               });                 
             },
             () => {
-            handleLocationError(true, infoWindowGPS, map.getCenter());
+               handleLocationError(true, infoWindowMyLocation, map.getCenter());
             }
          );
       } else {
          // Browser doesn't support Geolocation
-         handleLocationError(false, infoWindowGPS, map.getCenter());
+         handleLocationError(false, infoWindowMyLocation, map.getCenter());
       }
    });
+
+ 
+
 };
 
-function handleLocationError(browserHasGeolocation, infoWindowGPS, pos) {
-   infoWindowGPS.setPosition(pos);
-   infoWindowGPS.setContent(
+function handleLocationError(browserHasGeolocation, infoWindowMyLocation, pos) {
+   infoWindowMyLocation.setPosition(pos);
+   infoWindowMyLocation.setContent(
    browserHasGeolocation
       ? "Error: The Geolocation service failed."
       : "Error: Your browser doesn't support geolocation."
    );
-   infoWindowGPS.open(map);
+   infoWindowMyLocation.open(map);
 };
 
 google.maps.event.addDomListener(window, "resize", function() { 

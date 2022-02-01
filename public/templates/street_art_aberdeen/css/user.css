@@ -183,6 +183,12 @@ footer a:hover{
     background-color: #314152;
     border-color: #314152;
 }
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:active:focus, 
+.btn-primary.active:focus{
+    background-color: #5cdb95;
+}
 
 .noshow,
 .saa_edit_screen #publishing,
@@ -213,7 +219,30 @@ footer a:hover{
     margin: 10px;
 }
 
-
+/* map */
+.saa_map_screen .custom-map-control-button {
+    top: auto !important;
+    left: 10px !important;
+    bottom: 50px !important;
+}
+.saa_map_screen .you_are_here{
+    padding: 5px;
+}
+/*
+.saa_map_screen .gmnoprint {
+    top: 150px !important;
+}
+.saa_map_screen .gmnoprint button {
+    background-color: #314152 !important;
+    color: #fff !important;
+}
+.saa_map_screen .gmnoprint button [aria-checked='true']  {
+    background-color: #f00 !important;
+}
+.saa_map_screen .gmnoprint button [aria-checked='false']  {
+    background-color: #0f0 !important;
+}
+*/
 .options-form, .options-form > legend {
     background-color: none;
 }
