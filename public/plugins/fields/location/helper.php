@@ -26,7 +26,8 @@ abstract class plgFieldsLocationHelper {
         $scripturl = '//maps.googleapis.com/maps/api/js?' . implode('&', $urlvars);
         if (!isset($doc->_scripts[$scripturl])) {
             $doc->addScript($scripturl);
-            $doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location' . ($debug ? '' : '.min') . '.js');
+            #$doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location' . ($debug ? '' : '.min') . '.js');
+            $doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location.js');
         }
         static::$loaded = true;
     }

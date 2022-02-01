@@ -104,9 +104,81 @@
             root.maps[id].plg_fields_location_id = id;
             root.markers[id] = new google.maps.Marker({position:mapOptions.center,map:root.maps[id]});
             root.fields[id].setup = true;            
+
+
+            markerMyLocation = new google.maps.Marker();
+            const locationButton = document.createElement("button");
+            locationButton.textContent = "Go to your current location";
+            locationButton.classList.add("custom-map-control-button");
+            locationButton.classList.add("btn");
+            locationButton.classList.add("btn-primary");
+            root.maps[id].controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+            locationButton.addEventListener("click", () => {
+                alert("click event");
+                // Try HTML5 geolocation.
+                if (navigator.geolocation) {
+                    alert("if 1");
+                    navigator.geolocation.getCurrentPosition(
+                        
+                        (position) => {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                            alert("1.1");
+                            root.maps[id].setCenter(pos);
+                            markerMyLocation.setPosition(pos);   
+                            markerMyLocation.setMap(root.maps[id]);
+                            alert('ok?');     
+                        },
+                        () => {
+                            alert("e2");
+                            //handleLocationError(true, markerMyLocation, root.maps[id].getCenter());
+                            alert("handleLocationError");
+                            markerMyLocation.setPosition(pos);
+                            markerMyLocation.setContent(
+                               browserHasGeolocation
+                               ? "Error: The Geolocation service failed."
+                               : "Error: Your browser doesn't support geolocation."
+                            );
+                            markerMyLocation.setMap(root.maps[id]);
+                        }
+                    );
+                } else {
+                    alert("if 2");
+                    // Browser doesn't support Geolocation
+                    //handleLocationError(false, markerMyLocation, root.maps[id].getCenter());
+                    alert("handleLocationError");
+                    markerMyLocation.setPosition(pos);
+                    markerMyLocation.setContent(
+                       browserHasGeolocation
+                       ? "Error: The Geolocation service failed."
+                       : "Error: Your browser doesn't support geolocation."
+                    );
+                    markerMyLocation.setMap(root.maps[id]);
+                }
+            });
+
+
         };
+
+
+
+
         construct();
     };
+
+    function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
+        alert("handleLocationError");
+        markerMyLocation.setPosition(pos);
+        markerMyLocation.setContent(
+           browserHasGeolocation
+           ? "Error: The Geolocation service failed."
+           : "Error: Your browser doesn't support geolocation."
+        );
+        markerMyLocation.setMap(map);
+     };
+
     $(document).ready(function(){
         window.plg_fields_location = new plg_fields_location_class();
     });
