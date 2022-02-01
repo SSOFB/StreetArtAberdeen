@@ -241,7 +241,7 @@ function init() {
    var map = new google.maps.Map(mapElement, mapOptions);
 <?php
 JHtml::_('jquery.framework');
-
+# loop through the places
 foreach ($this->items as $i => $article) {
 
 	list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
@@ -273,15 +273,8 @@ foreach ($this->items as $i => $article) {
 
 ?>
 
-
-
-
-   //infoWindowMyLocation = new google.maps.InfoWindow();
-
    markerMyLocation = new google.maps.Marker();
-   
    const locationButton = document.createElement("button");
-
    locationButton.textContent = "Go to your current location";
    locationButton.classList.add("custom-map-control-button");
    locationButton.classList.add("btn");
@@ -296,21 +289,8 @@ foreach ($this->items as $i => $article) {
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                };
-               //infoWindowMyLocation.setPosition(pos);
-               //infoWindowMyLocation.setContent("You're around here");
-               //infoWindowMyLocation.open(map);
                map.setCenter(pos);
-
-               markerMyLocation.setPosition(pos);
-               //markerMyLocation.setLabel("You're probably here");
-               //markerMyLocation.open(map);
-               /*
-               markerMyLocation = new google.maps.Marker({
-                  position: pos,
-                  map,
-                  title: "You're probably here",
-               });    
-               */       
+               markerMyLocation.setPosition(pos);   
                markerMyLocation.setMap(map);      
             },
             () => {
@@ -322,9 +302,6 @@ foreach ($this->items as $i => $article) {
          handleLocationError(false, markerMyLocation, map.getCenter());
       }
    });
-
- 
-
 };
 
 function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
@@ -334,7 +311,6 @@ function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
       ? "Error: The Geolocation service failed."
       : "Error: Your browser doesn't support geolocation."
    );
-   //infoWindowMyLocation.open(map);
    markerMyLocation.setMap(map);
 };
 
