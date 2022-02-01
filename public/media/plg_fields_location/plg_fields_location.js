@@ -107,7 +107,7 @@
 
 
             markerMyLocation = new google.maps.Marker();
-            const locationButton = document.createElement("button");
+            const locationButton = document.createElement("div");
             locationButton.textContent = "Go to your current location";
             locationButton.classList.add("custom-map-control-button");
             locationButton.classList.add("btn");
@@ -133,29 +133,14 @@
                         },
                         () => {
                             alert("e2");
-                            //handleLocationError(true, markerMyLocation, root.maps[id].getCenter());
-                            alert("handleLocationError");
-                            markerMyLocation.setPosition(pos);
-                            markerMyLocation.setContent(
-                               browserHasGeolocation
-                               ? "Error: The Geolocation service failed."
-                               : "Error: Your browser doesn't support geolocation."
-                            );
-                            markerMyLocation.setMap(root.maps[id]);
+                            handleLocationError(true, markerMyLocation, root.maps[id].getCenter(), root.maps[id]);
+
                         }
                     );
                 } else {
                     alert("if 2");
                     // Browser doesn't support Geolocation
-                    //handleLocationError(false, markerMyLocation, root.maps[id].getCenter());
-                    alert("handleLocationError");
-                    markerMyLocation.setPosition(pos);
-                    markerMyLocation.setContent(
-                       browserHasGeolocation
-                       ? "Error: The Geolocation service failed."
-                       : "Error: Your browser doesn't support geolocation."
-                    );
-                    markerMyLocation.setMap(root.maps[id]);
+                    handleLocationError(false, markerMyLocation, root.maps[id].getCenter(), root.maps[id]);
                 }
             });
 
@@ -168,7 +153,7 @@
         construct();
     };
 
-    function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
+    function handleLocationError(browserHasGeolocation, markerMyLocation, pos, map) {
         alert("handleLocationError");
         markerMyLocation.setPosition(pos);
         markerMyLocation.setContent(
