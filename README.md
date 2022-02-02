@@ -15,20 +15,20 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 - [x] Map view
 - [x] Gallery view
 - [x] Blog / news view
-- [ ] Single page view
 - [x] Image resizer
 - [x] Pin icons
-- [ ] Edit view
 - [x] Make map use device gps
 - [x] Favicon and template previews
-- [ ] Make map satelite, on edit
 - [x] Sidebar for blog/news
+- [x] Geo lookup, lat/lon to street name for title
+- [x] Error page
+- [ ] Single page view
+- [ ] Edit view 
+- [ ] Make map satelite, on edit
 - [ ] Feedback forms
 - [ ] Chzn / select-or-new type field
 - [ ] Add more fields
-- [x] Geo lookup, lat/lon to street name for title
-- [x] Error page
-- [ ] Write more content
+- [ ] Write more content, FAQs, Getring involved
 
 
 ## Project links
