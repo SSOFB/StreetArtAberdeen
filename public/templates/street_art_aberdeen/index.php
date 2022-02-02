@@ -18,6 +18,11 @@ use Joomla\CMS\Uri\Uri;
 $app = Factory::getApplication();
 $wa  = $this->getWebAssetManager();
 
+// Browsers support SVG favicons
+$this->addHeadLink(HTMLHelper::_('image', 'saa_icon.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);
+$this->addHeadLink(HTMLHelper::_('image', 'favicon.ico', '', [], true, 1), 'alternate icon', 'rel', ['type' => 'image/vnd.microsoft.icon']);
+$this->addHeadLink(HTMLHelper::_('image', 'saa_icon.svg', '', [], true, 1), 'mask-icon', 'rel', ['color' => '#000']);
+
 // Detecting Active Variables
 $option   = $app->input->getCmd('option', '');
 $view     = $app->input->getCmd('view', '');
@@ -52,11 +57,6 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 	<jdoc:include type="styles" />
 	<jdoc:include type="scripts" />
 	<link rel='author' href='https://plus.google.com/+AndyGaskellUK' />
-    <link href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />    
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/apple-touch-icon-57-precomposed.png"> 
 </head>
 
 <body class="site <?php echo $option
@@ -68,7 +68,6 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 	. ($this->direction == 'rtl' ? ' rtl' : '');
 ?>">
 	<header class="header container-header full-width position-sticky sticky-top">
-
 		<?php if ($this->countModules('menu', true) || $this->countModules('search', true)) : ?>
 			<div class="grid-child container-nav">
 				<a class="head_logo_link" href="<?php echo $this->baseurl; ?>" title="<?php echo $app->getCfg( 'sitename' ); ?>">
@@ -98,8 +97,6 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 		</div>
 	</footer>
 	<?php endif; ?>
-
-
 
 	<jdoc:include type="modules" name="debug" style="none" />
 </body>

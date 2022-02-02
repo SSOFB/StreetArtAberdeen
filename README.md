@@ -19,7 +19,8 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 - [x] Image resizer
 - [x] Pin icons
 - [ ] Edit view
-- [ ] Make map use device gps
+- [x] Make map use device gps
+- [x] Favicon and template previews
 - [ ] Make map satelite, on edit
 - [ ] Sidebar for blog/news
 - [ ] Feedback forms
