@@ -355,7 +355,6 @@
 /public/administrator/language/en-GB/en-GB.tpl_isis.sys.ini
 /public/administrator/language/en-GB/en-GB.xml
 /public/administrator/language/en-GB/install.xml
-
 /public/administrator/language/en-GB/com_actionlogs.ini
 /public/administrator/language/en-GB/com_actionlogs.sys.ini
 /public/administrator/language/en-GB/com_admin.ini
@@ -734,8 +733,6 @@
 /public/administrator/language/en-GB/plg_workflow_publishing.sys.ini
 /public/administrator/language/en-GB/tpl_atum.ini
 /public/administrator/language/en-GB/tpl_atum.sys.ini
-
-
 /public/administrator/language/overrides/*
 /public/administrator/language/index.html
 /public/administrator/logs/*
@@ -806,6 +803,10 @@
 /public/images/sampledata/*
 /public/images/index.html
 /public/images/joomla*
+/public/images/image-field-file*
+/public/images/large_image-field-file*
+/public/images/small_image-field-file*
+/public/images/pin_image-field-file*
 /public/images/powered_by.png
 /public/includes/*
 /public/installation/*
