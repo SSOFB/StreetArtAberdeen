@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @copyright   Copyright (C) 2005 - 2017 Michael Richey. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -23,11 +22,12 @@ abstract class plgFieldsLocationHelper {
             JText::script('PLG_FIELDS_LOCATION_SEARCHBOX_PLACEHOLDER');
         }
         $urlvars[] = 'key=' . $params->get('apikey', false);
-        $urlvars[] = 'sensor=false';
+        $urlvars[] = 'sensor=true';
         $scripturl = '//maps.googleapis.com/maps/api/js?' . implode('&', $urlvars);
         if (!isset($doc->_scripts[$scripturl])) {
             $doc->addScript($scripturl);
-            $doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location' . ($debug ? '' : '.min') . '.js');
+            #$doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location' . ($debug ? '' : '.min') . '.js');
+            $doc->addScript(JURI::root(true) . '/media/plg_fields_location/plg_fields_location.js');
         }
         static::$loaded = true;
     }

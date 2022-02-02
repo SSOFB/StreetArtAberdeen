@@ -956,7 +956,7 @@
 /public/media/editors/*
 /public/media/jui/*
 /public/media/mailto/*
-/public/media/media/*
+#/public/media/media/*
 /public/media/mod_languages/*
 /public/media/mod_sampledata/*
 /public/media/overrider/*
