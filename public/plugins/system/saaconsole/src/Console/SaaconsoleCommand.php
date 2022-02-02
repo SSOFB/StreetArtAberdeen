@@ -28,8 +28,6 @@ use JLoader;
 use Joomla\CMS\Saa_helper\Saa_helper;
 class SaaconsoleCommand extends AbstractCommand
 {
-	
-	
 	/**
 	 * The default command name
 	 *
@@ -92,14 +90,11 @@ class SaaconsoleCommand extends AbstractCommand
 		$this->addArgument('action',
 				InputArgument::REQUIRED,
 				'name of action');
-
 		$help = "<info>%command.name%</info> Does cli tasks related to StreetArtAberdeen
 			\nUsage: <info>php %command.full_name% action
 			\nwhere action is what you want to do, like makeimages</info>";
-
 		$this->setDescription('Called by cron to do cli tasks related to StreetArtAberdeen.');
 		$this->setHelp($help);
-
 	}
 
 	/**
@@ -131,43 +126,69 @@ class SaaconsoleCommand extends AbstractCommand
 			->select('value')
 			->from($db->quoteName('#__fields_values'))
 			->where($db->quoteName('field_id') . " = 6");
-		
-		// Reset the query using our newly populated query object.
 		$db->setQuery($query);
 		$images = $db->loadColumn();
-
 
         JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
         $test = Saa_helper::tester("galopin");
         $symfonyStyle->text('saa_helper test: ' . $test);
 
-
 		foreach ($images AS $image) {
 			$symfonyStyle->text('image: ' . $image);
 			# run the helper functions against them
-			#$test = Saa_helper::tester("galopin");
-			#$symfonyStyle->text('test: ' . $test);
 
-
-
-			$clear_out_image_out = Saa_helper::clear_out_image($image);
-			$symfonyStyle->text('clear_out_image_out: ' . $clear_out_image_out);
+			#$clear_out_image_out = Saa_helper::clear_out_image($image);
+			#$symfonyStyle->text('clear_out_image_out: ' . $clear_out_image_out);
 			
 			$check_image_out = Saa_helper::check_image($image);
 			$symfonyStyle->text('check_image_out: ' . $check_image_out);
-
-
-			
 		}
 
+		# reverse geo lookup
 
-		
-		
+		# get all art
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select( array('value', 'id', 'title', 'alias') );
+		$query->from($db->quoteName('#__fields_values'));
+		$query->from($db->quoteName('#__content'));
+		$query->where($db->quoteName('field_id') . " = 2");
+		$query->where($db->quoteName('item_id') . " = " . $db->quoteName('id'));
+		$query->where($db->quoteName('state') . " = 1");
+		$db->setQuery($query);
+		$articles = $db->loadAssocList();
 
+		foreach( $articles AS $article ) {
+			$symfonyStyle->text('article: ' . $article['title'] . ", lat/lon: " . $article['value'] );
+
+			# call the google api with the lat and lon
+			$reverse_lookup_json = file_get_contents( "https://maps.googleapis.com/maps/api/geocode/json?latlng=" .$article['value'] ."&key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA");
+			$reverse_lookup = json_decode($reverse_lookup_json);
+			$symfonyStyle->text("result count: " . count( $reverse_lookup->results ) );
+
+			if ( count( $reverse_lookup->results ) ) {
+
+				#$symfonyStyle->text("reverse_lookup_json: " . $reverse_lookup_json );
+				#$symfonyStyle->text("reverse_lookup: " . print_r($reverse_lookup, TRUE) );
+
+				# make up the title from the output
+				$address = $reverse_lookup->results[0]->formatted_address;
+				$title = "Near " . $address;
+				$symfonyStyle->text("title: " .  $title);
+
+				# save it to the database
+				$db = Factory::getDbo();
+				$query = $db->getQuery(true);
+				$fields = array( $db->quoteName('title') . ' = ' . $db->quote($title) );
+				$conditions = array( $db->quoteName('id') . ' = ' . $db->quote($article['id']) );
+				$query->update($db->quoteName('#__content'))->set($fields)->where($conditions);
+				$db->setQuery($query);
+				$result = $db->execute();
+			}
+		}
 
 		$symfonyStyle->success('StreetArtAberdeen CLI');
 
 		return 0;
 	}
-
 }
