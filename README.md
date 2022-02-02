@@ -26,7 +26,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 - [ ] Feedback forms
 - [ ] Chzn / select-or-new type field
 - [ ] Add more fields
-- [ ] Geo lookup
+- [ ] Geo lookup, lat/lon to street name for title
 - [ ] Error page
 - [ ] Write more content
 
