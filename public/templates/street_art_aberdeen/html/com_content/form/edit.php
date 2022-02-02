@@ -31,11 +31,6 @@ $params = $this->state->get('params');
 // This checks if the editor config options have ever been saved. If they haven't they will fall back to the original settings.
 $editoroptions = isset($params->show_publishing_options);
 
-
-
-
-
-
 if (!$editoroptions)
 {
 	$params->show_urls_images_frontend = '0';
@@ -110,20 +105,22 @@ if (!$editoroptions)
 			<input type="hidden" name="task" value="">
 			<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
 			<?php echo HTMLHelper::_('form.token'); ?>
+
+			<div class="edit_button_box">
+				<button type="button" class="btn btn-primary" data-submit-task="article.save">
+					<span class="icon-check" aria-hidden="true"></span>
+					<?php echo Text::_('JSAVE'); ?>
+				</button>
+				<button type="button" class="btn btn-danger" data-submit-task="article.cancel">
+					<span class="icon-times" aria-hidden="true"></span>
+					<?php echo Text::_('JCANCEL'); ?>
+				</button>
+				<?php if ($params->get('save_history', 0) && $this->item->id) : ?>
+					<?php echo $this->form->getInput('contenthistory'); ?>
+				<?php endif; ?>
+			</div>			
 		</fieldset>
-		<div class="mb-2">
-			<button type="button" class="btn btn-primary" data-submit-task="article.save">
-				<span class="icon-check" aria-hidden="true"></span>
-				<?php echo Text::_('JSAVE'); ?>
-			</button>
-			<button type="button" class="btn btn-danger" data-submit-task="article.cancel">
-				<span class="icon-times" aria-hidden="true"></span>
-				<?php echo Text::_('JCANCEL'); ?>
-			</button>
-			<?php if ($params->get('save_history', 0) && $this->item->id) : ?>
-				<?php echo $this->form->getInput('contenthistory'); ?>
-			<?php endif; ?>
-		</div>
+
 	</form>
 </div>
 

@@ -18,12 +18,12 @@ use Joomla\CMS\Uri\Uri;
 $app = Factory::getApplication();
 $wa  = $this->getWebAssetManager();
 
-// Browsers support SVG favicons
+# Browsers support SVG favicons
 $this->addHeadLink(HTMLHelper::_('image', 'saa_icon.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);
 $this->addHeadLink(HTMLHelper::_('image', 'favicon.ico', '', [], true, 1), 'alternate icon', 'rel', ['type' => 'image/vnd.microsoft.icon']);
 $this->addHeadLink(HTMLHelper::_('image', 'saa_icon.svg', '', [], true, 1), 'mask-icon', 'rel', ['color' => '#000']);
 
-// Detecting Active Variables
+# Detecting Active Variables
 $option   = $app->input->getCmd('option', '');
 $view     = $app->input->getCmd('view', '');
 $layout   = $app->input->getCmd('layout', '');
@@ -33,22 +33,26 @@ $sitename = htmlspecialchars($app->get('sitename'), ENT_QUOTES, 'UTF-8');
 $menu     = $app->getMenu()->getActive();
 $pageclass = $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
 
-// Template path
+# Template path
 $templatePath = 'templates/' . $this->template;
 
-// Enable assets
+# Enable assets
 $wa->usePreset('template.street_art_aberdeen.' . ($this->direction === 'rtl' ? 'rtl' : 'ltr'))
 	->useStyle('template.active.language')
 	->useStyle('template.user')
 	->useScript('template.user');
 
-// Override 'template.active' asset to set correct ltr/rtl dependency
+# Override 'template.active' asset to set correct ltr/rtl dependency
 $wa->registerStyle('template.active', '', [], [], ['template.street_art_aberdeen.' . ($this->direction === 'rtl' ? 'rtl' : 'ltr')]);
 
 $this->setMetaData('viewport', 'width=device-width, initial-scale=1');
 
-// Defer font awesome
+# Defer font awesome
 $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
+
+# sidebar
+#$got_sidebar = ($this->countModules('sidebar', true) == true ? true : false);
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">

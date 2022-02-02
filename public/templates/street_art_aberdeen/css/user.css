@@ -142,6 +142,17 @@ body.offline{
     padding-bottom: 10px;
 }
 
+.sidebars{
+    float: right;
+    clear: both;
+
+}
+.sidebar > .sidebar {
+    margin: 20px 0px 10px 0px;
+    border: #5cdb95 4px solid;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
 
 .item-page,
 .com-content-category,
@@ -243,13 +254,22 @@ footer a:hover{
     background-color: #0f0 !important;
 }
 */
-.options-form, .options-form > legend {
-    background-color: none;
+.options-form, 
+.options-form > legend {
+    background-color: transparent !important;
 }
 .options-form {
     border: 0;
 }
-
+fieldset > .control-group,
+fieldset > .article_field,
+fieldset > .edit_button_box{
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+.edit_button_box{
+    padding-bottom: 50px;
+}
 
 /* menu, only on small screens */
 @media (max-width: 767.98px) {
