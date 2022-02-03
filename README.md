@@ -82,6 +82,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://inspiringcity.com/2021/08/08/nuart-murals-in-aberdeen-for-2021-street-art-festival/
 * https://www.instagram.com/nogreywalls/
 * https://www.instagram.com/nuartaberdeen/
+* https://www.google.com/maps/d/viewer?mid=1ug4n2zC_PzJG-VLCGh97tHRP5X5rbhqG
 
 
 
