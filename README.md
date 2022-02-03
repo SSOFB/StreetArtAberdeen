@@ -28,7 +28,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 - [ ] Feedback forms
 - [ ] Chzn / select-or-new type field
 - [ ] Add more fields
-- [ ] Write more content, FAQs, Getring involved
+- [ ] Write more content, FAQs, Getting involved
 
 
 ## Project links
@@ -45,6 +45,7 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 * https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding
 * https://developers.google.com/maps/documentation/javascript/geolocation
 * https://developers.google.com/maps/documentation/javascript/controls
+* https://developers.google.com/maps/documentation/javascript/examples/control-custom
 * https://magazine.joomla.org/all-issues/may-2021/explore-the-core-play-with-custom-fields-to-enrich-your-content-or-your-design
 * https://getbootstrap.com/docs/5.0/getting-started/introduction/
 * https://visme.co/blog/website-color-schemes/

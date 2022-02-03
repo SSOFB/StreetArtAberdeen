@@ -1,8 +1,9 @@
 <?php
-
 /**
  * @copyright   Copyright (C) 2005 - 2017 Michael Richey. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 
+ * This is the edit code
  */
 defined('_JEXEC') or die;
 
@@ -72,7 +73,7 @@ class PlgFieldsLocation extends FieldsPlugin
 			$options = array(
 				'zoom'=>$field->fieldparams->get('editzoom', 1),
 				'center'=>array($latlon[0]?:0, $latlon[1]?:0),
-				'mapTypeId'=>$field->fieldparams->get('maptype', 'ROADMAP'),
+				'mapTypeId'=>$field->fieldparams->get('mapstyle', 'ROADMAP'),
                 'searchbox'=>($this->params->get('searchbox',0) && $field->fieldparams->get('searchbox',0))?1:0
 			);
 			$doc->addScriptOptions('plg_fields_location_'.$field->id,$options);

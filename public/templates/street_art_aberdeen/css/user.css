@@ -23,7 +23,7 @@
 }
 
 html, body, main {
-    height: 100%;
+    /*height: 100%;*/
 }
 
 body{
@@ -153,6 +153,10 @@ body.offline{
     padding: 10px 20px;
     border-radius: 5px;
 }
+.sidebar ul {
+    margin-bottom: 0;
+}
+
 
 .item-page,
 .com-content-category,
@@ -238,6 +242,9 @@ footer a:hover{
 }
 .saa_map_screen .you_are_here{
     padding: 5px;
+}
+.edit .custom-map-control-button{
+    top: 10px !important;
 }
 /*
 .saa_map_screen .gmnoprint {

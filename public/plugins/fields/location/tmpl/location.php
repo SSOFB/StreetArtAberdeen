@@ -20,6 +20,9 @@ if (is_array($value)) {
 }
 $latlon = explode(',', $value);
 #echo "<pre>" . print_r($latlon, TRUE) . "</pre>";
+#echo "<pre>params:\n" . print_r($field->fieldparams, TRUE) . "</pre>";
+
+
 $displaytype = $this->params->get('staticapikey', false) ? $field->fieldparams->get('displaytype', 'map') : 'map';
 if ($app->input->getCmd('layout', false) !== 'edit') {
     if (!$this->params->get('apikey', false) || $displaytype == 'text') {
@@ -29,7 +32,7 @@ if ($app->input->getCmd('layout', false) !== 'edit') {
     } else {
         $zoom = $field->fieldparams->get('displayzoom', 1);
         $width = $field->fieldparams->get('displaywidth', 'auto');
-        $height = $field->fieldparams->get('displayheight', '200px');
+        $height = $field->fieldparams->get('displayheight', '400px');
         $fieldid = 'plg_fields_location_' . $field->name . '_' . $field->id;
         switch ($displaytype) {
             case 'map':
@@ -45,7 +48,7 @@ if ($app->input->getCmd('layout', false) !== 'edit') {
                 $options = array(
                     'zoom' => $field->fieldparams->get('displayzoom', 1),
                     'center' => array($latlon[0] ?: 0, $latlon[1] ?: 0),
-                    'mapTypeId' => $field->fieldparams->get('maptype', 'ROADMAP'),
+                    'mapTypeId' => $field->fieldparams->get('mapstyle', 'ROADMAP'),
                     'searchbox' => false
                 );
                 $doc->addScriptOptions('plg_fields_location_' . $field->id, $options);
