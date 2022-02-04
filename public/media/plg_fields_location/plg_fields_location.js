@@ -131,7 +131,6 @@
                         }
                     );
                 } else {
-                    alert("if 2");
                     // Browser doesn't support Geolocation
                     handleLocationError(false, markerMyLocation, root.maps[id].getCenter(), root.maps[id]);
                 }

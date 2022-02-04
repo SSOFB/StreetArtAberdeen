@@ -26,10 +26,5 @@ if (is_array($value))
 	$value = implode(', ', $value);
 }
 
-#echo htmlentities($value);
-
-#echo "zzz";
-
+# render an img tag
 echo "<img class=\"image_field_display\" alt=\"" . $field->label . "\" src=\"" . $value . "\" />";
-
-# TODO: make this render an img tag
