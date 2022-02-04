@@ -29,6 +29,8 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 - [ ] Chzn / select-or-new type field
 - [ ] Add more fields
 - [ ] Write more content, FAQs, Getting involved
+- [ ] Tags view
+- [ ] Tag view
 
 
 ## Project links

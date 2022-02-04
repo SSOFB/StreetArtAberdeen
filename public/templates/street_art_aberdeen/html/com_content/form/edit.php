@@ -61,7 +61,6 @@ if (!$editoroptions)
 				<?php echo $this->form->renderField('transition'); ?>
 				<?php echo $this->form->renderField('state'); ?>
 				<?php echo $this->form->renderField('catid'); ?>
-				<?php echo $this->form->renderField('tags'); ?>
 				<?php echo $this->form->renderField('note'); ?>
 				<?php if ($params->get('save_history', 0)) : ?>
 					<?php echo $this->form->renderField('version_note'); ?>
@@ -101,6 +100,7 @@ if (!$editoroptions)
 				<p>Notes</p>
 				<?php echo $this->form->renderField('articletext'); ?>
 			</div>
+			<?php echo $this->form->renderField('tags'); ?>
 
 			<input type="hidden" name="task" value="">
 			<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
@@ -136,13 +136,10 @@ TODO: use the lat lon to lookup a location name, and use that as the title
 ?>
 
 <script type="text/javascript">
-
-$("#jform_title").val( Math.floor(Math.random() * (999 - 100 + 1) + 100) );
-
-
+var title = $('#jform_title').val();
+if ( title.length == 0 ) {
+	$("#jform_title").val( Math.floor(Math.random() * (999 - 100 + 1) + 100) );
+}
 </script>
-
-
-
 
 <?php 

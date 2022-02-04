@@ -339,7 +339,9 @@ fieldset > .edit_button_box{
 }
 
 /* edit view */
-
+.choices__item {
+    color: #22262a !important;
+}
 
 
 /* Map screen syles, only on small screens */

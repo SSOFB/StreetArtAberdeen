@@ -26,7 +26,7 @@ use Joomla\CMS\Saa_helper\Saa_helper;
 JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
 #echo Saa_helper::tester("galopin");
 
-shuffle($this->items);
+#shuffle($this->items);
 
 ?>
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA'></script>
