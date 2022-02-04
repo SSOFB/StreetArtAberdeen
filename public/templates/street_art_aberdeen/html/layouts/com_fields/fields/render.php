@@ -69,7 +69,7 @@ foreach ($fields as $field)
 		continue;
 	}
 
-	$output[] = '<li class="field-entry ' . $class . '">' . $content . '</li>';
+	$output[] = '<div class="field-entry ' . $class . '">' . $content . '</div>';
 }
 
 if (empty($output))
@@ -77,6 +77,6 @@ if (empty($output))
 	return;
 }
 ?>
-<ul class="fields-container">
+<div class="fields-container">
 	<?php echo implode("\n", $output); ?>
-</ul>
+</div>

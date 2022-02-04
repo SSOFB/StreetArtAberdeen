@@ -26,6 +26,8 @@ use Joomla\CMS\Saa_helper\Saa_helper;
 JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
 #echo Saa_helper::tester("galopin");
 
+shuffle($this->items);
+
 ?>
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA'></script>
 <script>
@@ -245,9 +247,9 @@ JHtml::_('jquery.framework');
 foreach ($this->items as $i => $article) {
 
 	list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
-   $info_window_content = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
-	$info_window_content .=  "<img src=\"" . Saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
-	$info_window_content .=  "</a>\n";
+   $info_window_content  = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
+	$info_window_content .= "<img src=\"" . Saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
+	$info_window_content .= "</a>\n";
    $info_window_content = json_encode($info_window_content);
     
    if ( $lat AND $lon ) {
@@ -257,7 +259,7 @@ foreach ($this->items as $i => $article) {
       map: map,
       icon: {
          url: "<?php echo Saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", 
-         scaledSize: new google.maps.Size(30, 30),
+         scaledSize: new google.maps.Size(60, 60),
       }
    });
    var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({

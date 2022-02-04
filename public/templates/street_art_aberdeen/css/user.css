@@ -310,6 +310,37 @@ fieldset > .edit_button_box{
     border: 1px solid #fff;
 }
 
+/* field views */
+.field-entry {
+    margin-bottom: 25px;
+}
+
+/* item view */
+.icons {
+    background-color: #314152;
+    border: 1px solid #252525;
+    border-radius: 30px;
+    height: 60px;
+    font-size: 20px;
+    margin: 0;
+    padding: 0px 10px;
+    float: right;
+    color: #fff;
+}
+.icons a{
+    color: #fff;
+    padding: 15px;
+    margin: 0;
+    display: inline-block;
+    text-decoration: none;
+}
+.fields-container .photo .field-value {
+    text-align: center;
+}
+
+/* edit view */
+
+
 
 /* Map screen syles, only on small screens */
 @media (max-width: 767.98px) {

@@ -26,5 +26,11 @@ if (is_array($value))
 	$value = implode(', ', $value);
 }
 
+# TODO: see if we can use the helper files's 'large_image' function to get the name of the large image
+
+# see if we have a smaller one to use
+$sized_image = str_replace("images/", "images/large_", $value);
+
+
 # render an img tag
-echo "<img class=\"image_field_display\" alt=\"" . $field->label . "\" src=\"" . $value . "\" />";
+echo "<img class=\"image_field_display\" alt=\"" . $field->label . "\" src=\"" . $sized_image . "\" />";

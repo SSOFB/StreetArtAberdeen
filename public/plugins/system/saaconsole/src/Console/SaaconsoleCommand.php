@@ -137,8 +137,8 @@ class SaaconsoleCommand extends AbstractCommand
 			$symfonyStyle->text('image: ' . $image);
 			# run the helper functions against them
 
-			#$clear_out_image_out = Saa_helper::clear_out_image($image);
-			#$symfonyStyle->text('clear_out_image_out: ' . $clear_out_image_out);
+			$clear_out_image_out = Saa_helper::clear_out_image($image);
+			$symfonyStyle->text('clear_out_image_out: ' . $clear_out_image_out);
 			
 			$check_image_out = Saa_helper::check_image($image);
 			$symfonyStyle->text('check_image_out: ' . $check_image_out);

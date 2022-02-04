@@ -5,6 +5,8 @@
  *
  * @copyright   (C) 2022 SSOFB Ltd
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 
+ * This is the edit view
  */
 
 defined('_JEXEC') or die;

@@ -31,12 +31,12 @@ if ($value == '')
 
 ?>
 <?php if ($showLabel == 1) : ?>
-	<span class="field-label <?php echo $labelClass; ?>"><?php echo htmlentities($label, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?>: </span>
+	<div class="field-label <?php echo $labelClass; ?>"><?php echo htmlentities($label, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?>: </div>
 <?php endif; ?>
 <?php if ($prefix) : ?>
-	<span class="field-prefix"><?php echo htmlentities($prefix, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?></span>
+	<div class="field-prefix"><?php echo htmlentities($prefix, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?></div>
 <?php endif; ?>
-<span class="field-value <?php echo $valueClass; ?>"><?php echo $value; ?></span>
+<div class="field-value <?php echo $valueClass; ?>"><?php echo $value; ?></div>
 <?php if ($suffix) : ?>
-	<span class="field-suffix"><?php echo htmlentities($suffix, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?></span>
+	<div class="field-suffix"><?php echo htmlentities($suffix, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?></div>
 <?php endif; ?>

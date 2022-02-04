@@ -23,10 +23,10 @@ class Saa_helper{
     # fixed params
     const image_url = "/images/";
     const image_path = JPATH_ROOT . "/images/";
-    const small_width = 300;
-    const small_height = 90;
-    const large_width = 500;
-    const large_height = 800;
+    const small_width = 400;
+    const small_height = 120;
+    const large_width = 1400;
+    const large_height = 1000;
 
     # not sure if the onAfterInitialise is needed
     public function onAfterInitialise(){
@@ -115,13 +115,12 @@ class Saa_helper{
         # create a the pin one
         if ( !file_exists( $output_pin_full_filename ) ) {
             # add an overlay
-            $width = 40; 
-            $height = 40; 
+            $width = 60; 
+            $height = 60; 
             
             # get the art image
-            # TODO: check if it's a jpeg, we can't really assume this: output_pin_full_filename or  output_small_full_filename
             $bottom_image = self::get_image($input_full_filename); 
-            $bottom_image = imagescale($bottom_image, $width - 2, 26); 
+            $bottom_image = imagescale($bottom_image, $width - 2, 42); 
             
             # get the 
             $top_image = imagecreatefrompng(JPATH_BASE . "/templates/street_art_aberdeen/images/pin.png"); 
@@ -136,7 +135,7 @@ class Saa_helper{
             imagesavealpha($pin_image, true); 
 
             # add the art image to the new image
-            imagecopy($pin_image, $bottom_image, 1, 1, 0, 0, $width - 2, 26); 
+            imagecopy($pin_image, $bottom_image, 1, 1, 0, 0, $width - 2, 42); 
             # add the pin overlay
             imagecopy($pin_image, $top_image, 0, 0, 0, 0, $width, $height); 
             # output it
