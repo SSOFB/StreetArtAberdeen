@@ -55,7 +55,9 @@ class PlgFieldsLocation extends FieldsPlugin
 			#echo "<pre>" . print_r($field, TRUE) . "</pre>";
 			#echo "<pre>" . print_r($fieldNode, TRUE) . "</pre>";
 			
-			if ( strlen( $field->value ) == 0 ) {
+            if ( isset($field->value) ) {
+				$value = $field->default_value;
+            } elseif ( strlen( $field->value ) == 0 ) {
 				$value = $field->default_value;
 			} else {
 				$value = $field->value;
