@@ -13,6 +13,17 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
+# get the helper
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+Saa_helper::ilog("Hit at template root");
+Saa_helper::ilog("Post: " . print_r($_POST, TRUE) );
+Saa_helper::ilog("Get: " . print_r($_GET, TRUE) );
+Saa_helper::ilog("Files: " . print_r($_FILES, true));
+Saa_helper::ilog("Headers: " . print_r(getallheaders(), true));
+Saa_helper::ilog("Headers: " . print_r(getallheaders(), true));
+
+
 /** @var Joomla\CMS\Document\HtmlDocument $this */
 
 $app = Factory::getApplication();
