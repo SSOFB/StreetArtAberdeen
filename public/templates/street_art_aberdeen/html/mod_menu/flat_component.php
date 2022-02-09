@@ -13,14 +13,19 @@ defined('_JEXEC') or die;
 $class = $item->anchor_css ? '<i class="'.$item->anchor_css.'" ></i>' : '';
 $title = $item->anchor_title ? 'title="'.$item->anchor_title.'" ' : '';
 if ($item->menu_image) {
-	if ( $item->params->get('menu_text', 1) ) {
+	if ( $itemParams->get('menu_text', 1) ) {
 		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" /><span class="image-title">'.$item->title.'</span> ';
 	} else {
 		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" />';
 	}
 } else { 
-	$linktype = " <span>" . $item->title . "</span>";
+	if ( $itemParams->get('menu_text', 1) ) {
+		$linktype = "<span>" . $item->title . "</span>";
+	} else {
+		$linktype = "";
+	}
 }
+
 
 switch ($item->browserNav) :
 	default:

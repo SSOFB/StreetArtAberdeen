@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 
 foreach ($list as $i => &$item) :
 
+	$itemParams = $item->getParams();
+	
 	// Render the menu item.
 	switch ($item->type) :
 		case 'separator':

@@ -28,6 +28,7 @@ html, body, main {
 
 body{
     background-color: #f3f3f3;
+    font-size: 1.4rem;
 }
 body, h1, h2, h3, h4, h5, h6{
     font-family: 'KnewaveRegular';
@@ -334,8 +335,19 @@ fieldset > .edit_button_box{
     display: inline-block;
     text-decoration: none;
 }
+.field-entry > .field-label {
+    width: 30%;
+    display: inline-block;
+}
+.field-entry > .field-value {
+    display: inline-block;
+}
 .fields-container .photo .field-value {
     text-align: center;
+}
+.fields-container .photo .field-value,
+.fields-container .location .field-value {
+    width: 100%;
 }
 
 /* edit view */

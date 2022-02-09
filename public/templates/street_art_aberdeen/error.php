@@ -64,7 +64,6 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 </head>
 
 <body class="site error_site <?php echo $option
-	. ' ' . $wrapper
 	. ' view-' . $view
 	. ($layout ? ' layout-' . $layout : ' no-layout')
 	. ($task ? ' task-' . $task : ' no-task')
