@@ -23,14 +23,15 @@ A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 - [x] Geo lookup, lat/lon to street name for title
 - [x] Error page
 - [x] Single page view
-- [ ] Edit view 
+- [x] Edit view 
 - [x] Make map satelite, on edit
 - [ ] Feedback forms
-- [ ] Chzn / select-or-new type field
+- [-] Chzn / select-or-new type field
 - [ ] Add more fields
 - [ ] Write more content, FAQs, Getting involved
-- [ ] Tags view
-- [ ] Tag view
+- [-] Tags view
+- [x] Tag view
+
 
 
 ## Project links

@@ -14,6 +14,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
+# get the helper
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_tags.tag-list');
@@ -78,6 +82,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 				<?php endif; ?>
 				<tbody>
 					<?php foreach ($this->items as $i => $item) : ?>
+						<?php echo "<pre>" . print_r($item, TRUE) . "</pre>"; ?>
 						<?php if ($item->core_state == 0) : ?>
 							<tr class="system-unpublished cat-list-row<?php echo $i % 2; ?>">
 						<?php else : ?>
