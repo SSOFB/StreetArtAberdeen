@@ -362,6 +362,11 @@ fieldset > .edit_button_box{
 }
 
 
+/* tag view */
+.com-tags-tag h1 {
+    margin-left: 20px;
+}
+
 /* contact form */
 .simplecontactform {
     margin-bottom: 50px;
