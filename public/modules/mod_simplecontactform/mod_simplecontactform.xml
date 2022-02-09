@@ -13,12 +13,44 @@
         <fields name="params">
             <fieldset name="basic">
                 <field
+                    name="preamble"
+                    type="textarea"
+                    default=""
+                    label="Preamble"
+                    description="Bit of blurb shown above the form."
+                    />
+                <field
                     name="recipient"
                     type="text"
                     default=""
                     label="Form recipient"
-                    description="Enter the recipient of the contact form's email address"
+                    description="Enter the recipient of the contact form's email address."
                     />
+                <field
+                    name="subject"
+                    type="text"
+                    default=""
+                    label="Subject"
+                    description="The subject of the email that'll come through."
+                    />
+                <field
+                    name="message_footer"
+                    type="textarea"
+                    default=""
+                    label="Message footer"
+                    description="This is a chunk of text that will get placed at the foot of the message the form sends.  It is not visible to the user."
+                    />
+				<field
+					name="include_file_box"
+					type="radio"
+					label="Show a file box on the form"
+                    description="Show a file field on the form, so the user can send a photo or something."
+					default="0"
+					filter="integer"
+					>
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</field>
             </fieldset>
         </fields>
     </config>

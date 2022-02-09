@@ -344,6 +344,28 @@ fieldset > .edit_button_box{
 }
 
 
+/* contact form */
+.simplecontactform {
+    margin-bottom: 50px;
+}
+.simplecontactform div {
+    padding-bottom: 10px;
+}
+.simplecontactform label {
+    width: 30%;
+    vertical-align: top;
+}
+.simplecontactform input,
+.simplecontactform textarea {
+    width: 60%;
+}
+.simplecontactform .send_box{
+    text-align: center;
+}
+.simplecontactform .send_box input{
+    width: 30%;
+}
+
 /* Map screen syles, only on small screens */
 @media (max-width: 767.98px) {
     .gallery img {

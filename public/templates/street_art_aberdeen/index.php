@@ -97,7 +97,9 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 
 	<main>
 		<jdoc:include type="message" />
+		<jdoc:include type="modules" name="component_above" style="container" />
 		<jdoc:include type="component" />
+		<jdoc:include type="modules" name="component_below" style="container" />
 	</main>
 
 	<?php if ( $this->countModules('footer_left', true) || $this->countModules('footer_right', true) ) : ?>

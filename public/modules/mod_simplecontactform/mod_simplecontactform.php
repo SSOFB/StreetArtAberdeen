@@ -27,9 +27,6 @@ $input = $app->input;
 $name = $input->get('name', '', 'string');
 $email = $input->get('email', '', 'string');
 $phone = $input->get('phone', '', 'string');
-$addres = $input->get('address', '', 'string');
-$timeslot = $input->get('timeslot', '', 'string');
-$subject = $input->get('subject', '', 'string');
 $message = $input->get('message', '', 'string');
 $send = $input->get('send', false, 'boolean');
 
@@ -39,37 +36,36 @@ $url = $uri->toString();
 
 if ( !$send ){
     # display the form
+
+    # get the params we need
+    $preamble = $params->get('preamble');
     ?>
-<style type='text/css'>
-    .simplecontactform label {
-        width: 200px;
-    }
-</style>
 
 <form action="<?php echo $uri; ?>" method="post" class="simplecontactform">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" value=""><br>
-
-  <label for="email">Email:</label>
-  <input type="text" id="email" name="email" value=""><br>
-
-  <label for="phone">Phone:</label>
-  <input type="text" id="phone" name="phone" value=""><br>
-
-  <label for="address">Address:</label>
-  <input type="text" id="address" name="address" value=""><br>
-
-  <label for="timeslot">Prefered delivery / collection time slot:</label>
-  <input type="text" id="timeslot" name="timeslot" value=""><br>
-
-  <label for="subject">Subject:</label>
-  <input type="text" id="subject" name="subject" value=""><br>
-
-  <label for="Message">Message:</label>
-  <textarea id="message" name="message"> </textarea><br>
-
-  <input type="hidden" name="send" value="true">
-  <input type="submit" value="Send"><br><br>
+    <?php
+    if ( strlen($preamble) ) {
+        echo "<p>" . $preamble . "</p>";
+    }
+    ?>
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value=""><br>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" value=""><br>
+    </div>
+    <div>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" value=""><br>
+    </div>
+    <div>
+        <label for="Message">Message:</label>
+        <textarea id="message" name="message"> </textarea><br>
+    </div>
+    <div class="send_box">
+        <input type="hidden" name="send" value="true">
+        <input type="submit" value="Send"><br><br>
 </form> 
 
     <?php
@@ -77,7 +73,9 @@ if ( !$send ){
 } else {
     # process the form
 
-    # recipient from the form settings
+    # get the params we need
+    $subject = $params->get('subject');
+    $message_footer = $params->get('message_footer');
     $recipient = $params->get('recipient');
 
     # sender
@@ -94,21 +92,22 @@ if ( !$send ){
     $body   = "Message from the simple contact form module \n";
     $body .= "Name: " . $name . "\n";
     $body .= "Email: " . $email . "\n";
-    $body .= "Address: " . $address . "\n";
-    $body .= "Time slot: " . $timeslot . "\n";
+    $body .= "Phone: " . $phone . "\n";
     $body .= "Subject: " . $subject . "\n";
     $body .= "Message: " . $message . "\n";
     $body .= "\n";
-    $body .= "URL: " . $uri . "\n";
- 
+    $body .= "Form on page: " . $uri . "\n";
+    $body .= "\n";
+    $body .= $message_footer;
+
     $mailer->setSubject('Message from the website');
     $mailer->setBody($body);
     
     $send = $mailer->Send();
     if ( $send !== true ) {
-        echo 'Error sending email: ';
+        echo 'Error sending message: ';
     } else {
-        echo 'Mail sent';
+        echo 'Thanks for getting in touch';
     }
 
 }

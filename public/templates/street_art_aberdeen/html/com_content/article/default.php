@@ -74,6 +74,14 @@ if ( $this->item->catid == 9 ) {
 	<?php echo $this->item->event->afterDisplayContent; ?>
 	<?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
 	<?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
+
+	<?php
+        $modules = JModuleHelper::getModules('article_below');
+        foreach ($modules as $module) {
+            $output = JModuleHelper::renderModule($module, array('style' => 'contained'));
+            echo $output;
+        }
+	?>	
 </div>
 	<?php 
 } else {

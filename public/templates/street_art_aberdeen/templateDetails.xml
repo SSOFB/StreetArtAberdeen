@@ -24,6 +24,9 @@
 	</files>
 	<positions>
 		<position>menu</position>
+		<position>component_above</position>
+		<position>component_below</position>
+		<position>article_below</position>
 		<position>sidebar</position>
 		<position>footer_left</position>
 		<position>footer_right</position>		
