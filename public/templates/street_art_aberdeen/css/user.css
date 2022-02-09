@@ -105,7 +105,6 @@ body.offline{
     margin: 0;
     padding: 0px 10px;
 }
-
 .saa_menu > div {
     display: inline-block;
 }
@@ -139,14 +138,11 @@ body.offline{
     position: absolute;
 }
 
-.news > div {
-    padding-bottom: 10px;
-}
 
+/* sidebar */
 .sidebars{
     float: right;
     clear: both;
-
 }
 .sidebar > .sidebar {
     margin: 20px 0px 10px 0px;
@@ -157,7 +153,9 @@ body.offline{
 .sidebar ul {
     margin-bottom: 0;
 }
-
+.news > div {
+    padding-bottom: 10px;
+}
 
 .item-page,
 .com-content-category,
@@ -190,6 +188,7 @@ footer a:hover{
     text-align: center;
     width: 100%;
 }
+
 /* utility bits */
 .rfloat, 
 .pull-right{
@@ -241,11 +240,11 @@ footer a:hover{
     margin: 10px;
 }
 
-/* map */
+/* Map screen styles */
 .saa_map_screen .custom-map-control-button {
     top: auto !important;
     left: 10px !important;
-    bottom: 50px !important;
+    bottom: 35px !important;
 }
 .saa_map_screen .you_are_here{
     padding: 5px;
@@ -253,21 +252,6 @@ footer a:hover{
 .edit .custom-map-control-button{
     top: 10px !important;
 }
-/*
-.saa_map_screen .gmnoprint {
-    top: 150px !important;
-}
-.saa_map_screen .gmnoprint button {
-    background-color: #314152 !important;
-    color: #fff !important;
-}
-.saa_map_screen .gmnoprint button [aria-checked='true']  {
-    background-color: #f00 !important;
-}
-.saa_map_screen .gmnoprint button [aria-checked='false']  {
-    background-color: #0f0 !important;
-}
-*/
 .options-form, 
 .options-form > legend {
     background-color: transparent !important;
@@ -284,25 +268,6 @@ fieldset > .edit_button_box{
 .edit_button_box{
     padding-bottom: 50px;
 }
-
-/* menu, only on small screens */
-@media (max-width: 767.98px) {
-    .head_logo_link{
-        margin: 0;
-        font-size: 40px;
-        width: 200px;
-        line-height: 40px;
-    }
-    .footer_right,
-    .footer_left{
-        text-align: center;
-    }
-    .mod-footer{
-        display: none;
-    }
-}
-
-/* Map screen syles */
 #saa-map{
     position: absolute;
     top: 0;
@@ -361,7 +326,6 @@ fieldset > .edit_button_box{
     color: #22262a !important;
 }
 
-
 /* tag view */
 .com-tags-tag h1 {
     margin-left: 20px;
@@ -389,11 +353,13 @@ fieldset > .edit_button_box{
     width: 30%;
 }
 
-/* Map screen syles, only on small screens */
+/* Map screen styles, only on small screens */
 @media (max-width: 767.98px) {
-    .gallery img {
-        margin: 5px 0px;
-        max-height: 70px;
+    .head_logo_link{
+        margin: 0;
+        font-size: 40px;
+        width: 200px;
+        line-height: 40px;
     }
     .saa_menu, .icons {
         border-radius: 25px;
@@ -403,6 +369,10 @@ fieldset > .edit_button_box{
     .icons a {
         padding: 10px;
     } 
+    .gallery img {
+        margin: 5px 0px;
+        max-height: 70px;
+    }
     .sidebars {
         width: 40%;
     }
@@ -411,4 +381,22 @@ fieldset > .edit_button_box{
         padding: 5px 10px;
         border-radius: 5px;
     }
+    .flat_menu span{
+        display: none;
+    }
+    .footer_right,
+    .footer_left{
+        width: 50%;
+    }
+    .footer_right .flat_menu,
+    .footer_left .flat_menu{
+        padding: 0px 10px;
+    }
+    .footer_right .flat_menu a,
+    .footer_left .flat_menu a{
+        padding: 5px 3px;
+    }
+    .mod-footer{
+        display: none;
+    }    
 }

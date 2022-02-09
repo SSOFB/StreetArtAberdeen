@@ -134,7 +134,7 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 
 	<?php if ( $this->countModules('footer_left', true) || $this->countModules('footer_right', true) || $this->countModules('footer_middle', true) ) : ?>
 	<footer class="container-footer footer full-width fixed-bottom">
-		<div class="grid-child">
+		<div class="row">
 			<div class="pull-left footer_left">
 				<jdoc:include type="modules" name="footer_left" style="none" />
 			</div>
@@ -142,7 +142,7 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 				<jdoc:include type="modules" name="footer_right" style="none" />
 			</div>
 		</div>
-		<div class="grid-child">
+		<div class="row">
 			<div class="footer_middle">
 				<jdoc:include type="modules" name="footer_middle" style="none" />
 			</div>

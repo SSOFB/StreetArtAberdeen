@@ -11,10 +11,11 @@ defined('_JEXEC') or die;
 
 // Note. It is important to remove spaces between elements.
 
+echo "<div class=\"flat_menu\">";
 foreach ($list as $i => &$item) :
 
 	$itemParams = $item->getParams();
-	
+
 	// Render the menu item.
 	switch ($item->type) :
 		case 'separator':
@@ -29,7 +30,8 @@ foreach ($list as $i => &$item) :
 			break;
 	endswitch;
 
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;';
+	echo ' ';
     
 endforeach;
+echo "</div>";
 ?>
