@@ -6,8 +6,11 @@
  * Get cli options...
  * php cli/joomla.php list
  * 
- * 
  * php cli/joomla.php saaconsole:action hello
+ * php cli/joomla.php saaconsole:action clear_out
+ * php /var/www/html/streetartaberdeen/cli/joomla.php  saaconsole:action hello
+ * run every hour with a cron like... 
+ * 0 * * * * php /var/www/html/streetartaberdeen/cli/joomla.php  saaconsole:action hello
  *
  * @copyright   Copyright (C) 2005 - 2021 Clifford E Ford. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -16,6 +19,9 @@
 namespace Joomla\Plugin\System\Saaconsole\Console;
 
 \defined('JPATH_PLATFORM') or die;
+
+# make sure we run it from the right place
+chdir("/var/www/html/streetartaberdeen/");
 
 use Joomla\CMS\Factory;
 use Joomla\Console\Command\AbstractCommand;
@@ -137,8 +143,10 @@ class SaaconsoleCommand extends AbstractCommand
 			$symfonyStyle->text('image: ' . $image);
 			# run the helper functions against them
 
-			$clear_out_image_out = Saa_helper::clear_out_image($image);
-			$symfonyStyle->text('clear_out_image_out: ' . $clear_out_image_out);
+			if ( $action == "clear_out") {
+				$clear_out_image_out = Saa_helper::clear_out_image($image);
+				$symfonyStyle->text('clear_out_image_out: ' . $clear_out_image_out);
+			}
 			
 			$check_image_out = Saa_helper::check_image($image);
 			$symfonyStyle->text('check_image_out: ' . $check_image_out);
@@ -161,29 +169,35 @@ class SaaconsoleCommand extends AbstractCommand
 		foreach( $articles AS $article ) {
 			$symfonyStyle->text('article: ' . $article['title'] . ", lat/lon: " . $article['value'] );
 
-			# call the google api with the lat and lon
-			$reverse_lookup_json = file_get_contents( "https://maps.googleapis.com/maps/api/geocode/json?latlng=" .$article['value'] ."&key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA");
-			$reverse_lookup = json_decode($reverse_lookup_json);
-			$symfonyStyle->text("result count: " . count( $reverse_lookup->results ) );
+			# check if it has an automated 3 letter title
+			if ( strlen($article['title']) == 3 ) {
 
-			if ( count( $reverse_lookup->results ) ) {
+				# call the google api with the lat and lon
+				$reverse_lookup_json = file_get_contents( "https://maps.googleapis.com/maps/api/geocode/json?latlng=" .$article['value'] ."&key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA");
+				$reverse_lookup = json_decode($reverse_lookup_json);
+				$symfonyStyle->text("result count: " . count( $reverse_lookup->results ) );
 
-				#$symfonyStyle->text("reverse_lookup_json: " . $reverse_lookup_json );
-				#$symfonyStyle->text("reverse_lookup: " . print_r($reverse_lookup, TRUE) );
+				if ( count( $reverse_lookup->results ) ) {
 
-				# make up the title from the output
-				$address = $reverse_lookup->results[0]->formatted_address;
-				$title = "Near " . $address;
-				$symfonyStyle->text("title: " .  $title);
+					#$symfonyStyle->text("reverse_lookup_json: " . $reverse_lookup_json );
+					#$symfonyStyle->text("reverse_lookup: " . print_r($reverse_lookup, TRUE) );
 
-				# save it to the database
-				$db = Factory::getDbo();
-				$query = $db->getQuery(true);
-				$fields = array( $db->quoteName('title') . ' = ' . $db->quote($title) );
-				$conditions = array( $db->quoteName('id') . ' = ' . $db->quote($article['id']) );
-				$query->update($db->quoteName('#__content'))->set($fields)->where($conditions);
-				$db->setQuery($query);
-				$result = $db->execute();
+					# make up the title from the output
+					$address = $reverse_lookup->results[0]->formatted_address;
+					$title = "Near " . $address;
+					$symfonyStyle->text("title: " .  $title);
+
+					# save it to the database
+					$db = Factory::getDbo();
+					$query = $db->getQuery(true);
+					$fields = array( $db->quoteName('title') . ' = ' . $db->quote($title) );
+					$conditions = array( $db->quoteName('id') . ' = ' . $db->quote($article['id']) );
+					$query->update($db->quoteName('#__content'))->set($fields)->where($conditions);
+					$db->setQuery($query);
+					$result = $db->execute();
+				}
+			} else {
+				$symfonyStyle->text('title is good already');
 			}
 		}
 
