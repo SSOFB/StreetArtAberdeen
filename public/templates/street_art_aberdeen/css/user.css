@@ -349,4 +349,21 @@ fieldset > .edit_button_box{
     .gallery img {
         margin: 5px;
     }
+    .saa_menu, .icons {
+        border-radius: 25px;
+        height: 50px;
+    }
+    .saa_menu > div > a,
+    .icons a {
+        padding: 10px;
+    } 
+
+    .sidebars {
+        width: 40%;
+    }
+    .sidebar > .sidebar {
+        margin-left: 5px;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
 }
