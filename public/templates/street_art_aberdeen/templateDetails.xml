@@ -30,6 +30,7 @@
 		<position>sidebar</position>
 		<position>footer_left</position>
 		<position>footer_right</position>		
+		<position>footer_middle</position>
 		<position>debug</position>	
 	</positions>
 	<languages folder="language">

@@ -28,7 +28,7 @@ html, body, main {
 
 body{
     background-color: #f3f3f3;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 }
 body, h1, h2, h3, h4, h5, h6{
     font-family: 'KnewaveRegular';
@@ -179,11 +179,17 @@ footer a:hover{
 }
 .footer_left{
     text-align: left;
+    font-size: 1.1rem;
 }
 .footer_right{
     text-align: right;
+    font-size: 1.1rem;
 }
-
+.footer_middle{
+    font-size: 0.8rem;
+    text-align: center;
+    width: 100%;
+}
 /* utility bits */
 .rfloat, 
 .pull-right{
