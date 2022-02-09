@@ -127,16 +127,10 @@ if (!$editoroptions)
 <p></p><p></p><p></p>
 
 
-<?php
-/*
-https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&amp;key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA
-
-TODO: use the lat lon to lookup a location name, and use that as the title
-*/
-?>
 
 <script type="text/javascript">
 var title = $('#jform_title').val();
+//alert(title);
 if ( title.length == 0 ) {
 	$("#jform_title").val( Math.floor(Math.random() * (999 - 100 + 1) + 100) );
 }

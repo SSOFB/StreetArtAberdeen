@@ -347,7 +347,8 @@ fieldset > .edit_button_box{
 /* Map screen syles, only on small screens */
 @media (max-width: 767.98px) {
     .gallery img {
-        margin: 5px;
+        margin: 5px 0px;
+        max-height: 70px;
     }
     .saa_menu, .icons {
         border-radius: 25px;
@@ -357,7 +358,6 @@ fieldset > .edit_button_box{
     .icons a {
         padding: 10px;
     } 
-
     .sidebars {
         width: 40%;
     }
