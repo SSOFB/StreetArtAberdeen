@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.1.0" client="site" method="upgrade">
+    <name>Simple Contact Form</name>
+    <author>Andy Gaskell @ SSOFB</author>
+    <version>1.0.0</version>
+    <description>This is a very simple Joomla contact form module for Joomla 3 and 4.  It is not designed to be best practice, but rather as simple as possible, for an easy entry point for learning and modification.</description>
+    <files>
+        <filename>mod_simplecontactform.xml</filename>
+        <filename module="mod_simplecontactform">mod_simplecontactform.php</filename>
+        <filename>index.html</filename>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="recipient"
+                    type="text"
+                    default=""
+                    label="Form recipient"
+                    description="Enter the recipient of the contact form's email address"
+                    />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
