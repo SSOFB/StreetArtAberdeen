@@ -41,7 +41,7 @@ function init() {
          "clickableIcons":true,
          "disableDoubleClickZoom":false,
          "draggable":true,
-         "fullscreenControl":true,
+         "fullscreenControl":false,
          "keyboardShortcuts":true,
          "mapMaker":false,
          "mapTypeControl":false,
