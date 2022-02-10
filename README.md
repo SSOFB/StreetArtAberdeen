@@ -33,7 +33,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [ ] Write more content, FAQs, Getting involved
 - [x] Tag view
 - [ ] Feedback form with file/image
-- [ ] Add "not there anymore" field, and logic
+- [ ] Add "not there anymore" field, and display logic
 
 
 ## Project links
