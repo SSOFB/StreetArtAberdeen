@@ -1,6 +1,9 @@
 # Street Art Aberdeen
 A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 
+## Screen grabs
+![Map View](https://raw.githubusercontent.com/SSOFB/StreetArtAberdeen/main/graphics/StreetArtAberdeen_map.png) ![Gallery View](https://raw.githubusercontent.com/SSOFB/StreetArtAberdeen/main/graphics/StreetArtAberdeen_gallery.png)
+
 
 ## To-do
 - [x] Install CMS
