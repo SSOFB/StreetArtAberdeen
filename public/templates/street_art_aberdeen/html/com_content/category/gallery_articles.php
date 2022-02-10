@@ -27,6 +27,7 @@ use Joomla\CMS\Saa_helper\Saa_helper;
 JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
 #echo Saa_helper::tester("galopin");
 
+# mix em up
 shuffle($this->items);
 
 echo "<div class=\"gallery container-fluid\">";
