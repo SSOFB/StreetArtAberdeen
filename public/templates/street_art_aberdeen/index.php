@@ -72,6 +72,7 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 	<jdoc:include type="styles" />
 	<jdoc:include type="scripts" />
 	<link rel='author' href='https://plus.google.com/+AndyGaskellUK' />
+	<link rel="manifest" href="manifest.json">
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-CHHW9DCMR5"></script>
 	<script>

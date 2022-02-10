@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+    "name":"StreetArtAberdeeen",
+    "short_name":"StreetArtAberdeeen",
+    "description": "Street Art Aberdeen is a collaborative visual guide to street art in the city of Aberdeen, Scotland",
+    "categories": ["entertainment", "lifestyle", "photo", "travel"],
+    "icons":[
+       {
+          "src":"/images/icons/android-chrome-192x192.png",
+          "sizes":"192x192",
+          "type":"image/png"
+       },
+       {
+          "src":"/images/icons/android-chrome-512x512.png",
+          "sizes":"512x512",
+          "type":"image/png"
+       }
+    ],
+    "theme_color":"#fff",
+    "background_color":"#fff",
+    "display":"standalone"
+ }
