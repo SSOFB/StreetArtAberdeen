@@ -30,10 +30,10 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Edit view 
 - [x] Make map satelite, on edit
 - [x] Feedback forms
-- [ ] Add more fields
 - [ ] Write more content, FAQs, Getting involved
 - [x] Tag view
-- [x] Feedback form with file/image
+- [ ] Feedback form with file/image
+- [ ] Add "not there anymore" field, and logic
 
 
 ## Project links

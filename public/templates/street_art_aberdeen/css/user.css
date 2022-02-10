@@ -244,6 +244,7 @@ footer a:hover{
 /* gallery */
 .gallery{
     text-align: justify;
+    margin-top: -25px;
 }
 .gallery img {
     max-height: 200px;
