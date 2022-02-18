@@ -57,6 +57,14 @@ class SaaconsoleCommand extends AbstractCommand
 	private $ioStyle;
 
 	/**
+	 * Application object.
+	 *
+	 * @var    \Joomla\CMS\Application\CMSApplication
+	 * @since  3.8.0
+	 */
+	protected $app;
+
+	/**
 	 * Instantiate the command.
 	 *
 	 * @since   4.0.0
@@ -153,6 +161,11 @@ class SaaconsoleCommand extends AbstractCommand
 		}
 
 		# reverse geo lookup
+		# TODO: get values from params
+		#$map_api_key = $this->params->get('map_api_key');
+		#$map_default_lat_lon = $this->params->get('map_default_lat_lon'); 
+		$map_api_key = "AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA";
+		$map_default_lat_lon = "57.145428390778264,-2.0937312622943405"; 
 
 		# get all art
 		$db = Factory::getDbo();
@@ -170,10 +183,13 @@ class SaaconsoleCommand extends AbstractCommand
 			$symfonyStyle->text('article: ' . $article['title'] . ", lat/lon: " . $article['value'] );
 
 			# check if it has an automated 3 letter title
-			if ( strlen($article['title']) == 3 ) {
+			if ( $article['value'] == $map_default_lat_lon ) {
+				$symfonyStyle->text("lat lon equals default, so it's in the harbour, the location has not been set");
+				
+			} elseif ( strlen($article['title']) == 3 ) {
 
 				# call the google api with the lat and lon
-				$reverse_lookup_json = file_get_contents( "https://maps.googleapis.com/maps/api/geocode/json?latlng=" .$article['value'] ."&key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA");
+				$reverse_lookup_json = file_get_contents( "https://maps.googleapis.com/maps/api/geocode/json?latlng=" . $article['value'] . "&key=" . $map_api_key);
 				$reverse_lookup = json_decode($reverse_lookup_json);
 				$symfonyStyle->text("result count: " . count( $reverse_lookup->results ) );
 
@@ -198,6 +214,7 @@ class SaaconsoleCommand extends AbstractCommand
 				}
 			} else {
 				$symfonyStyle->text('title is good already');
+
 			}
 		}
 

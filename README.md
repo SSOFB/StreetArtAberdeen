@@ -34,6 +34,8 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Tag view
 - [ ] Feedback form with file/image
 - [ ] Add "not there anymore" field, and display logic
+- [ ] Move config and settings out of code
+- [x] Handle titles for places with no map set, like, in the harbour
 
 
 ## Project links

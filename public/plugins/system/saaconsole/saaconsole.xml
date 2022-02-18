@@ -19,5 +19,21 @@
 		<language tag="en-GB">language/en-GB/plg_system_saaconsole.sys.ini</language>
 	</languages>
 	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="map_api_key"
+					type="text"
+					label="Google Maps API Key"
+					default=""
+				/>
+				<field
+					name="map_default_lat_lon"
+					type="text"
+					label="Default lat/lon from the location field"
+					default="57.145428390778264,-2.0937312622943405"
+				/>
+			</fieldset>
+		</fields>
 	</config>
 </extension>
