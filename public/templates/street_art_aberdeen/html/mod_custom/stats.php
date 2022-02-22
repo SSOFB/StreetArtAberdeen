@@ -42,10 +42,10 @@ $query = $db
     ->group('date');
 $db->setQuery($query);
 $counts_data_array = $db->loadObjectList();
-echo "<p>" . $query . "</p>";
-echo "<pre>" . print_r($counts_data_array, TRUE) . "</pre>";
+#echo "<p>" . $query . "</p>";
+#echo "<pre>" . print_r($counts_data_array, TRUE) . "</pre>";
 foreach ($counts_data_array AS $counts_data) {
-    echo "<p>Number added in " . $counts_data->date . ": " . $counts_data->total . "</p>";
+    echo "<p>Added in " . $counts_data->date . ": " . $counts_data->total . "</p>";
 }
 
 
