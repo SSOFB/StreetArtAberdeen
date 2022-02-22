@@ -30,6 +30,8 @@ JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aber
 # mix em up
 shuffle($this->items);
 
+#echo "<pre>items: " . count($this->items) . "</pre>";
+
 echo "<div class=\"gallery container-fluid\">";
 foreach ($this->items as $i => $article) {
 	#echo "<pre>" . print_r($article, TRUE) . "</pre>";

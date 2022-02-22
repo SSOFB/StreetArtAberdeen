@@ -74,9 +74,27 @@ $htag    = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 		<?php endif; ?>
 	<?php endif; ?>
 
+	<?php
+	# sidebar on the left
+    if (count(JModuleHelper::getModules('sidebar'))) {
+        echo "<div class=\"sidebars\"> \n";
+        $sidebars = JModuleHelper::getModules('sidebar');
+        foreach ($sidebars as $sidebar) {
+            $output = JModuleHelper::renderModule($sidebar, array('style' => 'noCard'));
+            #$params = new JRegistry;
+            #$params->loadString($sidebar->params);
+            echo "<div class='sidebar'> \n";
+            echo $output;
+            echo "</div> \n";
+        }
+        echo "</div> \n";
+    }
+	?>
+
+
 	<?php $leadingcount = 0; ?>
 	<?php if (!empty($this->lead_items)) : ?>
-		<div class="com-content-category-blog__items blog-items items-leading <?php echo $this->params->get('blog_class_leading'); ?>">
+		<div class="com-content-category-blog__items blog-items-na items-leading <?php echo $this->params->get('blog_class_leading'); ?>">
 			<?php foreach ($this->lead_items as &$item) : ?>
 				<div class="com-content-category-blog__item blog-item"
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
@@ -101,7 +119,7 @@ $htag    = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 			<?php $blogClass .= (int) $this->params->get('multi_column_order', 0) === 0 ? ' masonry-' : ' columns-'; ?>
 			<?php $blogClass .= (int) $this->params->get('num_columns'); ?>
 		<?php endif; ?>
-		<div class="com-content-category-blog__items blog-items <?php echo $blogClass; ?>">
+		<div class="com-content-category-blog__items blog-items-na <?php echo $blogClass; ?>">
 		<?php foreach ($this->intro_items as $key => &$item) : ?>
 			<div class="com-content-category-blog__item blog-item"
 				itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">

@@ -283,7 +283,7 @@ class Saa_helper{
         $logging_level = 0;
         
         if ( $level > $logging_level ) {
-            $log_file = JPATH_ADMINISTRATOR . '/logs/saa_helper.log';
+            $log_file = JPATH_ADMINISTRATOR . "/logs/saa_helper_" . date("Y-m-d_H-i-s")  . "_" . rand(1000,9999) . ".log";
             $fh = fopen($log_file, 'a') or die();
             # if it's a app designer call, also write it to that log
             $calling_function = debug_backtrace()[1]['function'];

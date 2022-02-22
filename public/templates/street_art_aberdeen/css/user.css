@@ -240,6 +240,28 @@ footer a:hover{
     border: 0;
     height: 0;
 }
+ul.q_list { 	
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.q_list li:nth-child(odd) {
+    margin: 0px 0px 0px 0px;
+}
+.q_list li:nth-child(odd):before {
+    content: 'Q: ';
+}
+.q_list li:nth-child(even) {
+    margin: 0px 0px 20px 0px;
+}
+.q_list li:nth-child(even)::before {
+    content: 'A: ';
+}
+.q_list li:nth-child(odd):before,
+.q_list li:nth-child(even)::before {
+    color: #314152;
+    text-shadow: #5cdb95 1px 1px 0px;
+}
 
 /* gallery */
 .gallery{
@@ -343,6 +365,9 @@ fieldset > .edit_button_box{
 }
 
 /* contact form */
+.component_below{
+    clear: both;
+}
 .simplecontactform {
     margin-bottom: 50px;
 }

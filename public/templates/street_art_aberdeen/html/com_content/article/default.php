@@ -125,7 +125,7 @@ if ( $this->item->catid == 9 ) {
 	<?php echo $this->item->event->afterDisplayTitle; ?>
 
 	<?php
-
+	# sidebar on the left
     if (count(JModuleHelper::getModules('sidebar'))) {
         echo "<div class=\"sidebars\"> \n";
         $sidebars = JModuleHelper::getModules('sidebar');
@@ -138,7 +138,8 @@ if ( $this->item->catid == 9 ) {
             echo "</div> \n";
         }
         echo "</div> \n";
-    } ?>
+    } 
+	?>
 
 	<?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
 		<?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>

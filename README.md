@@ -36,6 +36,8 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [ ] Add "not there anymore" field, and display logic
 - [ ] Move config and settings out of code
 - [x] Handle titles for places with no map set, like, in the harbour
+- [x] Stats module
+- [ ] Auto social posting, either new items or random daily
 
 
 ## Project links
@@ -73,6 +75,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 * https://docs.joomla.org/J4_CLI_example_-_Onoffbydate
 * https://docs.joomla.org/JDOC:Joomla_4_Tutorials_Project
 * https://docs.joomla.org/Using_own_library_in_your_extensions
+* https://docs.joomla.org/J3.x:Access_Control_List_Tutorial
 
 
 ## Street Art Links

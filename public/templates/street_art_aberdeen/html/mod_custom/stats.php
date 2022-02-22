@@ -19,6 +19,8 @@ defined('_JEXEC') or die;
 
 
 $db = JFactory::getDbo();
+
+# get the total
 $query = $db
     ->getQuery(true)
     ->select('COUNT(*)')
@@ -27,25 +29,29 @@ $query = $db
     ->where($db->quoteName('state') . " = 1");
 $db->setQuery($query);
 $count = $db->loadResult();
-
 echo "<p>Number of artworks: " . $count . "</p>";
 
 
-
+# get the added-per-month
 $query = $db
     ->getQuery(true)
-    ->select('COUNT(*)')
+    ->select('DATE_FORMAT(created, "%M %Y") AS date, count(*) AS total')
     ->from($db->quoteName('#__content'))
     ->where($db->quoteName('catid') . " = 9")
     ->where($db->quoteName('state') . " = 1")
-    ->where($db->quoteName('state') . " = 1")
-    ->where("MONTH(created) = MONTH(CURRENT_DATE()")
-    ->where("YEAR(created) = YEAR(CURRENT_DATE()");
+    ->group('date');
 $db->setQuery($query);
-$count = $db->loadResult();
+$counts_data_array = $db->loadObjectList();
+echo "<p>" . $query . "</p>";
+echo "<pre>" . print_r($counts_data_array, TRUE) . "</pre>";
+foreach ($counts_data_array AS $counts_data) {
+    echo "<p>Number added in " . $counts_data->date . ": " . $counts_data->total . "</p>";
+}
 
-echo "<p>Number added this month: " . $count . "</p>";
 
+# TODO: Add user leader board
+# TODO: Add visitors
+# TODO: Add top items
 
 ?>
 	</div>
