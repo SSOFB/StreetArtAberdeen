@@ -123,11 +123,6 @@ if (!$editoroptions)
 
 	</form>
 </div>
-
-<p></p><p></p><p></p>
-
-
-
 <script type="text/javascript">
 var title = $('#jform_title').val();
 //alert(title);
@@ -135,5 +130,3 @@ if ( title.length == 0 ) {
 	$("#jform_title").val( Math.floor(Math.random() * (999 - 100 + 1) + 100) );
 }
 </script>
-
-<?php 
