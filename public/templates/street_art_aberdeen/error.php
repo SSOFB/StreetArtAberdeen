@@ -15,6 +15,15 @@ use Joomla\CMS\Uri\Uri;
 
 /** @var Joomla\CMS\Document\ErrorDocument $this */
 
+# log the error stuff
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+Saa_helper::elog("Hit on Joomla error screen");
+Saa_helper::elog("Post: " . print_r($_POST, TRUE) );
+Saa_helper::elog("Get: " . print_r($_GET, TRUE) );
+Saa_helper::elog("Files: " . print_r($_FILES, true));
+Saa_helper::elog("Headers: " . print_r(getallheaders(), true));
+
 $app = Factory::getApplication();
 $wa  = $this->getWebAssetManager();
 

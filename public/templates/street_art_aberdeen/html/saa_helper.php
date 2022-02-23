@@ -285,7 +285,6 @@ class Saa_helper{
         if ( $level > $logging_level ) {
             $log_file = JPATH_ADMINISTRATOR . "/logs/saa_helper_" . date("Y-m-d_H-i-s")  . "_" . rand(1000,9999) . ".log";
             $fh = fopen($log_file, 'a') or die();
-            # if it's a app designer call, also write it to that log
             $calling_function = debug_backtrace()[1]['function'];
             $log_string = date("Y-m-d H:i:s") . " : " . $calling_function . " : " . $log_string . "\n";
             fwrite($fh, $log_string);
@@ -293,6 +292,23 @@ class Saa_helper{
         }
     }  	
 
+    /**
+    * very simple logging function
+    *
+    * @param   string    the log string
+    * @param   int       log level
+    */    
+    public static function elog($log_string, $level=1) {
+        $logging_level = 0;
+        
+        if ( $level > $logging_level ) {
+            $log_file = JPATH_ADMINISTRATOR . "/logs/saa_error_" . date("Y-m-d")  . ".log";
+            $fh = fopen($log_file, 'a') or die();
+            $log_string = date("Y-m-d H:i:s") . " : : " . $log_string . "\n";
+            fwrite($fh, $log_string);
+            fclose($fh);  
+        }
+    }  
 
 }
 ?>
