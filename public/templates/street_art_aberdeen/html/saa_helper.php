@@ -283,7 +283,8 @@ class Saa_helper{
         $logging_level = 0;
         
         if ( $level > $logging_level ) {
-            $log_file = JPATH_ADMINISTRATOR . "/logs/saa_helper_" . date("Y-m-d_H-i-s")  . "_" . rand(1000,9999) . ".log";
+            $pid = getmypid();
+            $log_file = JPATH_ADMINISTRATOR . "/logs/saa_helper_" . date("Y-m-d_H-i")  . "_p" . $pid . ".log";
             $fh = fopen($log_file, 'a') or die();
             $calling_function = debug_backtrace()[1]['function'];
             $log_string = date("Y-m-d H:i:s") . " : " . $calling_function . " : " . $log_string . "\n";
