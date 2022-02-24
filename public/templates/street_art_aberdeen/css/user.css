@@ -366,14 +366,6 @@ fieldset > .edit_button_box{
 .tag-gallery{
     margin: 0px -10px 20px -10px;
 }
-#saa-map{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    border: 0;
-    height: 300px;
-}
 #saa-tag-map{
     width: 100%;
     height: 700px;
