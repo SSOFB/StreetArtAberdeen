@@ -366,6 +366,14 @@ fieldset > .edit_button_box{
 .com-tags-tag h1 {
     margin-left: 20px;
 }
+#saa-map{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    height: 300px;
+}
 
 /* contact form */
 .component_below{

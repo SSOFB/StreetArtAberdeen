@@ -27,6 +27,8 @@ $wa->useScript('com_tags.tag-default');
 // Get the user object.
 $user = Factory::getUser();
 
+$map_data = Array();
+
 // Check if user is allowed to add/edit based on tags permissions.
 // Do we really have to make it so people can see unpublished tags???
 $canEdit      = $user->authorise('core.edit', 'com_tags');
@@ -81,9 +83,143 @@ $canEditState = $user->authorise('core.edit.state', 'com_tags');
 					echo "<a href=\"".  Route::_($item->link) . "\">";
 					echo "<img src=\"" . Saa_helper::small_image( $item->jcfields[6]->rawvalue ) . "\" alt=\"" . $item->title . "\" />";
 					echo "</a>\n";
-				}
+
+					list($lat, $lon) = explode(",", $item->jcfields[2]->rawvalue);
+
+					$info_window_content = "<a href=\"".  Route::_($item->link) . "\">";
+					$info_window_content .= "<img src=\"" . Saa_helper::small_image( $item->jcfields[6]->rawvalue ) . "\" alt=\"" . $item->title . "\" />";
+					$info_window_content .= "</a>\n";
+				    #$info_window_content = json_encode($info_window_content);
+
+					$map_pin = Array(
+						"id" => $item->id,
+						"lat" => $lat,
+						"lon" => $lon,
+						"pin_image" => Saa_helper::pin_image( $item->jcfields[6]->rawvalue ),
+						"info_window_content" => $info_window_content,
+
+					);
+					$map_data[] = $map_pin;
+ 				}
 				?>
 			<?php endforeach; ?>
+<?php 
+#echo "<pre>" . print_r($map_data, TRUE) . "</pre>";
+?>
+
+<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA'></script>
+<script>
+let map, infoWindowMyLocation;
+function init() {
+      var mapOptions = {
+		"center":{
+			"lat":57.15293719699627,
+			"lng":-2.0985408827160112
+		},
+		"clickableIcons":true,
+		"disableDoubleClickZoom":false,
+		"draggable":true,
+		"fullscreenControl":false,
+		"keyboardShortcuts":true,
+		"mapMaker":false,
+		"mapTypeControl":false,
+		"mapTypeControlOptions":{
+			"style":0
+		},
+		"mapTypeId":"roadmap",
+		"rotateControl":true,
+		"scaleControl":true,
+		"scrollwheel":true,
+		"streetViewControl":true,
+		"zoom":15,
+		"zoomControl":true,
+		"navigationControl":true,
+		"navigationControlOptions":{
+			"style":1
+		}
+   };
+   var mapElement = document.getElementById('saa-tag-map');
+   var map = new google.maps.Map(mapElement, mapOptions);
+<?php
+JHtml::_('jquery.framework');
+# loop through the places
+foreach ($map_data as $i => $map_pin) {
+    
+    if ( $map_pin["lat"] AND $map_pin["lon"] ) {
+      ?>
+    var marker<?php echo $map_pin["id"]; ?> = new google.maps.Marker({
+      position: {lat:<?php echo $map_pin["lat"]; ?>, lng: <?php echo $map_pin["lon"]; ?>}, 
+      map: map,
+      icon: {
+         url: "<?php echo $map_pin["pin_image"]; ?>", 
+         scaledSize: new google.maps.Size(60, 60),
+      }
+    });
+    var infowindow<?php echo $map_pin["id"]; ?> = new google.maps.InfoWindow({
+      content: <?php echo json_encode( $map_pin["info_window_content"] ); ?> ,map: map
+    });
+    marker<?php echo $map_pin["id"]; ?>.addListener('click', function () { 
+      infowindow<?php echo $map_pin["id"]; ?>.open(map, marker<?php echo $map_pin["id"]; ?>) ;
+    });
+    infowindow<?php echo $map_pin["id"]; ?>.close();        
+      <?php
+    }    
+}
+?>
+
+   markerMyLocation = new google.maps.Marker();
+   const locationButton = document.createElement("button");
+   locationButton.textContent = "Go to your current location";
+   locationButton.classList.add("custom-map-control-button");
+   locationButton.classList.add("btn");
+   locationButton.classList.add("btn-primary");
+   map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
+   locationButton.addEventListener("click", () => {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(
+            (position) => {
+               const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+               };
+               map.setCenter(pos);
+               markerMyLocation.setPosition(pos);   
+               markerMyLocation.setMap(map);      
+            },
+            () => {
+               handleLocationError(true, markerMyLocation, map.getCenter());
+            }
+         );
+      } else {
+         // Browser doesn't support Geolocation
+         handleLocationError(false, markerMyLocation, map.getCenter());
+      }
+   });
+};
+
+function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
+   markerMyLocation.setPosition(pos);
+   markerMyLocation.setContent(
+      browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation."
+   );
+   markerMyLocation.setMap(map);
+};
+
+google.maps.event.addDomListener(window, "resize", function() { 
+   var center = map.getCenter(); 
+   google.maps.event.trigger(map, "resize"); 
+   map.setCenter(center); 
+});
+
+google.maps.event.addDomListener(window, 'load', init);
+</script>
+<div id='saa-tag-map'></div>   
+
+
+
 		</div>
 	<?php endif; ?>
 </div>

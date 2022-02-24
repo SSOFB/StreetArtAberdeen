@@ -282,17 +282,6 @@ foreach ($this->items as $i => $article) {
    locationButton.classList.add("custom-map-control-button");
    locationButton.classList.add("btn");
    locationButton.classList.add("btn-primary");
-/*
-   locationButton.style.backgroundColor = "#fff";
-   locationButton.style.border = "2px solid #fff";
-   locationButton.style.borderRadius = "3px";
-   locationButton.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
-   locationButton.style.cursor = "pointer";
-   locationButton.style.marginTop = "8px";
-   locationButton.style.marginBottom = "22px";
-   locationButton.style.textAlign = "center";
-   locationButton.title = "Click to recenter the map";
-*/
    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
    locationButton.addEventListener("click", () => {
       // Try HTML5 geolocation.
