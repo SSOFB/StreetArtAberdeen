@@ -16,7 +16,7 @@ $isSingleTag = count($this->item) === 1;
 $htag        = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 ?>
 
-<div class="com-tags-tag tag-category">
+<div class="com-tags-tag tag-category container">
 
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<h1>

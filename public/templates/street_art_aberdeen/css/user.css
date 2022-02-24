@@ -159,7 +159,7 @@ body.offline{
 
 .item-page,
 .com-content-category,
-com-content-article {
+.com-content-article {
     margin-bottom: 50px;
 }
 footer {
@@ -353,6 +353,9 @@ fieldset > .edit_button_box{
 .fields-container .location .field-value {
     width: 100%;
 }
+.item-page .list-inline{
+    margin-bottom: 50px;
+}
 
 /* edit view */
 .choices__item {
@@ -369,7 +372,8 @@ fieldset > .edit_button_box{
     clear: both;
 }
 .simplecontactform {
-    margin-bottom: 50px;
+    margin-bottom: 100px;
+    min-height: 200px;
 }
 .simplecontactform div {
     padding-bottom: 10px;

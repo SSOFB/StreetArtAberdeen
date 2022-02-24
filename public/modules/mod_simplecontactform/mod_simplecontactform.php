@@ -34,6 +34,8 @@ $send = $input->get('send', false, 'boolean');
 $uri = Uri::getInstance();
 $url = $uri->toString();
 
+echo "<div class=\"simplecontactform\">\n";
+
 if ( !$send ){
     # display the form
 
@@ -41,7 +43,7 @@ if ( !$send ){
     $preamble = $params->get('preamble');
     ?>
 
-<form action="<?php echo $uri; ?>" method="post" class="simplecontactform">
+<form action="<?php echo $uri; ?>" method="post">
     <?php
     if ( strlen($preamble) ) {
         echo "<p>" . $preamble . "</p>";
@@ -65,7 +67,8 @@ if ( !$send ){
     </div>
     <div class="send_box">
         <input type="hidden" name="send" value="true">
-        <input type="submit" value="Send"><br><br>
+        <input type="submit" value="Send">
+    </div>   
 </form> 
 
     <?php
@@ -111,3 +114,5 @@ if ( !$send ){
     }
 
 }
+
+echo "</div>\n";

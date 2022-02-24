@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $description      = $this->params->get('all_tags_description');
 $descriptionImage = $this->params->get('all_tags_description_image');
 ?>
-<div class="com-tags tag-category">
+<div class="com-tags tag-category container">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<h1>
 			<?php echo $this->escape($this->params->get('page_heading')); ?>

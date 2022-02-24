@@ -78,10 +78,10 @@ if ( $this->item->catid == 9 ) {
 	<?php
         $modules = JModuleHelper::getModules('article_below');
         foreach ($modules as $module) {
-            $output = JModuleHelper::renderModule($module, array('style' => 'contained'));
+            $output = JModuleHelper::renderModule($module, array('style' => 'uncontained'));
             echo $output;
         }
-	?>	
+	?>
 </div>
 	<?php 
 } else {
