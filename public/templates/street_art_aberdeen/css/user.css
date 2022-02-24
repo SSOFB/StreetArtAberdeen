@@ -363,8 +363,8 @@ fieldset > .edit_button_box{
 }
 
 /* tag view */
-.com-tags-tag h1 {
-    margin-left: 20px;
+.tag-gallery{
+    margin: 0px -10px 20px -10px;
 }
 #saa-map{
     position: absolute;
@@ -374,6 +374,16 @@ fieldset > .edit_button_box{
     border: 0;
     height: 300px;
 }
+#saa-tag-map{
+    width: 100%;
+    height: 700px;
+    margin-bottom: 100px;
+}
+#saa-tag-map img {
+    max-width: 100%;
+    max-height: none;
+}
+
 
 /* contact form */
 .component_below{
