@@ -33,13 +33,14 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [ ] Write more content, FAQs, Getting involved
 - [x] Tag view
 - [ ] Feedback form with file/image
-- [ ] Add "not there anymore" field, and display logic
+- [x] Add "state" field
+- [ ] Add logic for "state" = "gone" so gone items don't show on the main map
 - [ ] Move config and settings out of code
 - [x] Handle titles for places with no map set, like, in the harbour
 - [x] Stats module
 - [ ] Auto social posting, either new items or random daily
-- [ ] Add a map to the tag page
-- [ ] Improve layout of the tags and tag pages
+- [x] Add a map to the tag page
+- [x] Improve layout of the tags and tag pages
 
 
 ## Project links
