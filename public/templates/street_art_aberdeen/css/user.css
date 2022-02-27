@@ -361,6 +361,9 @@ fieldset > .edit_button_box{
 .choices__item {
     color: #22262a !important;
 }
+.control-group fieldset{
+    margin-bottom: 0;
+}
 
 /* tag view */
 .tag-gallery{
