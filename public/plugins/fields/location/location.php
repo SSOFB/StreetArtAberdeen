@@ -55,12 +55,15 @@ class PlgFieldsLocation extends FieldsPlugin
 			#echo "<pre>" . print_r($field, TRUE) . "</pre>";
 			#echo "<pre>" . print_r($fieldNode, TRUE) . "</pre>";
 			
-            if ( !property_exists("field", "value") ) {
+            if ( !property_exists($field, "value") ) {
 				$value = $field->default_value;
+				#echo "<pre>value property doesn't exist</pre>";
             } elseif ( strlen( $field->value ) == 0 ) {
 				$value = $field->default_value;
+				#echo "<pre>value property is zero</pre>";
 			} else {
 				$value = $field->value;
+				#echo "<pre>value property used</pre>";
 			}
 			#echo "value: " . $value . "<br/>";
 			$latlon = (false===strpos($value,','))?array(0,0):explode(',', $value);
