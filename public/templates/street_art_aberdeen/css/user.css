@@ -379,6 +379,10 @@ fieldset > .edit_button_box{
     max-height: none;
 }
 
+/* modules */
+.sidebars{
+    max-width: 33%;
+}
 
 /* contact form */
 .component_below{
@@ -404,6 +408,11 @@ fieldset > .edit_button_box{
 }
 .simplecontactform .send_box input{
     width: 30%;
+}
+
+.latest_art div{
+    margin: 10px 10px 10px 0px;
+    display: inline-block;
 }
 
 /* Map screen styles, only on small screens */

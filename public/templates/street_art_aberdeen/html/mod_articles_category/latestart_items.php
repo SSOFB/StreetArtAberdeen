@@ -12,77 +12,39 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
 
-?>
-<?php foreach ($items as $item) : ?>
 
-<?php
-#echo "<pre>" . print_r($item, TRUE) . "</pre>";
+# get the helper
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
 
-?>
-<li>
-	<?php if ($params->get('link_titles') == 1) : ?>
-		<?php $attributes = ['class' => 'mod-articles-category-title ' . $item->active]; ?>
-		<?php $link = htmlspecialchars($item->link, ENT_COMPAT, 'UTF-8', false); ?>
-		<?php $title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false); ?>
-		<?php echo HTMLHelper::_('link', $link, $title, $attributes); ?>
-	<?php else : ?>
-		<?php echo $item->title; ?>
-	<?php endif; ?>
+JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
 
-	<?php if ($item->displayHits) : ?>
-		<span class="mod-articles-category-hits">
-			(<?php echo $item->displayHits; ?>)
-		</span>
-	<?php endif; ?>
+echo "<div class=\"latest_art\">\n";
 
-	<?php if ($params->get('show_author')) : ?>
-		<span class="mod-articles-category-writtenby">
-			<?php echo $item->displayAuthorName; ?>
-		</span>
-	<?php endif; ?>
+foreach ($items as $item) {
 
-	<?php if ($item->displayCategoryTitle) : ?>
-		<span class="mod-articles-category-category">
-			(<?php echo $item->displayCategoryTitle; ?>)
-		</span>
-	<?php endif; ?>
+	$photo = "";
+	$custom_fields = FieldsHelper::getFields('com_content.article', $item, true);
+	#echo "<pre>" . print_r($item, TRUE) . "</pre>";
+	#echo "<pre>custom_fields:\n" . print_r($custom_fields, TRUE) . "</pre>";
+	foreach ( $custom_fields AS $custom_field ) {
+		if ( $custom_field->name == "photo" ) {
+			$photo = $custom_field->rawvalue;
+		}
+	}
+	#echo "<pre>photo: " . $photo . "</pre>";
+	
+	if ( $photo ) {
+		echo "<div>\n";
+		echo "<a href=\"".  Route::_($item->link) . "\">";
+		echo "<img src=\"" . Saa_helper::small_image( $photo ) . "\" alt=\"" . $item->title . "\" />";
+		echo "</a>\n";
+		echo "</div>\n";
+	}
 
-	<?php if ($item->displayDate) : ?>
-		<span class="mod-articles-category-date"><?php echo $item->displayDate; ?></span>
-	<?php endif; ?>
+}
 
-	<?php if ($params->get('show_tags', 0) && $item->tags->itemTags) : ?>
-		<div class="mod-articles-category-tags">
-			<?php echo LayoutHelper::render('joomla.content.tags', $item->tags->itemTags); ?>
-		</div>
-	<?php endif; ?>
+echo "</div>\n";
 
-	<?php if ($params->get('show_introtext')) : ?>
-		<p class="mod-articles-category-introtext">
-			<?php echo $item->displayIntrotext; ?>
-		</p>
-	<?php endif; ?>
-
-	<?php if ($params->get('show_readmore')) : ?>
-		<p class="mod-articles-category-readmore">
-			<a class="mod-articles-category-title <?php echo $item->active; ?>" href="<?php echo $item->link; ?>">
-				<?php if ($item->params->get('access-view') == false) : ?>
-					<?php echo Text::_('MOD_ARTICLES_CATEGORY_REGISTER_TO_READ_MORE'); ?>
-				<?php elseif ($item->alternative_readmore) : ?>
-					<?php echo $item->alternative_readmore; ?>
-					<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
-						<?php if ($params->get('show_readmore_title', 0)) : ?>
-							<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
-						<?php endif; ?>
-				<?php elseif ($params->get('show_readmore_title', 0)) : ?>
-					<?php echo Text::_('MOD_ARTICLES_CATEGORY_READ_MORE'); ?>
-					<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
-				<?php else : ?>
-					<?php echo Text::_('MOD_ARTICLES_CATEGORY_READ_MORE_TITLE'); ?>
-				<?php endif; ?>
-			</a>
-		</p>
-	<?php endif; ?>
-</li>
-<?php endforeach; ?>
