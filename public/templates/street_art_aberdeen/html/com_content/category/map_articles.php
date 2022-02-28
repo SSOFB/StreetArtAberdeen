@@ -246,36 +246,38 @@ function init() {
 JHtml::_('jquery.framework');
 # loop through the places
 foreach ($this->items as $i => $article) {
+   #echo "\n<!-- \n" . print_r($article, TRUE) . "\n -->\n";
+   # if it's not gone
+   if ( $article->jcfields[9]->rawvalue != "Gone" ) {
+      list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
+      $info_window_content  = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
+      $info_window_content .= "<img src=\"" . Saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
+      $info_window_content .= "</a>\n";
+      $info_window_content = json_encode($info_window_content);
+       
+      if ( $lat AND $lon ) {
+         ?>
+      var marker<?php echo $article->id; ?> = new google.maps.Marker({
+         position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, 
+         map: map,
+         icon: {
+            url: "<?php echo Saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", 
+            scaledSize: new google.maps.Size(60, 60),
+         }
+      });
+      var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({
+         content: <?php echo $info_window_content; ?> ,map: map
+      });
+      marker<?php echo $article->id; ?>.addListener('click', function () { 
+         infowindow<?php echo $article->id; ?>.open(map, marker<?php echo $article->id; ?>) ;
+      });
+      infowindow<?php echo $article->id; ?>.close();        
+         <?php
+      }   
+   }
 
-	list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
-   $info_window_content  = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
-	$info_window_content .= "<img src=\"" . Saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
-	$info_window_content .= "</a>\n";
-   $info_window_content = json_encode($info_window_content);
-    
-   if ( $lat AND $lon ) {
-      ?>
-   var marker<?php echo $article->id; ?> = new google.maps.Marker({
-      position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, 
-      map: map,
-      icon: {
-         url: "<?php echo Saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", 
-         scaledSize: new google.maps.Size(60, 60),
-      }
-   });
-   var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({
-      content: <?php echo $info_window_content; ?> ,map: map
-   });
-   marker<?php echo $article->id; ?>.addListener('click', function () { 
-      infowindow<?php echo $article->id; ?>.open(map, marker<?php echo $article->id; ?>) ;
-   });
-   infowindow<?php echo $article->id; ?>.close();        
-      <?php
-   }    
 }
-
 ?>
-
    markerMyLocation = new google.maps.Marker();
    const locationButton = document.createElement("button");
    locationButton.textContent = "Go to your current location";
