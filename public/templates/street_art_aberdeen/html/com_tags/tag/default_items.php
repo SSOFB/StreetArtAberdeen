@@ -35,7 +35,7 @@ $canEdit      = $user->authorise('core.edit', 'com_tags');
 $canCreate    = $user->authorise('core.create', 'com_tags');
 $canEditState = $user->authorise('core.edit.state', 'com_tags');
 ?>
-<p>All the items with this label.</p>
+<p>All the items with this label...</p>
 <div class="com-tags__items">
 	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
 		<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
