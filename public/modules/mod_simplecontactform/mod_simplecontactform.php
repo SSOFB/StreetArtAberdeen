@@ -96,14 +96,13 @@ if ( !$send ){
     $body .= "Name: " . $name . "\n";
     $body .= "Email: " . $email . "\n";
     $body .= "Phone: " . $phone . "\n";
-    $body .= "Subject: " . $subject . "\n";
     $body .= "Message: " . $message . "\n";
     $body .= "\n";
     $body .= "Form on page: " . $uri . "\n";
     $body .= "\n";
     $body .= $message_footer;
 
-    $mailer->setSubject('Message from the website');
+    $mailer->setSubject($subject);
     $mailer->setBody($body);
     
     $send = $mailer->Send();
