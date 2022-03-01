@@ -34,13 +34,14 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Tag view
 - [ ] Feedback form with file/image
 - [x] Add "state" field
-- [ ] Add logic for "state" = "gone" so gone items don't show on the main map
+- [x] Add logic for "state" = "gone" so gone items don't show on the main map
 - [ ] Move config and settings out of code
 - [x] Handle titles for places with no map set, like, in the harbour
 - [x] Stats module
 - [ ] Auto social posting, either new items or random daily
 - [x] Add a map to the tag page
 - [x] Improve layout of the tags and tag pages
+- [x] Create 'latest additions' module
 
 
 ## Project links
