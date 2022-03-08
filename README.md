@@ -42,6 +42,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Add a map to the tag page
 - [x] Improve layout of the tags and tag pages
 - [x] Create 'latest additions' module
+- [ ] Share preview data, images and text
 
 
 ## Project links
@@ -64,6 +65,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 * https://visme.co/blog/website-color-schemes/
 * https://slides.woluweb.be/cassiopeia/cassiopeia.html
 * https://joomla.stackexchange.com/questions/31868/
+* https://socialsharepreview.com/?url=https://streetartaberdeen.org/
 
 
 ## Useful Joomla! docs
