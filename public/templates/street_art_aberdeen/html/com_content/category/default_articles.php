@@ -225,33 +225,42 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 							</div>
 						<?php endif; ?>
 					<?php endif; ?>
+					
+					<?php echo " ID:" . $article->id . "\n"; ?>
+					
 					<?php if ($article->state == ContentComponent::CONDITION_UNPUBLISHED) : ?>
-						<div>
-							<span class="list-published badge bg-warning text-light">
-								<?php echo Text::_('JUNPUBLISHED'); ?>
-							</span>
-						</div>
+						<span class="list-published badge bg-secondary">
+							<?php echo Text::_('JUNPUBLISHED'); ?>
+						</span>
 					<?php endif; ?>
 					<?php if ($article->publish_up > $currentDate) : ?>
-						<div>
-							<span class="list-published badge bg-warning text-light">
-								<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
-							</span>
-						</div>
+						<span class="list-published badge bg-secondary">
+							<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
+						</span>
 					<?php endif; ?>
 					<?php if (!is_null($article->publish_down) && $article->publish_down < $currentDate) : ?>
-						<div>
-							<span class="list-published badge bg-warning text-light">
-								<?php echo Text::_('JEXPIRED'); ?>
-							</span>
-						</div>
+						<span class="list-published badge bg-secondary">
+							<?php echo Text::_('JEXPIRED'); ?>
+						</span>
 					<?php endif; ?>
 
+					<br/>
+
 					<?php
-					echo "<small>";
-					echo " file: " . $article->jcfields[6]->rawvalue . " ";
-					echo " lat/lon: " . $article->jcfields[2]->rawvalue . " ";
-					echo "</small>";
+
+					$file = $article->jcfields[6]->rawvalue;
+					if ( strlen($file) == 0 ){
+						echo " <span class=\"badge rounded-pill bg-danger\">No Image</span> ";
+					} else {
+						echo " <small>file: " . $file . "</small> ";
+					}
+
+					$lat_lon = $article->jcfields[2]->rawvalue;
+					if ( strlen($lat_lon) == 0 ){
+						echo " <span class=\"badge rounded-pill bg-danger\">No Lat/Lon</span> ";
+					} else {
+						echo " <small>lat_lon: " . $lat_lon . "</small> ";
+					}
 					?>
 				</th>
 				<?php if ($this->params->get('list_show_date')) : ?>
