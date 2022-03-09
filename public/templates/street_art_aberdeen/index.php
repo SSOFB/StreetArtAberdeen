@@ -63,8 +63,33 @@ $this->setMetaData('viewport', 'width=device-width, initial-scale=1');
 # Defer font awesome
 $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 
-# sidebar
-#$got_sidebar = ($this->countModules('sidebar', true) == true ? true : false);
+# this URL
+$uri = Uri::getInstance();
+$url = $uri->toString();
+
+# social meta
+$doc = JFactory::getDocument();
+$head_data = $doc->getHeadData();
+# twitter
+$head_data["metaTags"]["name"]["twitter:card"] = "summary_large_image";
+$head_data["metaTags"]["name"]["twitter:title"] = $head_data["title"];
+$head_data["metaTags"]["name"]["twitter:description"] = $head_data["description"];
+$head_data["metaTags"]["name"]["twitter:site"] = "@StreetArtAberde";
+$head_data["metaTags"]["name"]["twitter:creator"] = "@AndyGasman";
+if ( !array_key_exists( "twitter:image", $head_data["metaTags"]["name"] ) ) {
+	$head_data["metaTags"]["name"]["twitter:image"] = Uri::root() . "images/metadata_images/street_art_aberdeen_map.jpg";
+}
+# open graph / facebook
+$head_data["metaTags"]["property"]["og:title"] = $head_data["title"];
+$head_data["metaTags"]["property"]["og:description"] = $head_data["description"];
+$head_data["metaTags"]["property"]["og:url"] = $url;
+if (!array_key_exists("og:image", $head_data["metaTags"]["property"])) {
+    $head_data["metaTags"]["property"]["og:image"] = Uri::root() . "images/metadata_images/street_art_aberdeen_map.jpg";
+}
+$head_data["metaTags"]["property"]["og:type"] = "website";
+# set it back
+$doc->setHeadData($head_data);
+#echo "<!--\n\n" . print_r($head_data, TRUE) . "\n\n-->";
 
 ?>
 <!DOCTYPE html>

@@ -21,9 +21,9 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\CMS\HTML\ModuleHelper;
 
-#use Joomla\CMS\Saa_helper\Saa_helper;
-#JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
-#echo Saa_helper::tester("galopin");
+# get the helper
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
 
 // Create shortcuts to some parameters.
 $params  = $this->item->params;
@@ -44,6 +44,14 @@ JHtml::_('jquery.framework');
 
 if ( $this->item->catid == 9 ) {
 	# it's an street art item
+
+	# set the social meta
+	$doc = JFactory::getDocument();
+	$head_data = $doc->getHeadData();
+	$head_data["metaTags"]["name"]["twitter:image"] = Uri::root() . Saa_helper::large_image( $this->item->jcfields[6]->rawvalue );
+	$head_data["metaTags"]["property"]["og:image"] = Uri::root() . Saa_helper::large_image( $this->item->jcfields[6]->rawvalue );
+	$doc->setHeadData($head_data);
+
 	?>
 <div class="com-content-article item-page<?php echo $this->pageclass_sfx; ?> container" itemscope itemtype="https://schema.org/Article">
 	<?php if ($canEdit) : ?>
