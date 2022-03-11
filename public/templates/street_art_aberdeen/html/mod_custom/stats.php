@@ -35,11 +35,12 @@ echo "<p>Number of artworks: " . $count . "</p>";
 # get the added-per-month
 $query = $db
     ->getQuery(true)
-    ->select('DATE_FORMAT(created, "%M %Y") AS date, count(*) AS total')
+    ->select('DATE_FORMAT(created, "%M %Y") AS date, DATE_FORMAT(created, "%Y-%m") AS order_date, count(*) AS total')
     ->from($db->quoteName('#__content'))
     ->where($db->quoteName('catid') . " = 9")
     ->where($db->quoteName('state') . " = 1")
-    ->group('date');
+    ->group('date')
+    ->order('order_date DESC');
 $db->setQuery($query);
 $counts_data_array = $db->loadObjectList();
 #echo "<p>" . $query . "</p>";
