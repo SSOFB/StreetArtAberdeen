@@ -43,6 +43,9 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Improve layout of the tags and tag pages
 - [x] Create 'latest additions' module
 - [x] Share preview data, images and text
+- [ ] Items by day view
+- [ ] The saving issues, see https://github.com/SSOFB/StreetArtAberdeen/issues/1
+- [ ] An "items nearby" section at the bottom of each item
 
 
 ## Project links
