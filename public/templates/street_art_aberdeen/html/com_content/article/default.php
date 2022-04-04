@@ -91,6 +91,7 @@ if ( $this->item->catid == 9 ) {
 	?>
 
 	<?php 
+	/*
 	$user = Factory::getUser();
     if (!$user->guest) {
 		# nearby
@@ -154,9 +155,10 @@ if ( $this->item->catid == 9 ) {
 		$query->order('ordering ASC');
 		$db->setQuery($query);
 		$ll_results = $db->loadObjectList();
-
+		
 
     }
+	*/
 	?>
 
 </div>
