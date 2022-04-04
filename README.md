@@ -132,3 +132,13 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 * https://dcc.godaddy.com/manage/streetartaberdeen.co.uk/dns?plid=1
 
 
+## Handy SQL
+
+Change a field value...
+```
+UPDATE `s3ib7_fields_values` SET `value`='Sculpture' WHERE `value`='3D' AND `field_id`=1;
+
+UPDATE `s3ib7_fields_values` SET `value`='Mosaic' WHERE `value`='Sculpture' AND `field_id`=1 AND `item_id` IN(832,475,687,474,536,710,476,690,151,860,303);
+
+UPDATE `s3ib7_fields_values` SET `value`='Spray' WHERE `value`='Unknown' AND `field_id`=1;
+```
