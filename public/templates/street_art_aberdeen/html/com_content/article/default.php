@@ -91,7 +91,7 @@ if ( $this->item->catid == 9 ) {
 	?>
 
 	<?php 
-	/*
+
 	$user = Factory::getUser();
     if (!$user->guest) {
 		# nearby
@@ -109,7 +109,7 @@ if ( $this->item->catid == 9 ) {
 		$query->where($db->quoteName('item_id') . ' = ' . $db->quoteName('id'));
 		$query->where($db->quoteName('item_id') . ' != ' . $db->quote( $this->item->id ));
 		$query->where($db->quoteName('state') . ' = 1');
-		$query->order('ordering ASC');
+		#$query->order('ordering ASC');
 		$db->setQuery($query);
 		$ll_results = $db->loadObjectList();
 
@@ -136,29 +136,42 @@ if ( $this->item->catid == 9 ) {
 
 		asort($distance_array);
 
-		$distance_array = array_slice($distance_array, 0, 20); 
+		#echo "<pre>distance_array: \n" . print_r($distance_array, TRUE) . "\n</pre>\n";
+
+		$distance_array = array_slice($distance_array, 0, 20, true); 
 		
 		echo "<pre>distance_array: \n" . print_r($distance_array, TRUE) . "\n</pre>\n";
 
 		$close_items = array_keys( $distance_array );
 
+		echo "<pre>close_items: \n" . print_r($close_items, TRUE) . "\n</pre>\n";
+
 		$query = $db->getQuery(true);
-		$query->select( 'c.id', 'c.title', 'c.alias', 'vp.value');
+		#$query->select( Array('c.id', 'c.title', 'c.alias', 'vp.value', 'vs.value'), Array('art_id', 'title', 'alias', 'photo', 'state'));
+		$query->select( $db->quoteName('c.id', 'art_id') );
+		$query->select( $db->quoteName('c.title', 'title') );
+		$query->select( $db->quoteName('c.alias', 'alias') );
+		$query->select( $db->quoteName('vp.value', 'photo') ); 
+		$query->select( $db->quoteName('vs.value', 'state') );
 		$query->from($db->quoteName('#__fields_values', 'vp'));
 		$query->from($db->quoteName('#__fields_values', 'vs'));
 		$query->from($db->quoteName('#__content', 'c'));
 		$query->where($db->quoteName('vp.field_id') . ' = 6');
 		$query->where($db->quoteName('vp.item_id') . ' = ' . $db->quoteName('id'));
+		$query->where($db->quoteName('vs.field_id') . ' = 9');
+		$query->where($db->quoteName('vs.item_id') . ' = ' . $db->quoteName('id'));
 		$query->where($db->quoteName('c.id') . ' != ' . $db->quote( $this->item->id ));
-		$query->where($db->quoteName('c.id') . ' IN (' . implode(",", $close_items ));
+		$query->where($db->quoteName('c.id') . ' IN (' . implode(",", $close_items ) . ')' );
 		$query->where($db->quoteName('c.state') . ' = 1');
-		$query->order('ordering ASC');
+		#$query->order('ordering ASC');
 		$db->setQuery($query);
-		$ll_results = $db->loadObjectList();
+		$art_results = $db->loadObjectList();
+		echo "<pre>query: " . $query . "</pre>\n";
+		echo "<pre>art_results: \n" . print_r($art_results, TRUE) . "\n</pre>\n";
 		
 
     }
-	*/
+
 	?>
 
 </div>
