@@ -385,6 +385,12 @@ fieldset > .edit_button_box{
     margin-bottom: 10px;
 }
 
+/* all art view */
+.com-content-category__table img {
+    float: right;
+    margin-top: -30px;
+}
+
 /* modules */
 .sidebars{
     max-width: 33%;
