@@ -89,6 +89,76 @@ if ( $this->item->catid == 9 ) {
             echo $output;
         }
 	?>
+
+	<?php 
+	$user = Factory::getUser();
+    if (!$user->guest) {
+		# nearby
+        echo "<h3>Other art nearby...</h3>\n";
+
+		list($this_lat, $this_lon) = explode(",", $this->item->jcfields[2]->rawvalue);
+		echo "this_lat: " . $this_lat . " this_lon: " . $this_lon . "<br/>";
+
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select( $db->quoteName( array('value', 'item_id'), array('ll', 'art_id') ) );
+		$query->from($db->quoteName('#__fields_values'));
+		$query->from($db->quoteName('#__content'));
+		$query->where($db->quoteName('field_id') . ' = 2');
+		$query->where($db->quoteName('item_id') . ' = ' . $db->quoteName('id'));
+		$query->where($db->quoteName('item_id') . ' != ' . $db->quote( $this->item->id ));
+		$query->where($db->quoteName('state') . ' = 1');
+		$query->order('ordering ASC');
+		$db->setQuery($query);
+		$ll_results = $db->loadObjectList();
+
+
+
+		#echo "<pre>results: \n" . print_r($ll_results, TRUE) . "\n</pre>\n";
+
+		$distance_array = Array();
+		$art_lat = Array();
+		$art_lon = Array();
+
+		foreach ($ll_results AS $ll_result) {
+			list($lat, $lon) = explode(",", $ll_result->ll);
+			$lat_diff = abs($this_lat -  $lat);
+			$lon_diff = abs($this_lon -  $lon);
+			$diff = $lat_diff + $lon_diff;
+
+			$distance_array[$ll_result->art_id] = $diff;
+
+			$art_lat[$ll_result->art_id] = $lat;
+			$art_lon[$ll_result->art_id] = $lon;
+
+		}
+
+		asort($distance_array);
+
+		$distance_array = array_slice($distance_array, 0, 20); 
+		
+		echo "<pre>distance_array: \n" . print_r($distance_array, TRUE) . "\n</pre>\n";
+
+		$close_items = array_keys( $distance_array );
+
+		$query = $db->getQuery(true);
+		$query->select( 'c.id', 'c.title', 'c.alias', 'vp.value');
+		$query->from($db->quoteName('#__fields_values', 'vp'));
+		$query->from($db->quoteName('#__fields_values', 'vs'));
+		$query->from($db->quoteName('#__content', 'c'));
+		$query->where($db->quoteName('vp.field_id') . ' = 6');
+		$query->where($db->quoteName('vp.item_id') . ' = ' . $db->quoteName('id'));
+		$query->where($db->quoteName('c.id') . ' != ' . $db->quote( $this->item->id ));
+		$query->where($db->quoteName('c.id') . ' IN (' . implode(",", $close_items ));
+		$query->where($db->quoteName('c.state') . ' = 1');
+		$query->order('ordering ASC');
+		$db->setQuery($query);
+		$ll_results = $db->loadObjectList();
+
+
+    }
+	?>
+
 </div>
 	<?php 
 } else {
