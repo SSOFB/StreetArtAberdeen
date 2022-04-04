@@ -178,17 +178,18 @@ footer a:hover{
 .footer_left{
     text-align: left;
     font-size: 1.1rem;
-    width: 50%;
+    width: 35%;
 }
 .footer_right{
     text-align: right;
     font-size: 1.1rem;
-    width: 50%;
+    width: 35%;
 }
 .footer_middle{
     font-size: 0.8rem;
     text-align: center;
-    width: 100%;
+    width: 30%;
+    padding-top: 8px;
 }
 .footer .flat_menu a {
     padding: 5px 10px 3px 10px;
@@ -427,6 +428,19 @@ fieldset > .edit_button_box{
     display: inline-block;
 }
 
+/* Map screen styles, only on medium and small screens */
+@media (max-width: 1120px) {
+    .footer_middle{
+        display: none;
+    }    
+    .footer_right{
+        width: 60%;
+    }
+    .footer_left{
+        width: 40%;
+    }
+}
+
 /* Map screen styles, only on small screens */
 @media (max-width: 767.98px) {
     .head_logo_link{
@@ -459,10 +473,6 @@ fieldset > .edit_button_box{
     .flat_menu span{
         display: none;
     }
-    .footer_right,
-    .footer_left{
-        width: 50%;
-    }
     .footer_right .flat_menu,
     .footer_left .flat_menu{
         padding: 0px 10px;
@@ -471,7 +481,5 @@ fieldset > .edit_button_box{
     .footer_left .flat_menu a{
         padding: 5px 0px;
     }
-    .mod-footer{
-        display: none;
-    }    
+ 
 }
