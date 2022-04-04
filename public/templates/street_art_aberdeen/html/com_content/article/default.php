@@ -45,7 +45,6 @@ JHtml::_('jquery.framework');
 if ( $this->item->catid == 9 ) {
 	# it's an street art item
 
-	# set the social meta
 	$doc = JFactory::getDocument();
 	$head_data = $doc->getHeadData();
 	$head_data["metaTags"]["name"]["twitter:image"] = Uri::root() . Saa_helper::large_image( $this->item->jcfields[6]->rawvalue );

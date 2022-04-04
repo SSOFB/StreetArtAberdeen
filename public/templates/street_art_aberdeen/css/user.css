@@ -379,6 +379,12 @@ fieldset > .edit_button_box{
     max-height: none;
 }
 
+/* news etc */
+.item-content img,
+.com-content-article img {
+    margin-bottom: 10px;
+}
+
 /* modules */
 .sidebars{
     max-width: 33%;
