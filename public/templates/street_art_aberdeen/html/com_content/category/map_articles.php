@@ -54,6 +54,18 @@ function init() {
          "scaleControl":true,
          "scrollwheel":true,
          "streetViewControl":true,
+         "streetViewControlOptions":{
+            "position": google.maps.ControlPosition.RIGHT_CENTER,
+         },
+         "zoom":15,
+         "zoomControl":true,
+         "zoomControlOptions": {
+            "position": google.maps.ControlPosition.RIGHT_CENTER,
+         },
+         "navigationControl":true,
+         "navigationControlOptions":{
+            "style":1
+         },
          "styles":[
          {
             "featureType":"administrative",
@@ -232,13 +244,7 @@ function init() {
                }
             ]
          }
-      ],
-      "zoom":15,
-      "zoomControl":true,
-      "navigationControl":true,
-      "navigationControlOptions":{
-         "style":1
-      }
+      ]
    };
    var mapElement = document.getElementById('saa-map');
    var map = new google.maps.Map(mapElement, mapOptions);
@@ -284,7 +290,7 @@ foreach ($this->items as $i => $article) {
    locationButton.classList.add("custom-map-control-button");
    locationButton.classList.add("btn");
    locationButton.classList.add("btn-primary");
-   map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
+   map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(locationButton);
    locationButton.addEventListener("click", () => {
       // Try HTML5 geolocation.
       if (navigator.geolocation) {

@@ -21,6 +21,10 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\AssociationHelper;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
+# get the helper
+use Joomla\CMS\Saa_helper\Saa_helper;
+JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_content.articles-list');
@@ -248,19 +252,43 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 
 					<?php
 
+					#echo "<pre>tags: " . print_r($article, TRUE) . "</pre>";
+
 					$file = $article->jcfields[6]->rawvalue;
 					if ( strlen($file) == 0 ){
 						echo " <span class=\"badge rounded-pill bg-danger\">No Image</span> ";
 					} else {
-						echo " <small>file: " . $file . "</small> ";
+						echo "<img src=\"" . Saa_helper::small_image( $article->jcfields[6]->rawvalue ) . "\" alt=\"" . $article->title . "\" />";
+						echo " <small>file: " . $file . "</small><br/>";
 					}
 
 					$lat_lon = $article->jcfields[2]->rawvalue;
 					if ( strlen($lat_lon) == 0 ){
 						echo " <span class=\"badge rounded-pill bg-danger\">No Lat/Lon</span> ";
 					} else {
-						echo " <small>lat_lon: " . $lat_lon . "</small> ";
+						echo " <small>lat_lon: " . $lat_lon . "</small><br/>";
 					}
+
+					$medium = $article->jcfields[1]->rawvalue[0];
+					if ( strlen($medium) == 0 ){
+						echo " <span class=\"badge rounded-pill bg-danger\">No Medium</span> ";
+					} else {
+						echo " <span class=\"badge rounded-pill bg-primary\">Medium: " . $medium . "</span>";
+					}	
+
+					$state = $article->jcfields[9]->rawvalue;
+					if ( strlen($state) == 0 ){
+						echo " <span class=\"badge rounded-pill bg-danger\">No state</span> ";
+					} else {
+						echo " <span class=\"badge rounded-pill bg-success\">State: " . $state . "</span>";
+					}	
+
+					$year = $article->jcfields[3]->rawvalue[0];
+					if ( strlen($state) == 0 ){
+						echo " <span class=\"badge rounded-pill bg-danger\">No year</span> ";
+					} else {
+						echo " <span class=\"badge rounded-pill bg-info\">Year: " . $year . "</span>";
+					}	
 					?>
 				</th>
 				<?php if ($this->params->get('list_show_date')) : ?>

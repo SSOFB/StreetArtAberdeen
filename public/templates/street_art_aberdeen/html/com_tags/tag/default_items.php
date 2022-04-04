@@ -35,7 +35,7 @@ $canEdit      = $user->authorise('core.edit', 'com_tags');
 $canCreate    = $user->authorise('core.create', 'com_tags');
 $canEditState = $user->authorise('core.edit.state', 'com_tags');
 ?>
-<p>All the items with this label...</p>
+<p>All the items with this label.</p>
 <div class="com-tags__items">
 	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
 		<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
@@ -160,22 +160,22 @@ foreach ($map_data as $i => $map_pin) {
 	locationButton.classList.add("custom-map-control-button");
 	locationButton.classList.add("btn");
 	locationButton.classList.add("btn-primary");
-	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
+	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(locationButton);
 	locationButton.addEventListener("click", () => {
       	// Try HTML5 geolocation.
       	if (navigator.geolocation) {
          	navigator.geolocation.getCurrentPosition(
 				(position) => {
-				const pos = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				};
-				map.setCenter(pos);
-				markerMyLocation.setPosition(pos);   
-				markerMyLocation.setMap(map);      
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					};
+					map.setCenter(pos);
+					markerMyLocation.setPosition(pos);   
+					markerMyLocation.setMap(map);      
 				},
 				() => {
-				handleLocationError(true, markerMyLocation, map.getCenter());
+					handleLocationError(true, markerMyLocation, map.getCenter());
 				}
          	);
       	} else {
