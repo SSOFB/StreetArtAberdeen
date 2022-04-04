@@ -1,6 +1,7 @@
 # Street Art Aberdeen
 A gallery and map of street art in Aberdeen, Scotland, built with Joomla.
 
+
 ## Screen grabs
 They'll probably be out of date shortly, but a picture tells a 1000 words I guess.
 ![Map View](https://raw.githubusercontent.com/SSOFB/StreetArtAberdeen/main/graphics/StreetArtAberdeen_map.png) ![Gallery View](https://raw.githubusercontent.com/SSOFB/StreetArtAberdeen/main/graphics/StreetArtAberdeen_gallery.png)
@@ -44,8 +45,9 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Create 'latest additions' module
 - [x] Share preview data, images and text
 - [ ] Items by day view
-- [ ] The saving issues, see https://github.com/SSOFB/StreetArtAberdeen/issues/1
-- [ ] An "items nearby" section at the bottom of each item
+- [ ] The saving issues, see issue #1
+- [ ] An "items nearby" section at the bottom of each item, see issue #5
+- [ ] Add filter to map and gallery, see issue #4 
 
 
 ## Project links
@@ -105,7 +107,6 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 * https://www.google.com/maps/d/viewer?mid=1ug4n2zC_PzJG-VLCGh97tHRP5X5rbhqG
 
 
-
 ## Fonts
 * Kneewave - https://www.theleagueofmoveabletype.com/knewave
 * Philly Sans - https://allfont.net/download/philly-sans/
@@ -130,5 +131,8 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 * https://dcc.godaddy.com/manage/streetartaberdeen.org.uk/dns?plid=1
 * https://dcc.godaddy.com/manage/streetartaberdeen.com/dns?plid=1
 * https://dcc.godaddy.com/manage/streetartaberdeen.co.uk/dns?plid=1
+
+
+
 
 
