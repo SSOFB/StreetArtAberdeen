@@ -97,6 +97,8 @@ if ( $this->item->catid == 9 ) {
 		# nearby
         echo "<h3>Other art nearby...</h3>\n";
 
+		echo "<pre>" . print_r($this->item, TRUE) . "</pre>";
+
 		list($this_lat, $this_lon) = explode(",", $this->item->jcfields[2]->rawvalue);
 		echo "this_lat: " . $this_lat . " this_lon: " . $this_lon . "<br/>";
 
@@ -151,24 +153,151 @@ if ( $this->item->catid == 9 ) {
 		$query->select( $db->quoteName('c.id', 'art_id') );
 		$query->select( $db->quoteName('c.title', 'title') );
 		$query->select( $db->quoteName('c.alias', 'alias') );
-		$query->select( $db->quoteName('vp.value', 'photo') ); 
+		#$query->select( $db->quoteName('vp.value', 'photo') ); 
 		$query->select( $db->quoteName('vs.value', 'state') );
-		$query->from($db->quoteName('#__fields_values', 'vp'));
+		#$query->from($db->quoteName('#__fields_values', 'vp'));
 		$query->from($db->quoteName('#__fields_values', 'vs'));
 		$query->from($db->quoteName('#__content', 'c'));
-		$query->where($db->quoteName('vp.field_id') . ' = 6');
-		$query->where($db->quoteName('vp.item_id') . ' = ' . $db->quoteName('id'));
-		$query->where($db->quoteName('vs.field_id') . ' = 9');
+		#$query->where($db->quoteName('vp.field_id') . ' = 6');
+		#$query->where($db->quoteName('vp.item_id') . ' = ' . $db->quoteName('id'));
+		$query->where($db->quoteName('vs.field_id') . ' = ' . $db->quote(9));
 		$query->where($db->quoteName('vs.item_id') . ' = ' . $db->quoteName('id'));
-		$query->where($db->quoteName('c.id') . ' != ' . $db->quote( $this->item->id ));
 		$query->where($db->quoteName('c.id') . ' IN (' . implode(",", $close_items ) . ')' );
 		$query->where($db->quoteName('c.state') . ' = 1');
 		#$query->order('ordering ASC');
 		$db->setQuery($query);
 		$art_results = $db->loadObjectList();
 		echo "<pre>query: " . $query . "</pre>\n";
+		echo "<pre>number of art results: " . count($art_results) . "</pre>\n";
 		echo "<pre>art_results: \n" . print_r($art_results, TRUE) . "\n</pre>\n";
 		
+		/*
+https://streetartaberdeen.org/art/469
+
+
+
+close_items: 
+Array
+(
+    [0] => 142
+    [1] => 144
+    [2] => 145
+    [3] => 127
+    [4] => 146
+    [5] => 147
+    [6] => 288
+    [7] => 148
+    [8] => 375
+    [9] => 309
+    [10] => 376
+    [11] => 307
+    [12] => 286
+    [13] => 308
+    [14] => 278
+    [15] => 277
+    [16] => 106
+    [17] => 380
+    [18] => 382
+    [19] => 379
+)
+
+query: 
+SELECT `c`.`id` AS `art_id`,`c`.`title` AS `title`,`c`.`alias` AS `alias`,`vp`.`value` AS `photo`,`vs`.`value` AS `state`
+FROM `#__fields_values` AS `vp`,`#__fields_values` AS `vs`,`#__content` AS `c`
+WHERE `vp`.`field_id` = 6 AND `vp`.`item_id` = `id` AND `vs`.`field_id` = 9 AND `vs`.`item_id` = `id` AND `c`.`id` != '143' AND `c`.`id` IN (142,144,145,127,146,147,288,148,375,309,376,307,286,308,278,277,106,380,382,379) AND `c`.`state` = 1
+
+art_results: 
+Array
+(
+    [0] => stdClass Object
+        (
+            [art_id] => 278
+            [title] => Near R G U Student Association, 60 Schoolhill, Aberdeen AB10 1JQ, UK
+            [alias] => 610
+            [photo] => images/image-field-file_id278_2022-01-20_16-33-54_4236.jpeg
+            [state] => OK
+        )
+
+    [1] => stdClass Object
+        (
+            [art_id] => 148
+            [title] => Near 18 Harriet Street, Aberdeen AB10 1FR, UK
+            [alias] => 739
+            [photo] => images/image-field-file_id148_2022-01-17_15-01-19_6318.jpeg
+            [state] => OK
+        )
+
+    [2] => stdClass Object
+        (
+            [art_id] => 142
+            [title] => Near 123B George St, Aberdeen AB25 1HU, UK
+            [alias] => 946
+            [photo] => images/image-field-file_id142_2022-01-17_14-51-55_5446.jpeg
+            [state] => OK
+        )
+
+    [3] => stdClass Object
+        (
+            [art_id] => 307
+            [title] => Near 7 Jopp's Ln, Aberdeen AB25 1BX, UK
+            [alias] => 697
+            [photo] => images/image-field-file_id307_2022-01-20_22-27-09_2567.jpeg
+            [state] => OK
+        )
+
+)
+
+Missing:
+144,145,127,146,147,288,375,309,376,286,308,277,106,380,382,379
+
+142,144,145,127,146,147,288,148,375,309,376,307,286,308,278,277,106,380,382,379
+
+144 - https://streetartaberdeen.org/gallery/487
+
+SELECT * FROM s3ib7_fields_values WHERE item_id=144
+field_id	item_id		value	
+2			144			57.14949407507846,-2.101724783646255	
+3			144			Unknown	
+1			144			Spray	
+6			144			images/image-field-file_id144_2022-01-17_14-55-02_...	
+
+SELECT * FROM s3ib7_fields_values WHERE item_id=307
+field_id	item_id		value	
+2			307			57.15101992781453,-2.101539001611039	
+3			307			Unknown	
+1			307			Stencil	
+9			307			OK	
+6			307			images/image-field-file_id307_2022-01-20_22-27-09_...	
+
+
+
+SELECT `c`.`id` AS `art_id`,`c`.`title` AS `title`,`c`.`alias` AS `alias`,`vs`.`value` AS `state`
+FROM `s3ib7_fields_values` AS `vs`,`s3ib7_content` AS `c`
+WHERE `vs`.`field_id` = 9 AND `vs`.`item_id` = `id` AND `c`.`id` != '143' AND `c`.`id` IN (142,144,145,127,146,147,288,148,375,309,376,307,286,308,278,277,106,380,382,379) AND `c`.`state` = 1
+
+SELECT * FROM s3ib7_content, s3ib7_fields_values WHERE id=item_id AND field_id=9 AND state=1;
+
+
+SELECT COUNT(*) FROM s3ib7_fields_values WHERE field_id=9;	= 406
+SELECT COUNT(*) FROM s3ib7_fields_values WHERE field_id=6;	= 727
+SELECT COUNT(*) FROM s3ib7_fields_values WHERE field_id=1 	= 745
+
+SELECT value, count(*) FROM s3ib7_fields_values WHERE field_id=9 GROUP BY value
+value		count(*)	
+Degraded	25	
+Gone		34	
+OK			347		
+
+
+SELECT * FROM s3ib7_fields_values WHERE item_id=144;
+
+
+*/
+
+		JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
+		$custom_fields = FieldsHelper::getFields('com_content.article', $this->item, true);
+		#echo "<pre>" . print_r($item, TRUE) . "</pre>";
+		echo "<pre>custom_fields:\n" . print_r($custom_fields, TRUE) . "</pre>";
 
     }
 

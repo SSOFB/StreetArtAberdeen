@@ -274,6 +274,44 @@ class Saa_helper{
 
 
     /**
+     * Get a field value
+     * 
+     * @param   int     article_id
+     * @param   int     field_id, 1: medium, 2: location, 3: year created, 6: photo, 9: state
+     * 
+     * @return  string  the field value
+     */
+    public static function get_field_value($article_id, $field_id) {
+
+        $db = JFactory::getDbo();
+        
+            
+        # get the value 
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('value'));
+        $query->from($db->quoteName('#__fields_values'));
+        $query->where($db->quoteName('field_id') . " = " . $db->quote($field_id));
+        $query->where($db->quoteName('item_id') . " = " . $db->quote($article_id));
+        $db->setQuery($query);
+        $value = $db->loadResult();
+
+        if ( $value === null) {
+            # if there is no value, get the default
+            $query = $db->getQuery(true);
+            $query->select($db->quoteName('default_value'));
+            $query->from($db->quoteName('#__fields'));
+            $query->where($db->quoteName('id') . " = " . $db->quote($field_id));
+            $db->setQuery($query);
+            $value = $db->loadResult();
+        }
+
+        return $value;
+    }
+
+
+
+
+    /**
     * very simple logging function
     *
     * @param   string    the log string
