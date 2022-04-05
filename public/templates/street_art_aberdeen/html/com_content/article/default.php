@@ -95,12 +95,12 @@ if ( $this->item->catid == 9 ) {
 	$user = Factory::getUser();
     if (!$user->guest) {
 		# nearby
-        echo "<h3>Other art nearby...</h3>\n";
+        echo "<h3>Other art nearby, the 20 closest...</h3>\n";
 
 		#echo "<pre>" . print_r($this->item, TRUE) . "</pre>";
 
 		list($this_lat, $this_lon) = explode(",", $this->item->jcfields[2]->rawvalue);
-		echo "this_lat: " . $this_lat . " this_lon: " . $this_lon . "<br/>";
+		#echo "this_lat: " . $this_lat . " this_lon: " . $this_lon . "<br/>";
 
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -147,7 +147,7 @@ if ( $this->item->catid == 9 ) {
 		foreach ( $gone_articles AS $gone_article ) {
 			if ( array_key_exists($gone_article, $distance_array) ){
 				unset( $distance_array[$gone_article] );
-				echo "<pre>unset gone article: " . $gone_article . " </pre>";
+				#echo "<pre>unset gone article: " . $gone_article . " </pre>";
 			}
 		}
 
@@ -157,163 +157,151 @@ if ( $this->item->catid == 9 ) {
 
 		$distance_array = array_slice($distance_array, 0, 20, true); 
 		
-		echo "<pre>distance_array: \n" . print_r($distance_array, TRUE) . "\n</pre>\n";
+		#echo "<pre>distance_array: \n" . print_r($distance_array, TRUE) . "\n</pre>\n";
 
 		$close_items = array_keys( $distance_array );
 
-		echo "<pre>close_items: \n" . print_r($close_items, TRUE) . "\n</pre>\n";
+		#echo "<pre>close_items: \n" . print_r($close_items, TRUE) . "\n</pre>\n";
 
 		$query = $db->getQuery(true);
-		#$query->select( Array('c.id', 'c.title', 'c.alias', 'vp.value', 'vs.value'), Array('art_id', 'title', 'alias', 'photo', 'state'));
-		$query->select( $db->quoteName('c.id', 'art_id') );
-		$query->select( $db->quoteName('c.title', 'title') );
-		$query->select( $db->quoteName('c.alias', 'alias') );
-		#$query->select( $db->quoteName('vp.value', 'photo') ); 
-		$query->select( $db->quoteName('vs.value', 'state') );
-		#$query->from($db->quoteName('#__fields_values', 'vp'));
-		$query->from($db->quoteName('#__fields_values', 'vs'));
-		$query->from($db->quoteName('#__content', 'c'));
-		#$query->where($db->quoteName('vp.field_id') . ' = 6');
-		#$query->where($db->quoteName('vp.item_id') . ' = ' . $db->quoteName('id'));
-		$query->where($db->quoteName('vs.field_id') . ' = ' . $db->quote(9));
-		$query->where($db->quoteName('vs.item_id') . ' = ' . $db->quoteName('id'));
-		$query->where($db->quoteName('c.id') . ' IN (' . implode(",", $close_items ) . ')' );
-		$query->where($db->quoteName('c.state') . ' = 1');
-		#$query->order('ordering ASC');
+		$query->select( $db->quoteName('id') );
+		$query->select( $db->quoteName('title', 'title') );
+		$query->select( $db->quoteName('alias', 'alias') );
+		$query->select( $db->quoteName('catid') ); 
+		$query->select( $db->quoteName('value', 'photo') ); 
+		$query->from($db->quoteName('#__fields_values'));
+		$query->from($db->quoteName('#__content'));
+		$query->where($db->quoteName('field_id') . ' = 6');
+		$query->where($db->quoteName('item_id') . ' = ' . $db->quoteName('id'));
+		$query->where($db->quoteName('id') . ' IN (' . implode(",", $close_items ) . ')' );
+		$query->where($db->quoteName('state') . ' = 1');
 		$db->setQuery($query);
 		$art_results = $db->loadObjectList();
-		echo "<pre>query: " . $query . "</pre>\n";
-		echo "<pre>number of art results: " . count($art_results) . "</pre>\n";
-		echo "<pre>art_results: \n" . print_r($art_results, TRUE) . "\n</pre>\n";
+		#echo "<pre>query: " . $query . "</pre>\n";
+		#echo "<pre>number of art results: " . count($art_results) . "</pre>\n";
+		#echo "<pre>art_results: \n" . print_r($art_results, TRUE) . "\n</pre>\n";
+		$map_data = Array();
+
+		foreach ( $art_results AS $art_result ) {
+			$info_window_content = "<a href=\"/gallery/";
+			$info_window_content .= $art_result->alias;
+			$info_window_content .= "\" >";
+			$info_window_content .= "<img src='" . Saa_helper::small_image( $art_result->photo ) . "' alt='" . $art_result->title . "' />";
+			$info_window_content .= "</a>\n";
+			#$info_window_content = json_encode($info_window_content);
+
+			$map_pin = Array(
+				"id" => $art_result->id,
+				"lat" => $art_lat[ $art_result->id ],
+				"lon" => $art_lon[ $art_result->id ],
+				"pin_image" => Saa_helper::pin_image( $art_result->photo ),
+				"info_window_content" => $info_window_content,
+
+			);
+			$map_data[] = $map_pin;
+		}
+
+		#echo "<pre>map_data: " . print_r($map_data, TRUE) . "</pre>\n";
+		?>
 		
-		/*
-https://streetartaberdeen.org/art/469
+
+		<script>
+		
+		function init() {
+		   var mapOptions = {};
+		   var mapElement = document.getElementById('saa-nearby-map');
+		   var map = new google.maps.Map(mapElement, mapOptions);
+		   var bounds = new google.maps.LatLngBounds();
+		   const myLatLng = { lat: <?php echo $this_lat; ?>, lng: <?php echo $this_lon ?> };
+		   new google.maps.Marker({
+				position: myLatLng,
+				map,
+				title: "This artwork is here",
+			});
 
 
-
-close_items: 
-Array
-(
-    [0] => 142
-    [1] => 144
-    [2] => 145
-    [3] => 127
-    [4] => 146
-    [5] => 147
-    [6] => 288
-    [7] => 148
-    [8] => 375
-    [9] => 309
-    [10] => 376
-    [11] => 307
-    [12] => 286
-    [13] => 308
-    [14] => 278
-    [15] => 277
-    [16] => 106
-    [17] => 380
-    [18] => 382
-    [19] => 379
-)
-
-query: 
-SELECT `c`.`id` AS `art_id`,`c`.`title` AS `title`,`c`.`alias` AS `alias`,`vp`.`value` AS `photo`,`vs`.`value` AS `state`
-FROM `#__fields_values` AS `vp`,`#__fields_values` AS `vs`,`#__content` AS `c`
-WHERE `vp`.`field_id` = 6 AND `vp`.`item_id` = `id` AND `vs`.`field_id` = 9 AND `vs`.`item_id` = `id` AND `c`.`id` != '143' AND `c`.`id` IN (142,144,145,127,146,147,288,148,375,309,376,307,286,308,278,277,106,380,382,379) AND `c`.`state` = 1
-
-art_results: 
-Array
-(
-    [0] => stdClass Object
-        (
-            [art_id] => 278
-            [title] => Near R G U Student Association, 60 Schoolhill, Aberdeen AB10 1JQ, UK
-            [alias] => 610
-            [photo] => images/image-field-file_id278_2022-01-20_16-33-54_4236.jpeg
-            [state] => OK
-        )
-
-    [1] => stdClass Object
-        (
-            [art_id] => 148
-            [title] => Near 18 Harriet Street, Aberdeen AB10 1FR, UK
-            [alias] => 739
-            [photo] => images/image-field-file_id148_2022-01-17_15-01-19_6318.jpeg
-            [state] => OK
-        )
-
-    [2] => stdClass Object
-        (
-            [art_id] => 142
-            [title] => Near 123B George St, Aberdeen AB25 1HU, UK
-            [alias] => 946
-            [photo] => images/image-field-file_id142_2022-01-17_14-51-55_5446.jpeg
-            [state] => OK
-        )
-
-    [3] => stdClass Object
-        (
-            [art_id] => 307
-            [title] => Near 7 Jopp's Ln, Aberdeen AB25 1BX, UK
-            [alias] => 697
-            [photo] => images/image-field-file_id307_2022-01-20_22-27-09_2567.jpeg
-            [state] => OK
-        )
-
-)
-
-Missing:
-144,145,127,146,147,288,375,309,376,286,308,277,106,380,382,379
-
-142,144,145,127,146,147,288,148,375,309,376,307,286,308,278,277,106,380,382,379
-
-144 - https://streetartaberdeen.org/gallery/487
-
-SELECT * FROM s3ib7_fields_values WHERE item_id=144
-field_id	item_id		value	
-2			144			57.14949407507846,-2.101724783646255	
-3			144			Unknown	
-1			144			Spray	
-6			144			images/image-field-file_id144_2022-01-17_14-55-02_...	
-
-SELECT * FROM s3ib7_fields_values WHERE item_id=307
-field_id	item_id		value	
-2			307			57.15101992781453,-2.101539001611039	
-3			307			Unknown	
-1			307			Stencil	
-9			307			OK	
-6			307			images/image-field-file_id307_2022-01-20_22-27-09_...	
-
-
-
-SELECT `c`.`id` AS `art_id`,`c`.`title` AS `title`,`c`.`alias` AS `alias`,`vs`.`value` AS `state`
-FROM `s3ib7_fields_values` AS `vs`,`s3ib7_content` AS `c`
-WHERE `vs`.`field_id` = 9 AND `vs`.`item_id` = `id` AND `c`.`id` != '143' AND `c`.`id` IN (142,144,145,127,146,147,288,148,375,309,376,307,286,308,278,277,106,380,382,379) AND `c`.`state` = 1
-
-SELECT * FROM s3ib7_content, s3ib7_fields_values WHERE id=item_id AND field_id=9 AND state=1;
-
-
-SELECT COUNT(*) FROM s3ib7_fields_values WHERE field_id=9;	= 406
-SELECT COUNT(*) FROM s3ib7_fields_values WHERE field_id=6;	= 727
-SELECT COUNT(*) FROM s3ib7_fields_values WHERE field_id=1 	= 745
-
-SELECT value, count(*) FROM s3ib7_fields_values WHERE field_id=9 GROUP BY value
-value		count(*)	
-Degraded	25	
-Gone		34	
-OK			347		
-
-
-SELECT * FROM s3ib7_fields_values WHERE item_id=144;
-
-
-*/
-
-		JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
-		$custom_fields = FieldsHelper::getFields('com_content.article', $this->item, true);
-		#echo "<pre>" . print_r($item, TRUE) . "</pre>";
-		echo "<pre>custom_fields:\n" . print_r($custom_fields, TRUE) . "</pre>";
-
+		<?php
+		//JHtml::_('jquery.framework');
+		# loop through the places
+		foreach ($map_data as $i => $map_pin) {
+			
+		   if ( $map_pin["lat"] AND $map_pin["lon"] ) {
+			  ?>
+		
+		   var marker<?php echo $map_pin["id"]; ?> = new google.maps.Marker({
+			  position: {lat:<?php echo $map_pin["lat"]; ?>, lng: <?php echo $map_pin["lon"]; ?>}, 
+			  map: map,
+			  icon: {
+				 url: "<?php echo $map_pin["pin_image"]; ?>", 
+				 scaledSize: new google.maps.Size(60, 60),
+			  }
+		   });
+		   bounds.extend(marker<?php echo $map_pin["id"]; ?>.position);
+		   var infowindow<?php echo $map_pin["id"]; ?> = new google.maps.InfoWindow({
+			  content: <?php echo json_encode( $map_pin["info_window_content"] ); ?> ,map: map
+		   });
+		   marker<?php echo $map_pin["id"]; ?>.addListener('click', function () { 
+			  infowindow<?php echo $map_pin["id"]; ?>.open(map, marker<?php echo $map_pin["id"]; ?>) ;
+		   });
+		   infowindow<?php echo $map_pin["id"]; ?>.close();        
+			  <?php
+		   }    
+		}
+		
+		?>
+			map.fitBounds(bounds);
+		
+			markerMyLocation = new google.maps.Marker();
+			const locationButton = document.createElement("button");
+			locationButton.textContent = "Go to your current location";
+			locationButton.classList.add("custom-map-control-button");
+			locationButton.classList.add("btn");
+			locationButton.classList.add("btn-primary");
+			map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(locationButton);
+			locationButton.addEventListener("click", () => {
+				  // Try HTML5 geolocation.
+				  if (navigator.geolocation) {
+					 navigator.geolocation.getCurrentPosition(
+						(position) => {
+							const pos = {
+								lat: position.coords.latitude,
+								lng: position.coords.longitude,
+							};
+							map.setCenter(pos);
+							markerMyLocation.setPosition(pos);   
+							markerMyLocation.setMap(map);      
+						},
+						() => {
+							handleLocationError(true, markerMyLocation, map.getCenter());
+						}
+					 );
+				  } else {
+					 // Browser doesn't support Geolocation
+					 handleLocationError(false, markerMyLocation, map.getCenter());
+				}
+			   });
+		};
+		
+		function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
+		   markerMyLocation.setPosition(pos);
+		   markerMyLocation.setContent(
+			  browserHasGeolocation
+			  ? "Error: The Geolocation service failed."
+			  : "Error: Your browser doesn't support geolocation."
+		   );
+		   markerMyLocation.setMap(map);
+		};
+		
+		google.maps.event.addDomListener(window, "resize", function() { 
+		   var center = map.getCenter(); 
+		   google.maps.event.trigger(map, "resize"); 
+		   map.setCenter(center); 
+		});
+		
+		google.maps.event.addDomListener(window, 'load', init);
+		</script>
+		<div id='saa-nearby-map' style="height: 820px; width: 100%;"></div> 
+		<?php
     }
 
 	?>
