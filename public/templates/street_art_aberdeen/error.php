@@ -157,13 +157,11 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 			<div class="pull-left footer_left">
 				<jdoc:include type="modules" name="footer_left" style="none" />
 			</div>
-			<div class="pull-right footer_right">
-				<jdoc:include type="modules" name="footer_right" style="none" />
-			</div>
-		</div>
-		<div class="row">
 			<div class="footer_middle">
 				<jdoc:include type="modules" name="footer_middle" style="none" />
+			</div>
+			<div class="pull-right footer_right">
+				<jdoc:include type="modules" name="footer_right" style="none" />
 			</div>
 		</div>
 	</footer>
