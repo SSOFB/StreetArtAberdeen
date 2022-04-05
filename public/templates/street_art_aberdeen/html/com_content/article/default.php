@@ -97,7 +97,7 @@ if ( $this->item->catid == 9 ) {
 		# nearby
         echo "<h3>Other art nearby...</h3>\n";
 
-		echo "<pre>" . print_r($this->item, TRUE) . "</pre>";
+		#echo "<pre>" . print_r($this->item, TRUE) . "</pre>";
 
 		list($this_lat, $this_lon) = explode(",", $this->item->jcfields[2]->rawvalue);
 		echo "this_lat: " . $this_lat . " this_lon: " . $this_lon . "<br/>";
@@ -134,6 +134,21 @@ if ( $this->item->catid == 9 ) {
 			$art_lat[$ll_result->art_id] = $lat;
 			$art_lon[$ll_result->art_id] = $lon;
 
+		}
+
+		# get all 'gone' items
+		$query = $db->getQuery(true);
+		$query->select( "item_id" );
+		$query->from($db->quoteName('#__fields_values'));
+		$query->where($db->quoteName('field_id') . ' = 9');
+		$query->where($db->quoteName('value') . ' = ' . $db->quote('Gone'));
+		$db->setQuery($query);
+		$gone_articles = $db->loadColumn();
+		foreach ( $gone_articles AS $gone_article ) {
+			if ( array_key_exists($gone_article, $distance_array) ){
+				unset( $distance_array[$gone_article] );
+				echo "<pre>unset gone article: " . $gone_article . " </pre>";
+			}
 		}
 
 		asort($distance_array);
