@@ -91,218 +91,199 @@ if ( $this->item->catid == 9 ) {
 	?>
 
 	<?php 
+	# nearby
+	echo "<h3>Other art nearby, the 20 closest...</h3>\n";
 
-	$user = Factory::getUser();
-    if (!$user->guest) {
-		# nearby
-        echo "<h3>Other art nearby, the 20 closest...</h3>\n";
+	#echo "<pre>" . print_r($this->item, TRUE) . "</pre>";
 
-		#echo "<pre>" . print_r($this->item, TRUE) . "</pre>";
+	list($this_lat, $this_lon) = explode(",", $this->item->jcfields[2]->rawvalue);
+	#echo "this_lat: " . $this_lat . " this_lon: " . $this_lon . "<br/>";
 
-		list($this_lat, $this_lon) = explode(",", $this->item->jcfields[2]->rawvalue);
-		#echo "this_lat: " . $this_lat . " this_lon: " . $this_lon . "<br/>";
+	# get the lat & lon of all items
+	$db = JFactory::getDbo();
+	$query = $db->getQuery(true);
+	$query->select( $db->quoteName( array('value', 'item_id'), array('ll', 'art_id') ) );
+	$query->from($db->quoteName('#__fields_values'));
+	$query->from($db->quoteName('#__content'));
+	$query->where($db->quoteName('field_id') . ' = 2');
+	$query->where($db->quoteName('item_id') . ' = ' . $db->quoteName('id'));
+	$query->where($db->quoteName('item_id') . ' != ' . $db->quote( $this->item->id ));
+	$query->where($db->quoteName('state') . ' = 1');
+	$db->setQuery($query);
+	$ll_results = $db->loadObjectList();
+	#echo "<pre>results: \n" . print_r($ll_results, TRUE) . "\n</pre>\n";
 
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select( $db->quoteName( array('value', 'item_id'), array('ll', 'art_id') ) );
-		$query->from($db->quoteName('#__fields_values'));
-		$query->from($db->quoteName('#__content'));
-		$query->where($db->quoteName('field_id') . ' = 2');
-		$query->where($db->quoteName('item_id') . ' = ' . $db->quoteName('id'));
-		$query->where($db->quoteName('item_id') . ' != ' . $db->quote( $this->item->id ));
-		$query->where($db->quoteName('state') . ' = 1');
-		#$query->order('ordering ASC');
-		$db->setQuery($query);
-		$ll_results = $db->loadObjectList();
+	# get the diff for all items
+	$distance_array = Array();
+	$art_lat = Array();
+	$art_lon = Array();
+	foreach ($ll_results AS $ll_result) {
+		list($lat, $lon) = explode(",", $ll_result->ll);
+		$lat_diff = abs($this_lat -  $lat);
+		$lon_diff = abs($this_lon -  $lon);
+		$diff = $lat_diff + $lon_diff;
+		$distance_array[$ll_result->art_id] = $diff;
+		# save the lat & lon for later
+		$art_lat[$ll_result->art_id] = $lat;
+		$art_lon[$ll_result->art_id] = $lon;
+	}
 
-
-
-		#echo "<pre>results: \n" . print_r($ll_results, TRUE) . "\n</pre>\n";
-
-		$distance_array = Array();
-		$art_lat = Array();
-		$art_lon = Array();
-
-		foreach ($ll_results AS $ll_result) {
-			list($lat, $lon) = explode(",", $ll_result->ll);
-			$lat_diff = abs($this_lat -  $lat);
-			$lon_diff = abs($this_lon -  $lon);
-			$diff = $lat_diff + $lon_diff;
-
-			$distance_array[$ll_result->art_id] = $diff;
-
-			$art_lat[$ll_result->art_id] = $lat;
-			$art_lon[$ll_result->art_id] = $lon;
-
+	# get all 'gone' items, and remove them from the list
+	$query = $db->getQuery(true);
+	$query->select( "item_id" );
+	$query->from($db->quoteName('#__fields_values'));
+	$query->where($db->quoteName('field_id') . ' = 9');
+	$query->where($db->quoteName('value') . ' = ' . $db->quote('Gone'));
+	$db->setQuery($query);
+	$gone_articles = $db->loadColumn();
+	foreach ( $gone_articles AS $gone_article ) {
+		if ( array_key_exists($gone_article, $distance_array) ){
+			unset( $distance_array[$gone_article] );
+			#echo "<pre>unset gone article: " . $gone_article . " </pre>";
 		}
+	}
 
-		# get all 'gone' items
-		$query = $db->getQuery(true);
-		$query->select( "item_id" );
-		$query->from($db->quoteName('#__fields_values'));
-		$query->where($db->quoteName('field_id') . ' = 9');
-		$query->where($db->quoteName('value') . ' = ' . $db->quote('Gone'));
-		$db->setQuery($query);
-		$gone_articles = $db->loadColumn();
-		foreach ( $gone_articles AS $gone_article ) {
-			if ( array_key_exists($gone_article, $distance_array) ){
-				unset( $distance_array[$gone_article] );
-				#echo "<pre>unset gone article: " . $gone_article . " </pre>";
+	# sort them by difference 
+	asort($distance_array);
+	# get the closest 20
+	$distance_array = array_slice($distance_array, 0, 20, true); 
+	# get the ID of all of the close ones	
+	$close_items = array_keys( $distance_array );
+
+	# get the details needed for the pins
+	$query = $db->getQuery(true);
+	$query->select( $db->quoteName('id') );
+	$query->select( $db->quoteName('title', 'title') );
+	$query->select( $db->quoteName('alias', 'alias') );
+	$query->select( $db->quoteName('catid') ); 
+	$query->select( $db->quoteName('value', 'photo') ); 
+	$query->from($db->quoteName('#__fields_values'));
+	$query->from($db->quoteName('#__content'));
+	$query->where($db->quoteName('field_id') . ' = 6');
+	$query->where($db->quoteName('item_id') . ' = ' . $db->quoteName('id'));
+	$query->where($db->quoteName('id') . ' IN (' . implode(",", $close_items ) . ')' );
+	$query->where($db->quoteName('state') . ' = 1');
+	$db->setQuery($query);
+	$art_results = $db->loadObjectList();
+
+	# make up the map data
+	$map_data = Array();
+	foreach ( $art_results AS $art_result ) {
+		$info_window_content = "<a href=\"/gallery/";
+		$info_window_content .= $art_result->alias;			# TODO: make this use the route function
+		$info_window_content .= "\" >";
+		$info_window_content .= "<img src='" . Saa_helper::small_image( $art_result->photo ) . "' alt='" . $art_result->title . "' />";
+		$info_window_content .= "</a>\n";
+		$map_pin = Array(
+			"id" => $art_result->id,
+			"lat" => $art_lat[ $art_result->id ],
+			"lon" => $art_lon[ $art_result->id ],
+			"pin_image" => Saa_helper::pin_image( $art_result->photo ),
+			"info_window_content" => $info_window_content,
+
+		);
+		$map_data[] = $map_pin;
+	}
+
+	#echo "<pre>map_data: " . print_r($map_data, TRUE) . "</pre>\n";
+	?>
+	<script>
+	function init() {
+		var mapOptions = {};
+		var mapElement = document.getElementById('saa-nearby-map');
+		var map = new google.maps.Map(mapElement, mapOptions);
+		var bounds = new google.maps.LatLngBounds();
+	<?php
+	# loop through the places
+	foreach ($map_data as $i => $map_pin) {
+		
+		if ( $map_pin["lat"] AND $map_pin["lon"] ) {
+			?>
+		var marker<?php echo $map_pin["id"]; ?> = new google.maps.Marker({
+			position: {lat:<?php echo $map_pin["lat"]; ?>, lng: <?php echo $map_pin["lon"]; ?>}, 
+			map: map,
+			icon: {
+				url: "<?php echo $map_pin["pin_image"]; ?>", 
+				scaledSize: new google.maps.Size(60, 60),
 			}
-		}
-
-		asort($distance_array);
-
-		#echo "<pre>distance_array: \n" . print_r($distance_array, TRUE) . "\n</pre>\n";
-
-		$distance_array = array_slice($distance_array, 0, 20, true); 
-		
-		#echo "<pre>distance_array: \n" . print_r($distance_array, TRUE) . "\n</pre>\n";
-
-		$close_items = array_keys( $distance_array );
-
-		#echo "<pre>close_items: \n" . print_r($close_items, TRUE) . "\n</pre>\n";
-
-		$query = $db->getQuery(true);
-		$query->select( $db->quoteName('id') );
-		$query->select( $db->quoteName('title', 'title') );
-		$query->select( $db->quoteName('alias', 'alias') );
-		$query->select( $db->quoteName('catid') ); 
-		$query->select( $db->quoteName('value', 'photo') ); 
-		$query->from($db->quoteName('#__fields_values'));
-		$query->from($db->quoteName('#__content'));
-		$query->where($db->quoteName('field_id') . ' = 6');
-		$query->where($db->quoteName('item_id') . ' = ' . $db->quoteName('id'));
-		$query->where($db->quoteName('id') . ' IN (' . implode(",", $close_items ) . ')' );
-		$query->where($db->quoteName('state') . ' = 1');
-		$db->setQuery($query);
-		$art_results = $db->loadObjectList();
-		#echo "<pre>query: " . $query . "</pre>\n";
-		#echo "<pre>number of art results: " . count($art_results) . "</pre>\n";
-		#echo "<pre>art_results: \n" . print_r($art_results, TRUE) . "\n</pre>\n";
-		$map_data = Array();
-
-		foreach ( $art_results AS $art_result ) {
-			$info_window_content = "<a href=\"/gallery/";
-			$info_window_content .= $art_result->alias;
-			$info_window_content .= "\" >";
-			$info_window_content .= "<img src='" . Saa_helper::small_image( $art_result->photo ) . "' alt='" . $art_result->title . "' />";
-			$info_window_content .= "</a>\n";
-			#$info_window_content = json_encode($info_window_content);
-
-			$map_pin = Array(
-				"id" => $art_result->id,
-				"lat" => $art_lat[ $art_result->id ],
-				"lon" => $art_lon[ $art_result->id ],
-				"pin_image" => Saa_helper::pin_image( $art_result->photo ),
-				"info_window_content" => $info_window_content,
-
-			);
-			$map_data[] = $map_pin;
-		}
-
-		#echo "<pre>map_data: " . print_r($map_data, TRUE) . "</pre>\n";
-		?>
-		
-
-		<script>
-		
-		function init() {
-		   var mapOptions = {};
-		   var mapElement = document.getElementById('saa-nearby-map');
-		   var map = new google.maps.Map(mapElement, mapOptions);
-		   var bounds = new google.maps.LatLngBounds();
-		   const myLatLng = { lat: <?php echo $this_lat; ?>, lng: <?php echo $this_lon ?> };
-		   new google.maps.Marker({
-				position: myLatLng,
-				map,
-				title: "This artwork is here",
-			});
-
-
-		<?php
-		//JHtml::_('jquery.framework');
-		# loop through the places
-		foreach ($map_data as $i => $map_pin) {
-			
-		   if ( $map_pin["lat"] AND $map_pin["lon"] ) {
-			  ?>
-		
-		   var marker<?php echo $map_pin["id"]; ?> = new google.maps.Marker({
-			  position: {lat:<?php echo $map_pin["lat"]; ?>, lng: <?php echo $map_pin["lon"]; ?>}, 
-			  map: map,
-			  icon: {
-				 url: "<?php echo $map_pin["pin_image"]; ?>", 
-				 scaledSize: new google.maps.Size(60, 60),
-			  }
-		   });
-		   bounds.extend(marker<?php echo $map_pin["id"]; ?>.position);
-		   var infowindow<?php echo $map_pin["id"]; ?> = new google.maps.InfoWindow({
-			  content: <?php echo json_encode( $map_pin["info_window_content"] ); ?> ,map: map
-		   });
-		   marker<?php echo $map_pin["id"]; ?>.addListener('click', function () { 
-			  infowindow<?php echo $map_pin["id"]; ?>.open(map, marker<?php echo $map_pin["id"]; ?>) ;
-		   });
-		   infowindow<?php echo $map_pin["id"]; ?>.close();        
-			  <?php
-		   }    
-		}
-		
-		?>
-			map.fitBounds(bounds);
-		
-			markerMyLocation = new google.maps.Marker();
-			const locationButton = document.createElement("button");
-			locationButton.textContent = "Go to your current location";
-			locationButton.classList.add("custom-map-control-button");
-			locationButton.classList.add("btn");
-			locationButton.classList.add("btn-primary");
-			map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(locationButton);
-			locationButton.addEventListener("click", () => {
-				  // Try HTML5 geolocation.
-				  if (navigator.geolocation) {
-					 navigator.geolocation.getCurrentPosition(
-						(position) => {
-							const pos = {
-								lat: position.coords.latitude,
-								lng: position.coords.longitude,
-							};
-							map.setCenter(pos);
-							markerMyLocation.setPosition(pos);   
-							markerMyLocation.setMap(map);      
-						},
-						() => {
-							handleLocationError(true, markerMyLocation, map.getCenter());
-						}
-					 );
-				  } else {
-					 // Browser doesn't support Geolocation
-					 handleLocationError(false, markerMyLocation, map.getCenter());
-				}
-			   });
-		};
-		
-		function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
-		   markerMyLocation.setPosition(pos);
-		   markerMyLocation.setContent(
-			  browserHasGeolocation
-			  ? "Error: The Geolocation service failed."
-			  : "Error: Your browser doesn't support geolocation."
-		   );
-		   markerMyLocation.setMap(map);
-		};
-		
-		google.maps.event.addDomListener(window, "resize", function() { 
-		   var center = map.getCenter(); 
-		   google.maps.event.trigger(map, "resize"); 
-		   map.setCenter(center); 
 		});
-		
-		google.maps.event.addDomListener(window, 'load', init);
-		</script>
-		<div id='saa-nearby-map' style="height: 820px; width: 100%;"></div> 
-		<?php
-    }
+		bounds.extend(marker<?php echo $map_pin["id"]; ?>.position);
+		var infowindow<?php echo $map_pin["id"]; ?> = new google.maps.InfoWindow({
+			content: <?php echo json_encode( $map_pin["info_window_content"] ); ?> ,map: map
+		});
+		marker<?php echo $map_pin["id"]; ?>.addListener('click', function () { 
+			infowindow<?php echo $map_pin["id"]; ?>.open(map, marker<?php echo $map_pin["id"]; ?>) ;
+		});
+		infowindow<?php echo $map_pin["id"]; ?>.close();        
+			<?php
+		}    
+	}
+	
+	?>
+
+	const myLatLng = { lat: <?php echo $this_lat; ?>, lng: <?php echo $this_lon ?> };
+	new google.maps.Marker({
+		position: myLatLng,
+		map,
+		title: "This artwork is here",
+	});
+
+	map.fitBounds(bounds);
+
+	markerMyLocation = new google.maps.Marker();
+	const locationButton = document.createElement("button");
+	locationButton.textContent = "Go to your current location";
+	locationButton.classList.add("custom-map-control-button");
+	locationButton.classList.add("btn");
+	locationButton.classList.add("btn-primary");
+	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(locationButton);
+	locationButton.addEventListener("click", () => {
+		// Try HTML5 geolocation.
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					};
+					map.setCenter(pos);
+					markerMyLocation.setPosition(pos);   
+					markerMyLocation.setMap(map);      
+				},
+				() => {
+						handleLocationError(true, markerMyLocation, map.getCenter());
+					}
+				);
+			} else {
+				// Browser doesn't support Geolocation
+				handleLocationError(false, markerMyLocation, map.getCenter());
+			}
+		});
+	};
+	
+	function handleLocationError(browserHasGeolocation, markerMyLocation, pos) {
+		markerMyLocation.setPosition(pos);
+		markerMyLocation.setContent(
+			browserHasGeolocation
+			? "Error: The Geolocation service failed."
+			: "Error: Your browser doesn't support geolocation."
+		);
+		markerMyLocation.setMap(map);
+	};
+	
+	google.maps.event.addDomListener(window, "resize", function() { 
+		var center = map.getCenter(); 
+		google.maps.event.trigger(map, "resize"); 
+		map.setCenter(center); 
+	});
+	
+
+
+	google.maps.event.addDomListener(window, 'load', init);
+	</script>
+	<div id='saa-nearby-map' style="height: 820px; width: 100%;"></div> 
+	<?php
+
 
 	?>
 
