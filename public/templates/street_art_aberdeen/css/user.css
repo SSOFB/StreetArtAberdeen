@@ -274,6 +274,11 @@ ul.q_list {
     margin: 10px;
 }
 
+/* timeline gallery */
+.timeline h2{
+    padding-top: 20px;
+}
+
 /* Map screen styles */
 .saa_map_screen .custom-map-control-button {
     top: auto !important;
