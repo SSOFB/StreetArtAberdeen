@@ -44,7 +44,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Improve layout of the tags and tag pages
 - [x] Create 'latest additions' module
 - [x] Share preview data, images and text
-- [ ] Items by day view
+- [x] Items by day view
 - [ ] The saving issues, see issue #1
 - [x] An "items nearby" section at the bottom of each item, see issue #5
 - [ ] Add filter to map and gallery, see issue #4 
