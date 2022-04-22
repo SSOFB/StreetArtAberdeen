@@ -145,3 +145,16 @@ UPDATE `s3ib7_fields_values` SET `value`='Mosaic' WHERE `value`='Sculpture' AND 
 UPDATE `s3ib7_fields_values` SET `value`='Spray' WHERE `value`='Unknown' AND `field_id`=1;
 ```
 
+
+## Handy Video snippets
+
+
+Create a video stretching the image to fit, 5fps...
+```
+ffmpeg -framerate 5 -pattern_type glob -i "large*.jpeg" -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2"  movie01.mp4
+```
+
+Create a video, keeping the image aspect ratio, 10fps...
+```
+ffmpeg -framerate 10 -pattern_type glob -i "large*.jpeg" -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2"  movie03.mp4
+```
