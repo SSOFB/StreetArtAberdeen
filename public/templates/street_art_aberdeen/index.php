@@ -32,9 +32,9 @@ $app = Factory::getApplication();
 $wa  = $this->getWebAssetManager();
 
 # Browsers support SVG favicons
-$this->addHeadLink(HTMLHelper::_('image', 'saa_icon.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);
+$this->addHeadLink(HTMLHelper::_('image', 'splash_simple.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);
 $this->addHeadLink(HTMLHelper::_('image', 'favicon.ico', '', [], true, 1), 'alternate icon', 'rel', ['type' => 'image/vnd.microsoft.icon']);
-$this->addHeadLink(HTMLHelper::_('image', 'saa_icon.svg', '', [], true, 1), 'mask-icon', 'rel', ['color' => '#000']);
+$this->addHeadLink(HTMLHelper::_('image', 'splash_simple.svg', '', [], true, 1), 'mask-icon', 'rel', ['color' => '#000']);
 
 # Detecting Active Variables
 $option   = $app->input->getCmd('option', '');
@@ -47,7 +47,7 @@ $menu     = $app->getMenu()->getActive();
 $pageclass = $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
 
 # Template path
-$templatePath = 'templates/' . $this->template;
+$template_path = 'templates/' . $this->template;
 
 # Enable assets
 $wa->usePreset('template.street_art_aberdeen.' . ($this->direction === 'rtl' ? 'rtl' : 'ltr'))
@@ -119,10 +119,11 @@ $doc->setHeadData($head_data);
 	. ($pageclass ? ' ' . $pageclass : '')
 	. ($this->direction == 'rtl' ? ' rtl' : '');
 ?>">
-	<header class="header container-header full-width position-sticky sticky-top">
+	<header class="header container-header full-width position-sticky sticky-top saa_header">
 		<?php if ($this->countModules('menu', true) || $this->countModules('search', true)) : ?>
 			<div class="grid-child container-nav">
 				<a class="head_logo_link" href="<?php echo $this->baseurl; ?>" title="<?php echo $app->getCfg( 'sitename' ); ?>">
+					<img src="<?php echo $template_path; ?>/images/splash_simple.svg" alt="Street Art Aberdeen splash logo" />
 					Street Art Aberdeen
 				</a> 
 				<?php if ($this->countModules('menu', true)) : ?>
