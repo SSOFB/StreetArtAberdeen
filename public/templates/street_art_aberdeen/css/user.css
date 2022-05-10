@@ -76,7 +76,7 @@ body.offline{
     font-size: 50px;
     text-shadow: rgba(21, 21, 21, 0.7) 2px 2px 0px;
     word-spacing: -10px;
-    max-width: 50%;
+    width: 50%;
 }
 .head_logo_link:hover, .head_logo_link:active, .head_logo_link:focus, .head_logo_link:visited {
     color: #cc0000;
@@ -85,7 +85,9 @@ body.offline{
     height: 80px;
     float: left;
 }
-
+.head_logo_link div {
+    margin-top: 5px;
+}
 
 /* TODO: remove metismenu css */
 .container-nav > ul.mod-menu,
