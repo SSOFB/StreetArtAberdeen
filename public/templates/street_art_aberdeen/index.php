@@ -124,7 +124,7 @@ $doc->setHeadData($head_data);
 			<div class="grid-child container-nav">
 				<a class="head_logo_link" href="<?php echo $this->baseurl; ?>" title="<?php echo $app->getCfg( 'sitename' ); ?>">
 					<img src="<?php echo $template_path; ?>/images/splash_simple.svg" alt="Street Art Aberdeen splash logo" />
-					Street Art Aberdeen
+					<div>Street Art Aberdeen</div>
 				</a> 
 				<?php if ($this->countModules('menu', true)) : ?>
 					<jdoc:include type="modules" name="menu" style="none" />

@@ -76,12 +76,14 @@ body.offline{
     font-size: 50px;
     text-shadow: rgba(21, 21, 21, 0.7) 2px 2px 0px;
     word-spacing: -10px;
+    max-width: 50%;
 }
 .head_logo_link:hover, .head_logo_link:active, .head_logo_link:focus, .head_logo_link:visited {
     color: #cc0000;
 }
 .head_logo_link img {
     height: 80px;
+    float: left;
 }
 
 
@@ -469,9 +471,12 @@ fieldset > .edit_button_box{
 @media (max-width: 767.98px) {
     .head_logo_link{
         margin: 0;
-        font-size: 40px;
-        width: 200px;
-        line-height: 40px;
+        font-size: 25px;
+        line-height: 32px;
+        text-shadow: rgba(21, 21, 21, 0.7) 1px 1px 0px;
+    }
+    .head_logo_link img{
+        margin: -5px 0px 0px -5px;
     }
     .saa_menu, .icons {
         border-radius: 30px;
