@@ -28,6 +28,10 @@ $this->useCoreUI = true;
 // Create shortcut to parameters.
 $params = $this->state->get('params');
 
+
+#JHTML::script('edit.js', '/templates/street_art_aberdeen/js');
+HTMLHelper::_('script', 'templates/street_art_aberdeen/js/edit.js');
+
 // This checks if the editor config options have ever been saved. If they haven't they will fall back to the original settings.
 $editoroptions = isset($params->show_publishing_options);
 
