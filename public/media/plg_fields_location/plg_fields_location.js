@@ -136,14 +136,11 @@
                 }
             });
 
+            // set the lat lon from input, maybe from exif data
             var latlonbox = document.getElementById('jform_com_fields_location');
             latlonbox.addEventListener("change", (event) => {
-                //var box = document.getElementById('jform_com_fields_location');
-                //var latlon = box.value()
                 var latlon = document.getElementById('jform_com_fields_location').value;
                 console.log('latlon: ' + latlon);
-                //$(root.fields[this.plg_fields_location_id].target).val(latlon.join(","));
-                //root.markers[this.plg_fields_location_id].setPosition(latLng);
                 let latlon_arr = latlon.split(',');
                 console.log('lat: ' + latlon_arr[0]);
                 console.log('lon: ' + latlon_arr[1]);
@@ -154,7 +151,6 @@
                 root.maps[id].setCenter(pos);
                 markerMyLocation.setPosition(pos);   
                 markerMyLocation.setMap(root.maps[id]);
-
             });
         };
 

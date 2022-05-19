@@ -920,13 +920,6 @@
   
   $(function() {
     var someCallback = function(exifObject) {
-      $('#cameraModel').val(exifObject.Model);
-      $('#aperture').val('f/'+exifObject.FNumber);
-      $('#exposureTime').val(exifObject.ExposureTime + ' seg.');
-      $('#version').val(exifObject.ExifVersion);
-      $('#flash').val(exifObject.Flash);
-      $('#focalDistance').val(exifObject.FocalLength + 'mm');
-      $('#ISO').val(exifObject.ISOSpeedRatings);
       // Uncomment the line below to examine the 
       // EXIF object in console to read other values
       console.log(exifObject);
@@ -948,26 +941,11 @@
       var latlon = lat + ',' + lon;
       console.log('latlon: ' + latlon);
 
-      /* 
-      57.145428390778264,-2.0937312622943405
-      */
-
       $('#jform_com_fields_location').val(latlon);
-      //$('#jform_com_fields_location_2').val(latlon);
-      //$('#plg_fields_location_location').val(latlon);
-      //$('#plg_fields_location_location_2').val(latlon);
-      //$('#jform_title').val(latlon);
-
-      //gMap = new google.maps.Map(document.getElementById('plg_fields_location_location_2')); 
-      //gMap.setZoom(18);      // This will trigger a zoom_changed on the map
-      //gMap.setCenter(new google.maps.LatLng(lat, lon));
-
       const e = new Event("change");
       const element = document.getElementById('jform_com_fields_location')
       element.dispatchEvent(e);
-      
 
-      //alert(latlon);
     }
     try {
       $('#jform_com_fields_photo').change(function() {
