@@ -953,15 +953,19 @@
       */
 
       $('#jform_com_fields_location').val(latlon);
-      $('#jform_com_fields_location_2').val(latlon);
-      $('#plg_fields_location_location').val(latlon);
-      $('#plg_fields_location_location_2').val(latlon);
-      $('#jform_title').val(latlon);
+      //$('#jform_com_fields_location_2').val(latlon);
+      //$('#plg_fields_location_location').val(latlon);
+      //$('#plg_fields_location_location_2').val(latlon);
+      //$('#jform_title').val(latlon);
 
-      gMap = new google.maps.Map(document.getElementById('plg_fields_location_location_2')); 
-      gMap.setZoom(18);      // This will trigger a zoom_changed on the map
-      gMap.setCenter(new google.maps.LatLng(lat, lon));
+      //gMap = new google.maps.Map(document.getElementById('plg_fields_location_location_2')); 
+      //gMap.setZoom(18);      // This will trigger a zoom_changed on the map
+      //gMap.setCenter(new google.maps.LatLng(lat, lon));
 
+      const e = new Event("change");
+      const element = document.getElementById('jform_com_fields_location')
+      element.dispatchEvent(e);
+      
 
       //alert(latlon);
     }
