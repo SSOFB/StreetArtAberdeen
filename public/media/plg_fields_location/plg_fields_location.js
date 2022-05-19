@@ -151,6 +151,7 @@
                 root.maps[id].setCenter(pos);
                 markerMyLocation.setPosition(pos);   
                 markerMyLocation.setMap(root.maps[id]);
+                root.maps[id].setZoom(19);
             });
         };
 
