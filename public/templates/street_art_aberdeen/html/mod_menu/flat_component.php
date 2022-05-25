@@ -27,18 +27,24 @@ if ($item->menu_image) {
 }
 
 
+if ($item->id == $active_id || ($item->type === 'alias' && $itemParams->get('aliasoptions') == $active_id)) {
+	$link_class = " class=\"current\"";
+} else {
+	$link_class = "";
+}
+
 switch ($item->browserNav) :
 	default:
 	case 0:
-?><a href="<?php echo $item->flink; ?>" <?php echo $title; ?>><?php echo $class; ?><?php echo $linktype; ?></a><?php
+?><a href="<?php echo $item->flink; ?>" <?php echo $title; ?> <?php echo $link_class; ?>><?php echo $class; ?><?php echo $linktype; ?></a><?php
 		break;
 	case 1:
 		// _blank
-?><a href="<?php echo $item->flink; ?>" target="_blank" <?php echo $title; ?>><?php echo $class; ?><?php echo $linktype; ?></a><?php
+?><a href="<?php echo $item->flink; ?>" target="_blank" <?php echo $title; ?> <?php echo $link_class; ?>><?php echo $class; ?><?php echo $linktype; ?></a><?php
 		break;
 	case 2:
 	// window.open
-?><a href="<?php echo $item->flink; ?>" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes');return false;" <?php echo $title; ?>><?php echo $class; ?><?php echo $linktype; ?></a>
+?><a href="<?php echo $item->flink; ?>" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes');return false;" <?php echo $title; ?> <?php echo $link_class; ?>><?php echo $class; ?><?php echo $linktype; ?></a>
 <?php
 		break;
 endswitch;

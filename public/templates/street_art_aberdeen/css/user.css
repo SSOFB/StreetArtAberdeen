@@ -222,6 +222,9 @@ footer a:hover{
 .footer .flat_menu a i {
     padding-right: 4px;
 }
+.footer .flat_menu > a.current{
+    text-shadow: rgba(255, 0, 0, 0.7) 1px 1px 0px, rgba(255, 0, 0, 0.7) -1px 1px 0px, rgba(255, 0, 0, 0.7) 1px -1px 0px, rgba(255, 0, 0, 0.7) -1px -1px 0px;
+}
 
 /* utility bits */
 .rfloat, 
