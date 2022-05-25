@@ -47,6 +47,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Items by day view
 - [ ] The saving issues, see issue #1
 - [x] An "items nearby" section at the bottom of each item, see issue #5
+- [x] Make the image upload JS read in the EXIF and set the map location based on it
 - [ ] Add filter to map and gallery, see issue #4 
 
 
