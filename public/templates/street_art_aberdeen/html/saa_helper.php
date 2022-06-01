@@ -27,6 +27,8 @@ class Saa_helper{
     const small_height = 120;
     const large_width = 1400;
     const large_height = 1000;
+    const ig_width = 1080;
+    const ig_height = 1080;
 
     # not sure if the onAfterInitialise is needed
     public function onAfterInitialise(){
@@ -71,9 +73,11 @@ class Saa_helper{
         $output_small_filename = "small_" . $input_filename;
         $output_large_filename = "large_" . $input_filename;
         $output_pin_filename = "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
+        $output_ig_filename = "ig_" . $input_filename;
         $output_small_full_filename = self::image_path . $output_small_filename;
         $output_large_full_filename = self::image_path . $output_large_filename;
         $output_pin_full_filename = self::image_path . $output_pin_filename;
+        $output_ig_full_filename = self::image_path . $output_ig_filename;
 
 
         # check if the files exists
@@ -145,6 +149,22 @@ class Saa_helper{
             self::ilog("pin file exists already: " . $output_pin_full_filename);
         }
 
+
+        # create the ig one
+        if ( !file_exists( $output_ig_full_filename ) ) {
+            
+            # is it taller or wide
+
+
+            # get the background 
+
+
+
+            self::ilog("created ig file: " . $output_ig_full_filename);
+        } else {
+            self::ilog("ig file exists already: " . $output_ig_full_filename);
+        }
+
         return true;
     }
 
@@ -180,8 +200,8 @@ class Saa_helper{
      */
     public static function small_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-        $small_filename = self::image_url . "small_" . $input_filename;
-        return $small_filename;
+        $this_filename = self::image_url . "small_" . $input_filename;
+        return $this_filename;
     }
 
      /**
@@ -193,8 +213,8 @@ class Saa_helper{
      */
     public static function large_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-        $small_filename = self::image_url . "large_" . $input_filename;
-        return $small_filename;
+        $this_filename = self::image_url . "large_" . $input_filename;
+        return $this_filename;
     }  
 
 
@@ -207,9 +227,23 @@ class Saa_helper{
      */
     public static function pin_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-        $small_filename = self::image_url . "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
-        return $small_filename;
+        $this_filename = self::image_url . "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
+        return $this_filename;
     } 
+
+     /**
+     * ig_image
+     * 
+     * @param string    filename
+     * 
+     * @return string   ig filename
+     */
+    public static function ig_image( $input_filename ) {
+        $input_filename = basename( $input_filename );
+        $this_filename = self::image_url . "ig_" . $input_filename;
+        return $this_filename;
+    }  
+
 
 
      /**
