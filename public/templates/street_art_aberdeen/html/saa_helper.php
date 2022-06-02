@@ -10,7 +10,7 @@
  * Call functions like...
  * saa_helper::tester("hello");
  * ...or... 
- * saa_helper::check_image("image-field-file_id313_2022-01-20_22-32-44_2247.jpeg");
+ * saa_helper::check_image("large_image-field-file_id602_2022-03-08_16-18-03_7101.jpeg");
  */
 
 #namespace Saa_helper; # not sure about this bit
@@ -149,21 +149,57 @@ class Saa_helper{
             self::ilog("pin file exists already: " . $output_pin_full_filename);
         }
 
-
+ 
         # create the ig one
         if ( !file_exists( $output_ig_full_filename ) ) {
-            
+
+            #list($width, $height, $type, $attr) = getimagesize($input_full_filename);           
             # is it taller or wide
+            #$is_tall = ($height > $width) ? true : false;
 
+            $image = self::get_image($input_full_filename); 
+            $image = self::rezise_image($image, self::ig_width, self::ig_height );
+            $image_width = imagesx($image);
+            $image_height = imagesy($image);
 
-            # get the background 
+            self::ilog("image_width: " . $image_width);
+            self::ilog("image_height: " . $image_height);
 
+            $is_tall = ($image_height > $image_width) ? true : false;
 
+            if ( $is_tall ) {
+                self::ilog("it's tall");
+                $background_image = imagecreatefromjpeg(JPATH_BASE . "/templates/street_art_aberdeen/images/ig_background_tall.jpg"); 
+                $width = $image_width;
+                $height = 1080;
+                $x = (1080 - $image_width) / 2;
+                $y = 0;
+            } else {
+                self::ilog("it's wide");
+                $background_image = imagecreatefromjpeg(JPATH_BASE . "/templates/street_art_aberdeen/images/ig_background_wide.jpg"); 
+                $width = 1080;
+                $height = $image_height;
+                $x = 0;
+                $y = (1080 - $image_height) / 2;
+            } 
+
+            # create the new image
+            $ig_image = imagecreatetruecolor(1080, 1080);
+
+            # add the background to the new image
+            imagecopy($ig_image, $background_image, 0, 0, 0, 0, 1080, 1080); 
+
+            # add the art image to the new image
+            imagecopy($ig_image, $image, $x, $y, 0, 0, $width, $height); 
+
+            # output it
+            imagejpeg($ig_image, $output_ig_full_filename);
 
             self::ilog("created ig file: " . $output_ig_full_filename);
         } else {
             self::ilog("ig file exists already: " . $output_ig_full_filename);
         }
+
 
         return true;
     }
@@ -251,7 +287,7 @@ class Saa_helper{
      * 
      * @param string    filename
      * 
-     * @return GdImage  image obj
+     * @return \GdImage  image obj
      */
     public static function get_image( $input_filename ) {
         self::ilog("input_filename: " . $input_filename);
@@ -274,11 +310,11 @@ class Saa_helper{
      * resize image
      * this function resizes images so they'd fit in a maxwidth x maxheight box, keeping the aspect ratio the same
      * 
-     * @param   GdImage  image obj
+     * @param   \GdImage  image obj
      * @param   int      max width of the box the image will fit in
      * @param   int      max height of the box the image will fit in
      * 
-     * @return  GdImage  image obj
+     * @return  \GdImage  image obj
      */
     public static function rezise_image( $image_obj, $max_width, $max_height ) {
         $input_width = imagesx($image_obj);

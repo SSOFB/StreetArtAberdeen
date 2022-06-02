@@ -20,7 +20,7 @@ namespace Joomla\Plugin\System\Saaconsole\Console;
 
 \defined('JPATH_PLATFORM') or die;
 
-# make sure we run it from the right place
+# make sure we run it from the right place, eg /var/www/html/StreetArtAberdeen/public or /var/www/html/streetartaberdeen/
 chdir("/var/www/html/streetartaberdeen/");
 
 use Joomla\CMS\Factory;
@@ -139,6 +139,9 @@ class SaaconsoleCommand extends AbstractCommand
 			->getQuery(true)
 			->select('value')
 			->from($db->quoteName('#__fields_values'))
+			->from($db->quoteName('#__content'))
+			->where($db->quoteName('item_id') . " = " . $db->quoteName('id'))
+			->where($db->quoteName('state') . " = 1")
 			->where($db->quoteName('field_id') . " = 6");
 		$db->setQuery($query);
 		$images = $db->loadColumn();

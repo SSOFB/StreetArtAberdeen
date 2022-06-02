@@ -284,7 +284,8 @@ if ( $this->item->catid == 9 ) {
 	<div id='saa-nearby-map' style="height: 820px; width: 100%;"></div> 
 	<?php
 
-
+	# wee link for IG image
+	echo "<a href=\"" . Saa_helper::ig_image( $art_result->photo ) . "\" alt=\"IG image\" target=\"_blank\" >insta image</a>";
 	?>
 
 </div>
