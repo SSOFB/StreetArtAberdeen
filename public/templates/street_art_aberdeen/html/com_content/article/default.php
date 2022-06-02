@@ -282,11 +282,15 @@ if ( $this->item->catid == 9 ) {
 	google.maps.event.addDomListener(window, 'load', init);
 	</script>
 	<div id='saa-nearby-map' style="height: 820px; width: 100%;"></div> 
+
+	<p>&nbsp;</p>
+
 	<?php
 
 	# wee link for IG image
-	echo "<a href=\"" . Saa_helper::ig_image( $this->item->jcfields[6]->rawvalue ) . "\" alt=\"IG image\" target=\"_blank\" >insta image</a>";
+	echo "<p><a href=\"" . Saa_helper::ig_image( $this->item->jcfields[6]->rawvalue ) . "\" title=\"An instagram sized image of this artwork\" target=\"_blank\" >insta image</a></p>";
 	?>
+	<p>&nbsp;</p>
 
 </div>
 	<?php 
