@@ -285,7 +285,7 @@ if ( $this->item->catid == 9 ) {
 	<?php
 
 	# wee link for IG image
-	echo "<a href=\"" . Saa_helper::ig_image( $art_result->photo ) . "\" alt=\"IG image\" target=\"_blank\" >insta image</a>";
+	echo "<a href=\"" . Saa_helper::ig_image( $this->item->jcfields[6]->rawvalue ) . "\" alt=\"IG image\" target=\"_blank\" >insta image</a>";
 	?>
 
 </div>

@@ -153,10 +153,6 @@ class Saa_helper{
         # create the ig one
         if ( !file_exists( $output_ig_full_filename ) ) {
 
-            #list($width, $height, $type, $attr) = getimagesize($input_full_filename);           
-            # is it taller or wide
-            #$is_tall = ($height > $width) ? true : false;
-
             $image = self::get_image($input_full_filename); 
             $image = self::rezise_image($image, self::ig_width, self::ig_height );
             $image_width = imagesx($image);
