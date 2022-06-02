@@ -39,6 +39,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [ ] Move config and settings out of code
 - [x] Handle titles for places with no map set, like, in the harbour
 - [x] Stats module
+- [x] Add auto creation of Instagram image
 - [ ] Auto social posting, either new items or random daily
 - [x] Add a map to the tag page
 - [x] Improve layout of the tags and tag pages
@@ -49,6 +50,8 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] An "items nearby" section at the bottom of each item, see issue #5
 - [x] Make the image upload JS read in the EXIF and set the map location based on it
 - [ ] Add filter to map and gallery, see issue #4 
+- [ ] Add a way to share a location / view of the map
+- [ ] Tidy up the tags view
 
 
 ## Project links
