@@ -51,7 +51,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Make the image upload JS read in the EXIF and set the map location based on it
 - [ ] Add filter to map and gallery, see issue #4 
 - [ ] Add a way to share a location / view of the map
-- [ ] Tidy up the tags view
+- [x] Tidy up the tags view
 
 
 ## Project links
