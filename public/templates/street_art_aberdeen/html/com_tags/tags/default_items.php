@@ -43,43 +43,16 @@ if ($bsspans < 1)
 	$bsspans = 1;
 }
 
-$bscolumns = min($columns, floor(12 / $bsspans));
-$n         = count($this->items);
+# setup letter check
+$prev_letter = "";
+
+
+#echo "\n\n<!--\n\n" . print_r($this->items, TRUE) . "\n\n-->\n\n";
 ?>
 
 <div class="com-tags__items">
-	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
-		<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
-			<?php if ($this->params->get('filter_field')) : ?>
-				<div class="com-tags-tags__filter btn-group">
-					<label class="filter-search-lbl visually-hidden" for="filter-search">
-						<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>
-					</label>
-					<input
-						type="text"
-						name="filter-search"
-						id="filter-search"
-						value="<?php echo $this->escape($this->state->get('list.filter')); ?>"
-						class="inputbox" onchange="document.adminForm.submit();"
-						placeholder="<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>"
-					>
-					<button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button>
-					<button type="reset" name="filter-clear-button" class="btn btn-secondary"><?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>
-				</div>
-			<?php endif; ?>
-			<?php if ($this->params->get('show_pagination_limit')) : ?>
-				<div class="btn-group float-end">
-					<label for="limit" class="visually-hidden">
-						<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
-					</label>
-					<?php echo $this->pagination->getLimitBox(); ?>
-				</div>
-			<?php endif; ?>
+	<p>A list of labels.  Labels are used to group together pieces by festival, artist or site.</p>
 
-			<input type="hidden" name="limitstart" value="">
-			<input type="hidden" name="task" value="">
-		<?php endif; ?>
-	</form>
 
 	<?php if ($this->items == false || $n === 0) : ?>
 		<div class="alert alert-info">
@@ -87,58 +60,33 @@ $n         = count($this->items);
 			<?php echo Text::_('COM_TAGS_NO_TAGS'); ?>
 		</div>
 	<?php else : ?>
+		<div class="tag_col">
+			<div>
 		<?php foreach ($this->items as $i => $item) : ?>
-			<?php if ($n === 1 || $i === 0 || $bscolumns === 1 || $i % $bscolumns === 0) : ?>
-				<ul class="com-tags__category category list-group">
+
+			<?php 
+			$first_letter = strtoupper( substr($item->title, 0, 1) );
+			if ( $first_letter != $prev_letter ) {
+				if ( $first_letter == "F" OR $first_letter == "M" OR $first_letter == "Q" ) {
+					echo "</div>\n<div>";
+				}
+				echo "<h3>" . $first_letter . "</h3>";
+			}
+			$prev_letter = $first_letter;
+			?>
+			
+			<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
+				<p>
+					<a href="<?php echo Route::_(RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
+						<?php echo $this->escape($item->title); ?>
+					</a>
+				</p>
 			<?php endif; ?>
 
-			<li class="list-group-item list-group-item-action">
-				<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
-					<h3 class="mb-0">
-						<a href="<?php echo Route::_(RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
-							<?php echo $this->escape($item->title); ?>
-						</a>
-					</h3>
-				<?php endif; ?>
-
-				<?php if ($this->params->get('all_tags_show_tag_image') && !empty($item->images)) : ?>
-					<?php $images = json_decode($item->images); ?>
-					<span class="tag-body">
-						<?php if (!empty($images->image_intro)) : ?>
-							<?php $imgfloat = empty($images->float_intro) ? $this->params->get('float_intro') : $images->float_intro; ?>
-							<div class="float-<?php echo htmlspecialchars($imgfloat, ENT_QUOTES, 'UTF-8'); ?> item-image">
-								<img
-									<?php if ($images->image_intro_caption) : ?>
-										<?php echo 'class="caption" title="' . htmlspecialchars($images->image_intro_caption, ENT_QUOTES, 'UTF-8') . '"'; ?>
-									<?php endif; ?>
-									src="<?php echo htmlspecialchars($images->image_intro, ENT_QUOTES, 'UTF-8'); ?>"
-									alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_QUOTES, 'UTF-8'); ?>">
-							</div>
-						<?php endif; ?>
-					</span>
-				<?php endif; ?>
-
-				<?php if (($this->params->get('all_tags_show_tag_description', 1) && !empty($item->description)) || $this->params->get('all_tags_show_tag_hits')) : ?>
-					<div class="caption">
-						<?php if ($this->params->get('all_tags_show_tag_description', 1) && !empty($item->description)) : ?>
-							<span class="tag-body">
-								<?php echo HTMLHelper::_('string.truncate', $item->description, $this->params->get('all_tags_tag_maximum_characters')); ?>
-							</span>
-						<?php endif; ?>
-						<?php if ($this->params->get('all_tags_show_tag_hits')) : ?>
-							<span class="list-hits badge bg-info">
-								<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $item->hits); ?>
-							</span>
-						<?php endif; ?>
-					</div>
-				<?php endif; ?>
-			</li>
-
-			<?php if (($i === 0 && $n === 1) || $i === $n - 1 || $bscolumns === 1 || (($i + 1) % $bscolumns === 0)) : ?>
-				</ul>
-			<?php endif; ?>
 
 		<?php endforeach; ?>
+			</div>
+		</div>
 	<?php endif; ?>
 
 	<?php // Add pagination links ?>
