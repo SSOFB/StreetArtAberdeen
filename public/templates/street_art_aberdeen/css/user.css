@@ -422,6 +422,13 @@ fieldset > .edit_button_box{
     float: right;
     margin-top: -30px;
 }
+.com-content-category__table a.badge {
+    text-decoration: none;
+}
+.com-content-category__table a.badge:hover {
+    text-decoration: none;
+    color: #fff;
+}
 
 /* modules */
 .sidebars{

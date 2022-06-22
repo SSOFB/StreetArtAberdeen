@@ -71,6 +71,30 @@ if (!empty($this->items))
 }
 
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
+
+
+
+
+# get a article -> tag lookup, we'll maybe move this into a helper
+$db = JFactory::getDbo();
+$query = $db->getQuery(true);
+$query->select($db->quoteName(array('content_item_id', 'title')));
+$query->from($db->quoteName('#__contentitem_tag_map', 'map'));
+$query->from($db->quoteName('#__tags', 'tags'));
+$query->where($db->quoteName('map.tag_id') . ' = ' . $db->quoteName('tags.id'));
+$db->setQuery($query);
+$results = $db->loadAssocList();
+#echo "<!-- " . print_r($results, TRUE) . "-->";
+$tags_lookup = Array();
+foreach( $results AS $result ) {
+	$id = $result["content_item_id"];
+	$title = $result["title"];
+	if ( !isset( $tags_lookup[$id] ) ) {
+		$tags_lookup[$id] = Array();
+	}
+	$tags_lookup[$id][] = $title;
+}
+#echo "<!-- " . print_r($tags_lookup, TRUE) . "-->";
 ?>
 
 <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="com-content-category__articles">
@@ -289,6 +313,14 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 					} else {
 						echo " <span class=\"badge rounded-pill bg-info\">Year: " . $year . "</span>";
 					}	
+
+
+					if ( is_array( $tags_lookup[$article->id]) ) {
+						foreach ( $tags_lookup[$article->id] AS $item_tag ) {
+							$tag_for_url = str_replace(" ", "-", strtolower($item_tag) );
+							echo " <a href=\"/labels/" . $tag_for_url . "\" class=\"badge rounded-pill bg-secondary\">" . $item_tag . "</a> ";
+						}
+					}
 					?>
 				</th>
 				<?php if ($this->params->get('list_show_date')) : ?>
