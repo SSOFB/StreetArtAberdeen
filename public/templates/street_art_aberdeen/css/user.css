@@ -74,7 +74,7 @@ body.offline{
     text-decoration: none;
     color: #cc0000;
     font-size: 50px;
-    text-shadow: rgba(21, 21, 21, 0.7) 2px 2px 0px;
+    text-shadow: #fff 0px 0px 1px, #fff 0px 0px 2px, #fff 0px 0px 2px;
     word-spacing: -10px;
     width: 50%;
 }
@@ -138,7 +138,7 @@ body.offline{
 }
 .saa_menu > div.active > a{
     color: #fff;
-    text-shadow: rgba(255, 0, 0, 0.7) 1px 1px 0px, rgba(255, 0, 0, 0.7) -1px 1px 0px, rgba(255, 0, 0, 0.7) 1px -1px 0px, rgba(255, 0, 0, 0.7) -1px -1px 0px;
+    text-shadow: #ff0000 0px 0px 1px, #ff0000 0px 0px 1px, #ff0000 0px 0px 1px, #ff0000 0px 0px 2px, #ff0000 0px 0px 2px, #ff0000 0px 0px 2px;
 }
 
 .hero_wide {
