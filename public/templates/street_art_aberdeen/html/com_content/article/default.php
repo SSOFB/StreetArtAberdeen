@@ -58,7 +58,8 @@ if ( $this->item->catid == 9 ) {
 	<?php endif; ?>
 	<div class="page-header">
 		<<?php echo $htag; ?> itemprop="headline">
-			<?php echo $this->escape($this->item->title); ?>
+			<a class="float: right" href="https://maps.google.com/?q=<?php echo $this->item->jcfields[2]->rawvalue; ?>" title="View this location on Google maps" target="_blank"><i class="fa fa-map-signs"></i></a>
+			<?php echo $this->escape($this->item->title); ?> 
 		</<?php echo $htag; ?>>
 		<?php if ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED) : ?>
 			<span class="badge bg-warning text-light"><?php echo Text::_('JUNPUBLISHED'); ?></span>
@@ -288,7 +289,7 @@ if ( $this->item->catid == 9 ) {
 	<?php
 
 	# wee link for IG image
-	echo "<p><a href=\"" . Saa_helper::ig_image( $this->item->jcfields[6]->rawvalue ) . "\" title=\"An instagram sized image of this artwork\" target=\"_blank\" >insta image</a></p>";
+	echo "<p><a href=\"" . Saa_helper::ig_image( $this->item->jcfields[6]->rawvalue ) . "\" title=\"An instagram sized image of this artwork\" target=\"_blank\" ><i class=\"fab fa-instagram\"></i> Instagram image</a></p>";
 	?>
 	<p>&nbsp;</p>
 
