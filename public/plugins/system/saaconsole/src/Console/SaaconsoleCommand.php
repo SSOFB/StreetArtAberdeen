@@ -295,7 +295,7 @@ class SaaconsoleCommand extends AbstractCommand
 		# get all art
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select( array('value', 'id', 'title', 'alias', 'ucm_id') );
+		$query->select( array('value', 'id', 'title', 'alias', 'introtext', 'created_by', 'created', 'modified_by', 'modified', 'hits', 'publish_up', 'asset_id', 'metakey', 'catid', 'ordering') );
 		$query->from($db->quoteName('#__fields_values'));
 		$query->from($db->quoteName('#__content'));
 		#$query->from($db->quoteName('#__ucm_base'));
@@ -416,119 +416,163 @@ class SaaconsoleCommand extends AbstractCommand
 			$symfonyStyle->text("\n\n Art: " . $article['title'] . " (id: " . $article['id'] . ", alias: " . $article['alias'] . "), lat/lon: " . $article['value'] );
 			list($art_lat, $art_lon) = explode(",", $article['value']);
 
-			# loop through boxes
-			foreach ( $boxes AS $box ) {
-				$symfonyStyle->text("Box: \n" . print_r($box, TRUE) );
+			if ( $article['id'] == 786 ) {
 
-				# see if it is in this box
-				if ( $art_lat < $box["nw-lat"] AND $art_lat > $box["se-lat"] AND $art_lon > $box["nw-lon"] AND $art_lon < $box["se-lon"] ) {
-					$symfonyStyle->text("Item " . $article['id'] . " is in the " . $box["alias"] . " box");
+				# loop through boxes
+				foreach ( $boxes AS $box ) {
+					$symfonyStyle->text("Box: \n" . print_r($box, TRUE) );
 
-					# check them item doesn't have this tag already
-					$query = $db->getQuery(true);
-					$query->select(array('COUNT(*)'));
-					$query->where($db->quoteName('type_alias') . " = " . $db->quote('com_content.article'));
-					$query->where($db->quoteName('content_item_id') . " = " . $db->quote($article['id']));
-					$query->where($db->quoteName('tag_id') . " = " . $db->quote($box["id"]));
-					$query->from($db->quoteName('#__contentitem_tag_map'));
-					$db->setQuery($query);
-					$count = $db->loadResult();
-					$symfonyStyle->text("matching tag count: " . $count . " from " . $query);
+					# see if it is in this box
+					if ( $art_lat < $box["nw-lat"] AND $art_lat > $box["se-lat"] AND $art_lon > $box["nw-lon"] AND $art_lon < $box["se-lon"] ) {
+						$symfonyStyle->text("Item " . $article['id'] . " is in the " . $box["alias"] . " box");
 
-					$dt_obj = new Date('now');
-					$sql_datetime = $dt_obj->toSQL();
-
-					# Test 
-					# https://streetartaberdeen.org/gallery/354
-					# Article: Near 1 Sunnyside Terrace, Aberdeen AB24 3NB, UK (id: 1193, alias: 354), lat/lon: 57.161112437766306,-2.1045888443866256
-
-					if ($count == 0) {
-						# insert a tag
-						$symfonyStyle->text("Not got this tag, so add it");
-
-						/*
-						# check if this item has a record in the ucm_base table, ucm_base.ucm_item_id = content.id
+						# check them item doesn't have this tag already
 						$query = $db->getQuery(true);
 						$query->select(array('COUNT(*)'));
-						$query->where($db->quoteName('ucm_item_id') . " = " . $db->quote($article['id']));
-						$query->from($db->quoteName('#__ucm_base'));
+						$query->where($db->quoteName('type_alias') . " = " . $db->quote('com_content.article'));
+						$query->where($db->quoteName('content_item_id') . " = " . $db->quote($article['id']));
+						$query->where($db->quoteName('tag_id') . " = " . $db->quote($box["id"]));
+						$query->from($db->quoteName('#__contentitem_tag_map'));
 						$db->setQuery($query);
 						$count = $db->loadResult();
-						*/
+						$symfonyStyle->text("matching tag count: " . $count . " from " . $query);
 
-						# check if this item has a record in the ucm_base table, ucm_base.ucm_item_id = content.id
-						$query = $db->getQuery(true);
-						$query->select(array('COUNT(*)'));
-						$query->where($db->quoteName('core_content_item_id') . " = " . $db->quote($article['id']));
-						$query->from($db->quoteName('#__ucm_content'));
-						$db->setQuery($query);
-						$count = $db->loadResult();
+						$dt_obj = new Date('now');
+						$sql_datetime = $dt_obj->toSQL();
 
-						# if not, add it
+						# Test 
+						# https://streetartaberdeen.org/gallery/354
+						# Article: Near 1 Sunnyside Terrace, Aberdeen AB24 3NB, UK (id: 1193, alias: 354), lat/lon: 57.161112437766306,-2.1045888443866256
+
 						if ($count == 0) {
-							$symfonyStyle->text("Not in ucm_content, so add it");
+							# insert a tag
+							$symfonyStyle->text("Not got this tag, so add it");
 
-
-
-							# insert row into ucm_content
-							# INSERT INTO `s3ib7_ucm_content` (`core_content_id`, `core_type_alias`, `core_title`, `core_alias`, `core_body`, `core_state`, `core_checked_out_time`, `core_checked_out_user_id`, `core_access`, `core_params`, `core_featured`, `core_metadata`, `core_created_user_id`, `core_created_by_alias`, `core_created_time`, `core_modified_user_id`, `core_modified_time`, `core_language`, `core_publish_up`, `core_publish_down`, `core_content_item_id`, `asset_id`, `core_images`, `core_urls`, `core_hits`, `core_version`, `core_ordering`, `core_metakey`, `core_metadesc`, `core_catid`, `core_type_id`) 
-							# VALUES(700, 'com_content.article', 'Near 21 Spa St, Aberdeen AB25 1PU, UK', '740-2', '<p>Thanks to <a title=\"Danny Christie / wired.wifi\" href=\"https://www.instagram.com/wired.wifi/\" target=\"_blank\" rel=\"noopener\">Danny Christie / wired.wifi</a> for the photo</p>', 1, NULL, NULL, 1, '{}', 0, '{}', 873, '', '2022-03-24 16:32:26', 873, '2022-10-04 10:49:33', '*', '2022-03-24 16:32:26', NULL, 786, 2287, '{}', '{}', 184, 3, 667, '', '', 9, 1);
+							/*
+							# check if this item has a record in the ucm_base table, ucm_base.ucm_item_id = content.id
 							$query = $db->getQuery(true);
-							$columns = array();
-							$values = array(); 
-							$query->insert($db->quoteName('#__ucm_content'));
-							$query->columns($db->quoteName($columns));
-							$query->values(implode(',', $values));
+							$query->select(array('COUNT(*)'));
+							$query->where($db->quoteName('ucm_item_id') . " = " . $db->quote($article['id']));
+							$query->from($db->quoteName('#__ucm_base'));
 							$db->setQuery($query);
-							$symfonyStyle->text("Insert ucm_content query " . $query);
-							$result = $db->execute();
-							$symfonyStyle->text("Result for ucm_content query: " . $result);	
+							$count = $db->loadResult();
+							*/
 
-							# TODO: get inserted id
-							$ucm_id = 0;
+							# check if this item has a record in the ucm_base table, ucm_base.ucm_item_id = content.id
+							$query = $db->getQuery(true);
+							$query->select(array('COUNT(*)'));
+							$query->where($db->quoteName('core_content_item_id') . " = " . $db->quote($article['id']));
+							$query->from($db->quoteName('#__ucm_content'));
+							$db->setQuery($query);
+							$count = $db->loadResult();
 
-							# insert row into ucm_content
-							# INSERT INTO `s3ib7_ucm_base` (`ucm_id`, `ucm_item_id`, `ucm_type_id`, `ucm_language_id`) 
-							# VALUES(700, 786, 1, 0);
+							# if not, add it
+							if ($count == 0) {
+								$symfonyStyle->text("Not in ucm_content, so add it");
+
+								# insert row into ucm_content
+								# INSERT INTO `s3ib7_ucm_content` (`core_content_id`, `core_type_alias`, `core_title`, `core_alias`, `core_body`, `core_state`, `core_checked_out_time`, `core_checked_out_user_id`, `core_access`, `core_params`, `core_featured`, `core_metadata`, `core_created_user_id`, `core_created_by_alias`, `core_created_time`, `core_modified_user_id`, `core_modified_time`, `core_language`, `core_publish_up`, `core_publish_down`, `core_content_item_id`, `asset_id`, `core_images`, `core_urls`, `core_hits`, `core_version`, `core_ordering`, `core_metakey`, `core_metadesc`, `core_catid`, `core_type_id`) 
+								# VALUES(700, 'com_content.article', 'Near 21 Spa St, Aberdeen AB25 1PU, UK', '740-2', '<p>Thanks to <a title=\"Danny Christie / wired.wifi\" href=\"https://www.instagram.com/wired.wifi/\" target=\"_blank\" rel=\"noopener\">Danny Christie / wired.wifi</a> for the photo</p>', 1, NULL, NULL, 1, '{}', 0, '{}', 873, '', '2022-03-24 16:32:26', 873, '2022-10-04 10:49:33', '*', '2022-03-24 16:32:26', NULL, 786, 2287, '{}', '{}', 184, 3, 667, '', '', 9, 1);
+								$query = $db->getQuery(true);
+								#$columns = array(`core_type_alias`, `core_title`, `core_alias`, `core_body`, `core_state`, `core_checked_out_time`, `core_checked_out_user_id`, `core_access`, `core_params`, `core_featured`, `core_metadata`, `core_created_user_id`, `core_created_by_alias`, `core_created_time`, `core_modified_user_id`, `core_modified_time`, `core_language`, `core_publish_up`, `core_publish_down`, `core_content_item_id`, `asset_id`, `core_images`, `core_urls`, `core_hits`, `core_version`, `core_ordering`, `core_metakey`, `core_metadesc`, `core_catid`, `core_type_id`);
+								$columns = array('core_type_alias', 'core_title', 'core_alias', 'core_body', 'core_state', 'core_access', 'core_params', 'core_featured', 'core_metadata', 'core_created_user_id', 'core_created_by_alias', 'core_created_time', 'core_modified_user_id', 'core_modified_time', 'core_language', 'core_publish_up', 'core_content_item_id', 'asset_id', 'core_images', 'core_urls', 'core_hits', 'core_version', 'core_ordering', 'core_metakey', 'core_metadesc', 'core_catid', 'core_type_id');
+								$symfonyStyle->text("columns (" . count($columns) . "): " . print_r($columns, TRUE));
+								$values = array(
+									$db->quote('com_content.article'),		# `core_type_alias`, eg 'com_content.article'
+									$db->quote($article['title']),			# `core_title`, eg 'Near 21 Spa St, Aberdeen AB25 1PU, UK'
+									$db->quote($article['alias']),			# `core_alias`, eg '740-2'
+									$db->quote($article['introtext']),		# `core_body`, eg '<p>Thanks to....'
+									$db->quote(1),							# `core_state`, eg 1
+									#$db->quote(NULL),						# `core_checked_out_time`, eg NULL
+									#$db->quote(NULL),						# `core_checked_out_user_id`, eg NULL
+									$db->quote(1),							# `core_access`, eg 1
+									$db->quote('{}'),						# `core_params`, eg '{}'
+									$db->quote(0),							# `core_featured`, eg 0
+									$db->quote('{}'),						# `core_metadata`, eg '{}'
+									$db->quote($article['created_by']),		# `core_created_user_id`, eg 873
+									$db->quote(''),							# `core_created_by_alias`, eg ''
+									$db->quote($article['created']),		# `core_created_time`, eg '2022-03-24 16:32:26'
+									$db->quote($article['modified_by']),	# `core_modified_user_id`, eg 873
+									$db->quote($article['modified']),		# `core_modified_time`, eg '2022-10-04 10:49:33'
+									$db->quote('*'),						# `core_language`, eg '*'
+									$db->quote($article['publish_up']),		# `core_publish_up`, eg '2022-03-24 16:32:26'
+									#$db->quote(NULL),						# `core_publish_down`, eg NULL
+									$db->quote($article['id']),				# `core_content_item_id`, eg 786
+									$db->quote($article['asset_id']),		# `asset_id`, eg 2287
+									$db->quote('{}'),						# `core_images`, eg '{}'
+									$db->quote('{}'),						# `core_urls`, eg '{}'
+									$db->quote($article['hits']),			# `core_hits`, eg 184
+									$db->quote(1),							# `core_version`, eg 1
+									$db->quote($article['ordering']),		# `core_ordering`, eg 3
+									$db->quote($article['metakey']),		# `core_metakey`, eg 667
+									$db->quote(''),							# `core_metadesc`, eg ''
+									$db->quote($article['catid']),			# `core_catid`, eg 9
+									$db->quote(1),							# `core_type_id`, eg 1						
+								); 
+								$symfonyStyle->text("values (" . count($values) . "): " . print_r($values, TRUE));
+								$query->insert($db->quoteName('#__ucm_content'));
+								$query->columns($db->quoteName($columns));
+								$query->values(implode(',', $values));
+								$symfonyStyle->text("Insert ucm_content query " . $query);
+								$db->setQuery($query);
+								$result = $db->execute();
+								$symfonyStyle->text("Result for ucm_content query: " . $result);	
+
+								# get inserted id
+								$ucm_id = $db->insertid();
+								$symfonyStyle->text("ucm_id from insert: " . $ucm_id);
+
+								# insert row into ucm_content
+								# INSERT INTO `s3ib7_ucm_base` (`ucm_id`, `ucm_item_id`, `ucm_type_id`, `ucm_language_id`) 
+								# VALUES(700, 786, 1, 0);
+								$query = $db->getQuery(true);
+								$columns = array('ucm_id', 'ucm_item_id', 'ucm_type_id', 'ucm_language_id');
+								$values = array($db->quote($ucm_id), $db->quote($article['id']), $db->quote(1), $db->quote(0)); 
+								$query->insert($db->quoteName('#__ucm_base'));
+								$query->columns($db->quoteName($columns));
+								$query->values(implode(',', $values));
+								$db->setQuery($query);
+								$symfonyStyle->text("Insert ucm_base query " . $query);
+								$result = $db->execute();
+								$symfonyStyle->text("Result for ucm_base query: " . $result);						
+
+
+							} else {
+								$symfonyStyle->text("Already got ucm stuff");
+							}
+
+							# get the ucm_id
+							$query = $db->getQuery(true);
+							$query->select(array('ucm_id'));
+							$query->where($db->quoteName('ucm_item_id') . " = " . $db->quote($article['id']));
+							$query->from($db->quoteName('#__ucm_base'));
+							$db->setQuery($query);
+							$symfonyStyle->text("Find ucm_id from ucm_base query " . $query);
+							$ucm_id = $db->loadResult();
+							$symfonyStyle->text("ucm_id from query: " . $ucm_id);
+
+
+							# like INSERT INTO `s3ib7_contentitem_tag_map` (`type_alias`, `core_content_id`, `content_item_id`, `tag_id`, `tag_date`, `type_id`) VALUES('com_content.article', 699, 1398, 39, '2022-10-03 10:44:58', 1);
 							$query = $db->getQuery(true);
 							$columns = array('type_alias', 'core_content_id', 'content_item_id', 'tag_id', 'tag_date', 'type_id');
 							$values = array($db->quote('com_content.article'), $db->quote($ucm_id), $db->quote($article['id']), $db->quote($box['id']), $db->quote($sql_datetime), 1); 
-							$query->insert($db->quoteName('#__ucm_base'));
+							$query->insert($db->quoteName('#__contentitem_tag_map'));
 							$query->columns($db->quoteName($columns));
 							$query->values(implode(',', $values));
 							$db->setQuery($query);
-							$symfonyStyle->text("Insert ucm_base query " . $query);
+							$symfonyStyle->text("Insert query " . $query);
 							$result = $db->execute();
-							$symfonyStyle->text("Result for ucm_base query: " . $result);						
-
-
+							$symfonyStyle->text("Result: " . $result);
+						} else {
+							$symfonyStyle->text("Already got this tag");
 						}
-
-						# get the ucm_id
-						$query = $db->getQuery(true);
-						$query->select(array('ucm_id'));
-						$query->where($db->quoteName('ucm_item_id') . " = " . $db->quote($article['id']));
-						$query->from($db->quoteName('#__ucm_base'));
-						$db->setQuery($query);
-						$ucm_id = $db->loadResult();
-
-
-						# like INSERT INTO `s3ib7_contentitem_tag_map` (`type_alias`, `core_content_id`, `content_item_id`, `tag_id`, `tag_date`, `type_id`) VALUES('com_content.article', 699, 1398, 39, '2022-10-03 10:44:58', 1);
-						$query = $db->getQuery(true);
-						$columns = array('type_alias', 'core_content_id', 'content_item_id', 'tag_id', 'tag_date', 'type_id');
-						$values = array($db->quote('com_content.article'), $db->quote($ucm_id), $db->quote($article['id']), $db->quote($box['id']), $db->quote($sql_datetime), 1); 
-						$query->insert($db->quoteName('#__contentitem_tag_map'));
-						$query->columns($db->quoteName($columns));
-						$query->values(implode(',', $values));
-						$db->setQuery($query);
-						$symfonyStyle->text("Insert query " . $query);
-						$result = $db->execute();
-						$symfonyStyle->text("Result: " . $result);
+					} else {
+						$symfonyStyle->text("Not in the box");
 					}
-				} else {
-					$symfonyStyle->text("Not in the box");
 				}
-			}
+
+			} # temp test close brace
+
 		}
 		return;
 	}
