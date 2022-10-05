@@ -54,6 +54,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 - [x] Tidy up the tags view
 - [ ] Auto tag places in a lat/lon area, eg, sunnybank, mounhooley, the green/merchant quarter, beach tunnel, TX, bridge of don farm, westburn park, clifton road shopping center, denburn, former hydrosun, fittie, greyhope, garthdee
 - [ ] add an "open in google maps" link on the item pages
+- [ ] Optimise loading times and data sizes on map and gallery screens,
 
 
 ## Project links
