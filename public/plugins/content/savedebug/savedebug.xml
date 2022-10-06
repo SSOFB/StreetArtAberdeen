@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade">
+	<name>plg_content_savedebug</name>
+	<author>Andy @ SSOFB</author>
+	<creationDate>October 2022</creationDate>
+	<copyright>(C) 2022 SSOFB.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>ag@ssofb.co.uk</authorEmail>
+	<authorUrl>ssofb.co.uk</authorUrl>
+	<version>3.0.0</version>
+	<description>A simple plug-in to debug save issues</description>
+	<files>
+		<filename plugin="savedebug">savedebug.php</filename>
+	</files>
+	<languages>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			</fieldset>
+		</fields>
+	</config>
+</extension>
