@@ -43,7 +43,7 @@ $menu     = $app->getMenu()->getActive();
 $pageclass = $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
 
 // Template path
-$template_path = 'templates/' . $this->template;
+$template_path = '/templates/' . $this->template;
 
 // Enable assets
 $wa->usePreset('template.street_art_aberdeen.' . ($this->direction === 'rtl' ? 'rtl' : 'ltr'))
