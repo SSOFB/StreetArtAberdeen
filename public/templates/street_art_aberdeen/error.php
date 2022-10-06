@@ -96,7 +96,7 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 	<header class="header container-header full-width position-sticky sticky-top">
 		<?php if ($this->countModules('menu', true) || $this->countModules('search', true)) : ?>
 			<div class="grid-child container-nav">
-				<a class="head_logo_link" href="<?php echo $this->baseurl; ?>" title="<?php echo $app->getCfg( 'sitename' ); ?>">
+				<a class="head_logo_link" href="/" title="<?php echo $app->getCfg( 'sitename' ); ?>">
 					<img src="<?php echo $template_path; ?>/images/splash_simple.svg" alt="Street Art Aberdeen splash logo" />
 					<div>Street Art Aberdeen</div>
 				</a> 
