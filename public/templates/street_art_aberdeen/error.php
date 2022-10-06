@@ -23,6 +23,9 @@ Saa_helper::elog("Post: " . print_r($_POST, TRUE) );
 Saa_helper::elog("Get: " . print_r($_GET, TRUE) );
 Saa_helper::elog("Files: " . print_r($_FILES, true));
 Saa_helper::elog("Headers: " . print_r(getallheaders(), true));
+Saa_helper::elog("Code: " . $this->error->getCode());
+Saa_helper::elog("Message: " . $this->error->getMessage());
+Saa_helper::elog("Backtrace: " . $this->renderBacktrace());
 
 $app = Factory::getApplication();
 $wa  = $this->getWebAssetManager();
@@ -124,7 +127,7 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 				<blockquote>
 					<span class="badge bg-secondary"><?php echo $this->error->getCode(); ?></span> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?>
 				</blockquote>
-				<?php 
+				<?php
 				if ( $this->debug OR $is_user_super ){ 
 				?>
 					<div>
