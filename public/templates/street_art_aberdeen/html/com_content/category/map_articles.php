@@ -58,8 +58,8 @@ foreach ($this->items as $i => $article) {
       # make it js safe
       $info_window_content = json_encode($info_window_content);
        
-      if ( $lat AND $lon ) {
-         # got lat and lon, so stick it on the map
+      if ( $lat AND $lon AND $article->state ) {
+         # got lat and lon, and published, so stick it on the map
          ?>
       var marker<?php echo $article->id; ?> = new google.maps.Marker({ position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, map: map, icon: { url: "<?php echo Saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", scaledSize: new google.maps.Size(60, 60),} });
       var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({ content: <?php echo $info_window_content; ?> ,map: map });
