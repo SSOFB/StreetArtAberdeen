@@ -58,7 +58,7 @@ if ( $this->item->catid == 9 ) {
 	<?php endif; ?>
 	<div class="page-header">
 		<<?php echo $htag; ?> itemprop="headline">
-			<a class="float: right" href="https://maps.google.com/?q=<?php echo $this->item->jcfields[2]->rawvalue; ?>" title="View this location on Google maps" target="_blank"><i class="fa fa-map-signs"></i></a>
+			<a style="float: right" href="https://maps.google.com/?q=<?php echo $this->item->jcfields[2]->rawvalue; ?>" title="View this location on Google maps" target="_blank"><i class="fa fa-map-signs"></i></a>
 			<?php echo $this->escape($this->item->title); ?> 
 		</<?php echo $htag; ?>>
 		<?php if ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED) : ?>
