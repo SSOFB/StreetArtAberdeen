@@ -33,219 +33,7 @@ shuffle($this->items);
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMhPB4QnspmKY49FP3YnlhRp7_ao1CA'></script>
 <script>
 let map, infoWindowMyLocation;
-function init() {
-      var mapOptions = {
-         "center":{
-            "lat":57.15293719699627,
-            "lng":-2.0985408827160112
-         },
-         "clickableIcons":true,
-         "disableDoubleClickZoom":false,
-         "draggable":true,
-         "fullscreenControl":false,
-         "keyboardShortcuts":true,
-         "mapMaker":false,
-         "mapTypeControl":false,
-         "mapTypeControlOptions":{
-            "style":0
-         },
-         "mapTypeId":"roadmap",
-         "rotateControl":true,
-         "scaleControl":true,
-         "scrollwheel":true,
-         "streetViewControl":true,
-         "streetViewControlOptions":{
-            "position": google.maps.ControlPosition.RIGHT_CENTER,
-         },
-         "zoom":15,
-         "zoomControl":true,
-         "zoomControlOptions": {
-            "position": google.maps.ControlPosition.RIGHT_CENTER,
-         },
-         "navigationControl":true,
-         "navigationControlOptions":{
-            "style":1
-         },
-         "styles":[
-         {
-            "featureType":"administrative",
-            "elementType":"labels.text.fill",
-            "stylers":[
-               {
-                  "color":"#444444"
-               }
-            ]
-         },
-         {
-            "featureType":"administrative.country",
-            "elementType":"geometry.stroke",
-            "stylers":[
-               {
-                  "weight":"0.5"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape",
-            "elementType":"all",
-            "stylers":[
-               {
-                  "color":"#f2f2f2"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape.man_made",
-            "elementType":"geometry.fill",
-            "stylers":[
-               {
-                  "color":"#d3d2d1"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape.natural",
-            "elementType":"geometry.fill",
-            "stylers":[
-               {
-                  "visibility":"on"
-               },
-               {
-                  "color":"#eae8e4"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape.natural",
-            "elementType":"labels.text.fill",
-            "stylers":[
-               {
-                  "color":"#a06845"
-               },
-               {
-                  "weight":"10"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape.natural",
-            "elementType":"labels.text.stroke",
-            "stylers":[
-               {
-                  "weight":"4"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape.natural",
-            "elementType":"labels.icon",
-            "stylers":[
-               {
-                  "visibility":"off"
-               },
-               {
-                  "color":"#9c7359"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape.natural.landcover",
-            "elementType":"all",
-            "stylers":[
-               {
-                  "visibility":"on"
-               },
-               {
-                  "color":"#dddcdb"
-               }
-            ]
-         },
-         {
-            "featureType":"landscape.natural.terrain",
-            "elementType":"geometry.fill",
-            "stylers":[
-               {
-                  "visibility":"on"
-               },
-               {
-                  "color":"#dddcdb"
-               }
-            ]
-         },
-         {
-            "featureType":"poi",
-            "elementType":"all",
-            "stylers":[
-               {
-                  "visibility":"off"
-               }
-            ]
-         },
-         {
-            "featureType":"road",
-            "elementType":"all",
-            "stylers":[
-               {
-                  "saturation":-100
-               },
-               {
-                  "lightness":45
-               }
-            ]
-         },
-         {
-            "featureType":"road.highway",
-            "elementType":"all",
-            "stylers":[
-               {
-                  "visibility":"simplified"
-               }
-            ]
-         },
-         {
-            "featureType":"road.highway",
-            "elementType":"labels.icon",
-            "stylers":[
-               {
-                  "visibility":"off"
-               }
-            ]
-         },
-         {
-            "featureType":"road.arterial",
-            "elementType":"labels.icon",
-            "stylers":[
-               {
-                  "visibility":"off"
-               },
-               {
-                  "weight":"0.01"
-               }
-            ]
-         },
-         {
-            "featureType":"transit",
-            "elementType":"all",
-            "stylers":[
-               {
-                  "visibility":"off"
-               }
-            ]
-         },
-         {
-            "featureType":"water",
-            "elementType":"all",
-            "stylers":[
-               {
-                  "color":"#6084b9"
-               },
-               {
-                  "visibility":"on"
-               }
-            ]
-         }
-      ]
-   };
+function init() {var mapOptions={"center":{"lat":57.15293719699627,"lng":-2.0985408827160112},"clickableIcons":true,"disableDoubleClickZoom":false,"draggable":true,"fullscreenControl":false,"keyboardShortcuts":true,"mapMaker":false,"mapTypeControl":false,"mapTypeControlOptions":{"style":0},"mapTypeId":"roadmap","rotateControl":true,"scaleControl":true,"scrollwheel":true,"streetViewControl":true,"streetViewControlOptions":{"position":google.maps.ControlPosition.RIGHT_CENTER,},"zoom":15,"zoomControl":true,"zoomControlOptions":{"position":google.maps.ControlPosition.RIGHT_CENTER,},"navigationControl":true,"navigationControlOptions":{"style":1},"styles":[{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"weight":"0.5"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#d3d2d1"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#eae8e4"}]},{"featureType":"landscape.natural","elementType":"labels.text.fill","stylers":[{"color":"#a06845"},{"weight":"10"}]},{"featureType":"landscape.natural","elementType":"labels.text.stroke","stylers":[{"weight":"4"}]},{"featureType":"landscape.natural","elementType":"labels.icon","stylers":[{"visibility":"off"},{"color":"#9c7359"}]},{"featureType":"landscape.natural.landcover","elementType":"all","stylers":[{"visibility":"on"},{"color":"#dddcdb"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#dddcdb"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"},{"weight":"0.01"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#6084b9"},{"visibility":"on"}]}]};
    var mapElement = document.getElementById('saa-map');
    var map = new google.maps.Map(mapElement, mapOptions);
 <?php
@@ -255,35 +43,31 @@ foreach ($this->items as $i => $article) {
    #echo "\n<!-- \n" . print_r($article, TRUE) . "\n -->\n";
    # if it's not gone
    if ( $article->jcfields[9]->rawvalue != "Gone" ) {
+      # get the lat and lon
       list($lat, $lon) = explode(",", $article->jcfields[2]->rawvalue);
+      # get the image filename
       $small_image = Saa_helper::small_image( $article->jcfields[6]->rawvalue );
+      # get the width and height
       list($width, $height) = getimagesize(JPATH_BASE . $small_image);
+      # make the link
       $info_window_content  = "<a href=\"".  Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)) . "\">";
+      # set the image
       $info_window_content .= "<img loading=\"lazy\" width=\"" . $width . "\" height=\"" . $height . "\" src=\"" . $small_image . "\" alt=\"" . $article->title . "\" />";
+      # close the a tag
       $info_window_content .= "</a>\n";
+      # make it js safe
       $info_window_content = json_encode($info_window_content);
        
       if ( $lat AND $lon ) {
+         # got lat and lon, so stick it on the map
          ?>
-      var marker<?php echo $article->id; ?> = new google.maps.Marker({
-         position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, 
-         map: map,
-         icon: {
-            url: "<?php echo Saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", 
-            scaledSize: new google.maps.Size(60, 60),
-         }
-      });
-      var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({
-         content: <?php echo $info_window_content; ?> ,map: map
-      });
-      marker<?php echo $article->id; ?>.addListener('click', function () { 
-         infowindow<?php echo $article->id; ?>.open(map, marker<?php echo $article->id; ?>) ;
-      });
+      var marker<?php echo $article->id; ?> = new google.maps.Marker({ position: {lat:<?php echo $lat; ?>, lng: <?php echo $lon; ?>}, map: map, icon: { url: "<?php echo Saa_helper::pin_image( $article->jcfields[6]->rawvalue ); ?>", scaledSize: new google.maps.Size(60, 60),} });
+      var infowindow<?php echo $article->id; ?> = new google.maps.InfoWindow({ content: <?php echo $info_window_content; ?> ,map: map });
+      marker<?php echo $article->id; ?>.addListener('click', function () { infowindow<?php echo $article->id; ?>.open(map, marker<?php echo $article->id; ?>);});
       infowindow<?php echo $article->id; ?>.close();        
          <?php
       }   
    }
-
 }
 ?>
    markerMyLocation = new google.maps.Marker();
