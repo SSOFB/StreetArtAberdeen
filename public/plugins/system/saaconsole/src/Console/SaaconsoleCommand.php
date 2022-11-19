@@ -737,7 +737,7 @@ class SaaconsoleCommand extends AbstractCommand
 		$json .= "}\n";
 
 		# write it to file
-		file_put_contents(JPATH_ROOT . "/art.json", $json);
+		file_put_contents(JPATH_ROOT . "/art_api.json", $json);
 
 
 		return;

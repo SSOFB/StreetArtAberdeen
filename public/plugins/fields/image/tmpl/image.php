@@ -29,7 +29,7 @@ if (is_array($value))
 # TODO: see if we can use the helper files's 'large_image' function to get the name of the large image
 
 # see if we have a smaller one to use
-$sized_image = str_replace("images/", "images/large_", $value);
+$sized_image = str_replace("images/orig_images/", "images/large_images/large_", $value);
 
 
 # render an img tag

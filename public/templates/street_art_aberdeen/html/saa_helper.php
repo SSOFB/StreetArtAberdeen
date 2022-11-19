@@ -69,15 +69,15 @@ class Saa_helper{
 
         $input_filename = basename( $input_filename );
         # other params
-        $input_full_filename = self::image_path . $input_filename;
+        $input_full_filename = self::image_path . "/orig_images/" . $input_filename;
         $output_small_filename = "small_" . $input_filename;
         $output_large_filename = "large_" . $input_filename;
         $output_pin_filename = "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
         $output_ig_filename = "ig_" . $input_filename;
-        $output_small_full_filename = self::image_path . $output_small_filename;
-        $output_large_full_filename = self::image_path . $output_large_filename;
-        $output_pin_full_filename = self::image_path . $output_pin_filename;
-        $output_ig_full_filename = self::image_path . $output_ig_filename;
+        $output_small_full_filename = self::image_path . "/small_images/" . $output_small_filename;
+        $output_large_full_filename = self::image_path . "/large_images/" . $output_large_filename;
+        $output_pin_full_filename = self::image_path . "/pin_images/" . $output_pin_filename;
+        $output_ig_full_filename = self::image_path . "/ig_images/" . $output_ig_filename;
 
 
         # check if the files exists
@@ -232,7 +232,7 @@ class Saa_helper{
      */
     public static function small_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-        $this_filename = self::image_url . "small_" . $input_filename;
+        $this_filename = self::image_url . "small_images/small_" . $input_filename;
         return $this_filename;
     }
 
@@ -245,7 +245,7 @@ class Saa_helper{
      */
     public static function large_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-        $this_filename = self::image_url . "large_" . $input_filename;
+        $this_filename = self::image_url . "large_images/large_" . $input_filename;
         return $this_filename;
     }  
 
@@ -259,7 +259,7 @@ class Saa_helper{
      */
     public static function pin_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-        $this_filename = self::image_url . "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
+        $this_filename = self::image_url . "pin_images/pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
         return $this_filename;
     } 
 
@@ -272,7 +272,7 @@ class Saa_helper{
      */
     public static function ig_image( $input_filename ) {
         $input_filename = basename( $input_filename );
-        $this_filename = self::image_url . "ig_" . $input_filename;
+        $this_filename = self::image_url . "ig_images/ig_" . $input_filename;
         return $this_filename;
     }  
 
