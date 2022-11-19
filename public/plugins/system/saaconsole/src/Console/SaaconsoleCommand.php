@@ -150,6 +150,9 @@ class SaaconsoleCommand extends AbstractCommand
 		} elseif ( $action == "social") {
 			self::do_social($symfonyStyle);
 
+		} elseif ( $action == "generate_json") {
+			self::do_generate_json($symfonyStyle);
+
 		} else {
 			$symfonyStyle->text('No recognised action');
 
@@ -586,6 +589,159 @@ class SaaconsoleCommand extends AbstractCommand
 		return;
 	}
 
+
+
+	/**
+	* do_generate_json
+	* 
+	* Generates JSON for cached API output
+	* php /var/www/html/streetartaberdeen/cli/joomla.php  saaconsole:action generate_json
+	*
+	* @return 	void			no return value
+	*/
+	public function do_generate_json($symfonyStyle){
+
+		$symfonyStyle->text('Running do_generate_json');
+
+		/*
+
+		The de-facto JSON API standard: https://jsonapi.org/
+    	Lorna Mitchell's book: http://shop.oreilly.com/product/0636920028291.do
+    	Phil Sturgeon's book: https://apisyouwonthate.com/books/build-apis-you-wont-hate
+		https://restfulapi.net/introduction-to-json/
+
+
+		*/
+        JLoader::register('Joomla\CMS\Saa_helper\Saa_helper', 'templates/street_art_aberdeen/html/saa_helper.php'); 
+        $test = Saa_helper::tester("galopin");
+		$data = Array();
+		$tag_lookup = Array();
+
+		$base_url = "https://streetartaberdeen.org";
+
+		# get all the tags and make a look-up array
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select( array('id', 'title') );
+		$query->from($db->quoteName('#__tags'));
+		$db->setQuery($query);
+		$tags = $db->loadAssocList();
+		foreach ($tags as $tag) {
+			$tag_lookup[$tag['id']] = $tag['title'];
+		}
+
+		# get all the art
+		$query = $db->getQuery(true);
+		$query->select( array('id', 'title', 'alias', 'introtext', 'created', 'modified' ) );
+		$query->from($db->quoteName('#__content'));
+		$query->where($db->quoteName('state') . " = 1");
+		$query->where($db->quoteName('catid') . " = 9");
+		#$query->where($db->quoteName('id') . " = 110");
+		$db->setQuery($query);
+		$articles = $db->loadAssocList();
+
+		foreach ($articles as $article) {
+			$symfonyStyle->text('article: ' . $article['title'] . ", id: " . $article['id']);
+
+			# create the data object
+			$this_data = (object)[];
+
+			# base content
+			$this_data->id = $article['id'];
+			$this_data->title = $article['title'];
+			$this_data->description = $article['introtext'];
+			$this_data->created = $article['created'];
+			$this_data->modified = $article['modified'];
+
+			# link
+			$this_data->url = $base_url . "/gallery/" . $article['alias'];
+
+			# photo field, 6
+			$query = $db->getQuery(true);
+			$query->select('value');
+			$query->from($db->quoteName('#__fields_values'));
+			$query->where($db->quoteName('item_id') . " = " . $db->quote( $article['id'] ));
+			$query->where($db->quoteName('field_id') . " = 6");
+			$db->setQuery($query);
+			$image = $db->loadResult();
+			$this_data->image = $base_url . "/" . $image;		
+			$this_data->small_image = $base_url . Saa_helper::small_image($image);
+			$this_data->large_image = $base_url . Saa_helper::large_image($image);
+
+			# geo field, 2
+			$query = $db->getQuery(true);
+			$query->select('value');
+			$query->from($db->quoteName('#__fields_values'));
+			$query->where($db->quoteName('item_id') . " = " . $db->quote( $article['id'] ));
+			$query->where($db->quoteName('field_id') . " = 2");
+			$db->setQuery($query);
+			$lat_lon = $db->loadResult();
+			list($lat, $lon) = explode(",", $lat_lon);
+			$this_data->lat_lon = $lat_lon;		
+			$this_data->lat = $lat;
+			$this_data->lon = $lon;
+
+			# year created field, 3
+			$query = $db->getQuery(true);
+			$query->select('value');
+			$query->from($db->quoteName('#__fields_values'));
+			$query->where($db->quoteName('item_id') . " = " . $db->quote( $article['id'] ));
+			$query->where($db->quoteName('field_id') . " = 3");
+			$db->setQuery($query);
+			$year_created = $db->loadResult();
+			$this_data->year_created = $year_created;		
+
+			# medium field, 1
+			$query = $db->getQuery(true);
+			$query->select('value');
+			$query->from($db->quoteName('#__fields_values'));
+			$query->where($db->quoteName('item_id') . " = " . $db->quote( $article['id'] ));
+			$query->where($db->quoteName('field_id') . " = 1");
+			$db->setQuery($query);
+			$medium = $db->loadResult();
+			$this_data->medium = $medium;
+
+			# state field, 9
+			$query = $db->getQuery(true);
+			$query->select('value');
+			$query->from($db->quoteName('#__fields_values'));
+			$query->where($db->quoteName('item_id') . " = " . $db->quote( $article['id'] ));
+			$query->where($db->quoteName('field_id') . " = 9");
+			$db->setQuery($query);
+			$state = $db->loadResult();
+			$this_data->state = $state;
+
+			# tags
+			$query = $db->getQuery(true);
+			$query->select( 'tag_id' );
+			$query->from($db->quoteName('#__contentitem_tag_map'));
+			$query->where($db->quoteName('core_content_id') . " = " . $db->quote( $article['id'] ));
+			$query->where($db->quoteName('type_alias') . " = " . $db->quote('com_content.article'));
+			$db->setQuery($query);
+			$tag_ids = $db->loadColumn();
+			#print_r($tag_ids);
+			$tags = Array();
+			foreach( $tag_ids AS $tag_id ) {
+				$tags[] = $tag_lookup[ $tag_id ];
+			} 
+			$this_data->tags = $tags;
+
+			$data[] = $this_data;
+		}
+
+		# build up the json
+		$json = "{\n";
+		$json .= "  \"success\": true, \n";
+		$json .= "  \"message\": \"Thanks for downloading the Street Art Aberdeen data, " . count($data) . " items, data generated at " . date('l jS \of F Y h:i:s A') . "\", \n";
+		$json .= "  \"data\":" . json_encode($data, JSON_PRETTY_PRINT) . "\n";
+		$json .= "}\n";
+
+		# write it to file
+		file_put_contents(JPATH_ROOT . "/art.json", $json);
+
+
+		return;
+	}	
 
 
 	/**
