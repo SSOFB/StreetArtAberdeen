@@ -30,6 +30,7 @@ if (is_array($value))
 
 # see if we have a smaller one to use
 $sized_image = str_replace("images/orig_images/", "images/large_images/large_", $value);
+$sized_image = str_replace("imagesorig_images", "images/large_images/large_", $value);
 
 
 # render an img tag
