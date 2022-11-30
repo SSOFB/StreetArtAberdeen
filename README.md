@@ -8,53 +8,7 @@ They'll probably be out of date shortly, but a picture tells a 1000 words I gues
 
 
 ## To-do
-- [x] Install CMS
-- [x] Set-up server
-- [x] Domains
-- [x] Initial fieldset
-- [x] New image field
-- [x] Write basic content
-- [x] Main template file
-- [x] Top menu
-- [x] Footer menu
-- [x] Map view
-- [x] Gallery view
-- [x] Blog / news view
-- [x] Image resizer
-- [x] Pin icons
-- [x] Make map use device gps
-- [x] Favicon and template previews
-- [x] Sidebar for blog/news
-- [x] Geo lookup, lat/lon to street name for title
-- [x] Error page
-- [x] Single page view
-- [x] Edit view 
-- [x] Make map satelite, on edit
-- [x] Feedback forms
-- [ ] Write more content, FAQs, Getting involved
-- [x] Tag view
-- [ ] Feedback form with file/image
-- [x] Add "state" field
-- [x] Add logic for "state" = "gone" so gone items don't show on the main map
-- [ ] Move config and settings out of code
-- [x] Handle titles for places with no map set, like, in the harbour
-- [x] Stats module
-- [x] Add auto creation of Instagram image
-- [ ] Auto social posting, either new items or random daily
-- [x] Add a map to the tag page
-- [x] Improve layout of the tags and tag pages
-- [x] Create 'latest additions' module
-- [x] Share preview data, images and text
-- [x] Items by day view
-- [ ] The saving issues, see issue #1
-- [x] An "items nearby" section at the bottom of each item, see issue #5
-- [x] Make the image upload JS read in the EXIF and set the map location based on it
-- [ ] Add filter to map and gallery, see issue #4 
-- [ ] Add a way to share a location / view of the map
-- [x] Tidy up the tags view
-- [x] Auto tag places in a lat/lon area, eg, sunnybank, mounthooley, the green/merchant quarter, beach tunnel, TX, bridge of don farm, westburn park, clifton road shopping center, denburn, former hydrasun, fittie, greyhope, garthdee
-- [x] add an "open in google maps" link on the item pages
-- [ ] Optimise loading times and data sizes on map and gallery screens,
+Moved into issues, see https://github.com/SSOFB/StreetArtAberdeen/issues
 
 
 ## Project links
