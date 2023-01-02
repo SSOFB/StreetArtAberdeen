@@ -140,7 +140,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
 
                 # check it's an image
                 if ( $file_type == "image" ) {
-                    $file_url = "images/orig_image/image-field-file_id" . $article->id . "_"  . date("Y-m-d_H-i-s") . "_" . rand(1000, 9999) . "." . $file_extension;
+                    $file_url = "images/orig_images/image-field-file_id" . $article->id . "_"  . date("Y-m-d_H-i-s") . "_" . rand(1000, 9999) . "." . $file_extension;
                     $file_name = JPATH_SITE . "/" . $file_url;
                     $this->ilog("file_url: " . $file_url);
                     $this->ilog("file_name: " . $file_name);
@@ -171,7 +171,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
                 $this->ilog("value_to_keep: " . $value_to_keep);
 
                 # TODO: figure out why the slash is getting removed
-                $value_to_keep = str_replace("images/orig_image", "images/orig_image/", $value_to_keep);
+                $value_to_keep = str_replace("images/orig_images", "images/orig_images/", $value_to_keep);
                 $this->ilog("value_to_keep, fixed: " . $value_to_keep);
 
                 $field_id = $this->get_field_id_from_name($field_name);

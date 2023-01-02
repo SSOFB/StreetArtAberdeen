@@ -69,21 +69,21 @@ class Saa_helper{
 
         $input_filename = basename( $input_filename );
         # other params
-        $input_full_filename = self::image_path . "/orig_images/" . $input_filename;
+        $input_full_filename = self::image_path . "orig_images/" . $input_filename;
         $output_small_filename = "small_" . $input_filename;
         $output_large_filename = "large_" . $input_filename;
         $output_pin_filename = "pin_" . str_replace(Array(".jpg", ".jpeg"), ".png", $input_filename);
         $output_ig_filename = "ig_" . $input_filename;
-        $output_small_full_filename = self::image_path . "/small_images/" . $output_small_filename;
-        $output_large_full_filename = self::image_path . "/large_images/" . $output_large_filename;
-        $output_pin_full_filename = self::image_path . "/pin_images/" . $output_pin_filename;
-        $output_ig_full_filename = self::image_path . "/ig_images/" . $output_ig_filename;
+        $output_small_full_filename = self::image_path . "small_images/" . $output_small_filename;
+        $output_large_full_filename = self::image_path . "large_images/" . $output_large_filename;
+        $output_pin_full_filename = self::image_path . "pin_images/" . $output_pin_filename;
+        $output_ig_full_filename = self::image_path . "ig_images/" . $output_ig_filename;
 
 
         # check if the files exists
         if ( !file_exists( $input_full_filename ) ) {
             #Factory::getApplication()->enqueueMessage("File not found: " . $input_full_filename);
-            self::ilog("input_filename, no file, file doesn't exist");
+            self::ilog("input_filename, no file, file doesn't exist, " . $input_full_filename);
             return false;
         }
 
