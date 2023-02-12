@@ -730,14 +730,17 @@ class SaaconsoleCommand extends AbstractCommand
 
 			$api_data[] = $this_api_data;
 
-
+			$this_geojson_data = new \stdClass();
+			$this_geojson_data->type = "Feature";
 			# create the geojson data object, based on the standard one
-			$this_geojson_data = clone $this_api_data;
-			unset( $this_geojson_data->id );
-			unset( $this_geojson_data->lat_lon );
-			unset( $this_geojson_data->lat );
-			unset( $this_geojson_data->lon );
+			$this_geojson_data->properties = clone $this_api_data;
+			unset( $this_geojson_data->properties->id );
+			unset( $this_geojson_data->properties->lat_lon );
+			unset( $this_geojson_data->properties->lat );
+			unset( $this_geojson_data->properties->lon );
 			
+			
+
 			# add the extra bits
 			$geometry = new \stdClass();
 			# note that the geometry is lon-lat and not lat-lon (as used by Google Maps). The geo world is split on which order to use.
