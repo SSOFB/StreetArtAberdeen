@@ -744,7 +744,7 @@ class SaaconsoleCommand extends AbstractCommand
 			# add the extra bits
 			$geometry = new \stdClass();
 			# note that the geometry is lon-lat and not lat-lon (as used by Google Maps). The geo world is split on which order to use.
-			$geometry->coordinates = Array($lon, $lat );
+			$geometry->coordinates = Array( floatval($lon), floatval($lat) );
 			$geometry->type = "Point";
 			$this_geojson_data->geometry = $geometry;
 			$geojson_data[] = $this_geojson_data;
