@@ -171,7 +171,7 @@ class PlgFieldsImage extends \Joomla\Component\Fields\Administrator\Plugin\Field
                 $this->ilog("value_to_keep: " . $value_to_keep);
 
                 # TODO: figure out why the slash is getting removed
-                $value_to_keep = str_replace("images/orig_images", "images/orig_images/", $value_to_keep);
+                $value_to_keep = str_replace("imagesorig_images", "images/orig_images/", $value_to_keep);
                 $this->ilog("value_to_keep, fixed: " . $value_to_keep);
 
                 $field_id = $this->get_field_id_from_name($field_name);
