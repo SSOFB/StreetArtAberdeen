@@ -9,6 +9,8 @@
  * php cli/joomla.php saaconsole:action hello
  * php cli/joomla.php saaconsole:action clear_out
  * php /var/www/html/streetartaberdeen/cli/joomla.php  saaconsole:action hello
+ * php /var/www/html/streetartaberdeen/cli/joomla.php  saaconsole:action generate_json
+ * 
  * run every hour with a cron like... 
  * 0 * * * * php /var/www/html/streetartaberdeen/cli/joomla.php  saaconsole:action hello
  *
@@ -644,17 +646,17 @@ class SaaconsoleCommand extends AbstractCommand
 			$symfonyStyle->text('article: ' . $article['title'] . ", id: " . $article['id']);
 
 			# create the data object
-			$this_data = (object)[];
+			$this_api_data = (object)[];
 
 			# base content
-			$this_data->id = $article['id'];
-			$this_data->title = $article['title'];
-			$this_data->description = $article['introtext'];
-			$this_data->created = $article['created'];
-			$this_data->modified = $article['modified'];
+			$this_api_data->id = $article['id'];
+			$this_api_data->title = $article['title'];
+			$this_api_data->description = $article['introtext'];
+			$this_api_data->created = $article['created'];
+			$this_api_data->modified = $article['modified'];
 
 			# link
-			$this_data->url = $base_url . "/gallery/" . $article['alias'];
+			$this_api_data->url = $base_url . "/gallery/" . $article['alias'];
 
 			# photo field, 6
 			$query = $db->getQuery(true);
@@ -664,9 +666,9 @@ class SaaconsoleCommand extends AbstractCommand
 			$query->where($db->quoteName('field_id') . " = 6");
 			$db->setQuery($query);
 			$image = $db->loadResult();
-			$this_data->image = $base_url . "/" . $image;		
-			$this_data->small_image = $base_url . Saa_helper::small_image($image);
-			$this_data->large_image = $base_url . Saa_helper::large_image($image);
+			$this_api_data->image = $base_url . "/" . $image;		
+			$this_api_data->small_image = $base_url . Saa_helper::small_image($image);
+			$this_api_data->large_image = $base_url . Saa_helper::large_image($image);
 
 			# geo field, 2
 			$query = $db->getQuery(true);
@@ -677,9 +679,9 @@ class SaaconsoleCommand extends AbstractCommand
 			$db->setQuery($query);
 			$lat_lon = $db->loadResult();
 			list($lat, $lon) = explode(",", $lat_lon);
-			$this_data->lat_lon = $lat_lon;		
-			$this_data->lat = $lat;
-			$this_data->lon = $lon;
+			$this_api_data->lat_lon = $lat_lon;		
+			$this_api_data->lat = $lat;
+			$this_api_data->lon = $lon;
 
 			# year created field, 3
 			$query = $db->getQuery(true);
@@ -689,7 +691,7 @@ class SaaconsoleCommand extends AbstractCommand
 			$query->where($db->quoteName('field_id') . " = 3");
 			$db->setQuery($query);
 			$year_created = $db->loadResult();
-			$this_data->year_created = $year_created;		
+			$this_api_data->year_created = $year_created;		
 
 			# medium field, 1
 			$query = $db->getQuery(true);
@@ -699,7 +701,7 @@ class SaaconsoleCommand extends AbstractCommand
 			$query->where($db->quoteName('field_id') . " = 1");
 			$db->setQuery($query);
 			$medium = $db->loadResult();
-			$this_data->medium = $medium;
+			$this_api_data->medium = $medium;
 
 			# state field, 9
 			$query = $db->getQuery(true);
@@ -709,7 +711,7 @@ class SaaconsoleCommand extends AbstractCommand
 			$query->where($db->quoteName('field_id') . " = 9");
 			$db->setQuery($query);
 			$state = $db->loadResult();
-			$this_data->state = $state;
+			$this_api_data->state = $state;
 
 			# tags
 			$query = $db->getQuery(true);
@@ -724,20 +726,46 @@ class SaaconsoleCommand extends AbstractCommand
 			foreach( $tag_ids AS $tag_id ) {
 				$tags[] = $tag_lookup[ $tag_id ];
 			} 
-			$this_data->tags = $tags;
+			$this_api_data->tags = $tags;
 
-			$data[] = $this_data;
+			$api_data[] = $this_api_data;
+
+
+			# create the geojson data object, based on the standard one
+			$this_geojson_data = clone $this_api_data;
+			unset( $this_geojson_data->id );
+			unset( $this_geojson_data->lat_lon );
+			unset( $this_geojson_data->lat );
+			unset( $this_geojson_data->lon );
+			
+			# add the extra bits
+			$geometry = new \stdClass();
+			# note that the geometry is lon-lat and not lat-lon (as used by Google Maps). The geo world is split on which order to use.
+			$geometry->coordinates = Array($lon, $lat );
+			$geometry->type = "Point";
+			$this_geojson_data->geometry = $geometry;
+			$geojson_data[] = $this_geojson_data;
+
 		}
 
-		# build up the json
+		# build up the api json
 		$json = "{\n";
 		$json .= "  \"success\": true, \n";
-		$json .= "  \"message\": \"Thanks for downloading the Street Art Aberdeen data, " . count($data) . " items, data generated at " . date('l jS \of F Y h:i:s A') . "\", \n";
-		$json .= "  \"data\":" . json_encode($data, JSON_PRETTY_PRINT) . "\n";
+		$json .= "  \"message\": \"Thanks for downloading the Street Art Aberdeen data, " . count($api_data) . " items, data generated at " . date('l jS \of F Y h:i:s A') . "\", \n";
+		$json .= "  \"data\":" . json_encode($api_data, JSON_PRETTY_PRINT) . "\n";
 		$json .= "}\n";
 
 		# write it to file
 		file_put_contents(JPATH_ROOT . "/art_api.json", $json);
+
+		# build up the geojson api json
+		$geojson = "{\n";
+		$geojson .= "  \"type\": \"FeatureCollection\",\n";
+		$geojson .= "  \"features\":" . json_encode($geojson_data, JSON_PRETTY_PRINT) . "\n";
+		$geojson .= "}\n";
+
+		# write it to file
+		file_put_contents(JPATH_ROOT . "/art_geojson_api.json", $geojson);
 
 
 		return;
