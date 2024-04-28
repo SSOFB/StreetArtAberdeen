@@ -91,6 +91,10 @@ $head_data["metaTags"]["property"]["og:type"] = "website";
 $doc->setHeadData($head_data);
 #echo "<!--\n\n" . print_r($head_data, TRUE) . "\n\n-->";
 
+# check the user
+$user = Factory::getUser();
+$is_user_super = in_array(8, $user->groups );
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -156,6 +160,12 @@ $doc->setHeadData($head_data);
 	</footer>
 	<?php endif; ?>
 
+	<?php
+	if ( $is_user_super ){ 
+		?>
 	<jdoc:include type="modules" name="debug" style="none" />
+		<?php
+	}
+	?>
 </body>
 </html>

@@ -128,7 +128,7 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 					<span class="badge bg-secondary"><?php echo $this->error->getCode(); ?></span> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?>
 				</blockquote>
 				<?php
-				if ( $this->debug OR $is_user_super ){ 
+				if ( $is_user_super ){ 
 				?>
 					<div>
 						<?php echo $this->renderBacktrace(); ?>
@@ -170,7 +170,12 @@ $wa->getAsset('style', 'fontawesome')->setAttribute('rel', 'lazy-stylesheet');
 		</div>
 	</footer>
 	<?php endif; ?>
-
+	<?php
+	if ( $is_user_super ){ 
+		?>
 	<jdoc:include type="modules" name="debug" style="none" />
+		<?php
+	}
+	?>
 </body>
 </html>
